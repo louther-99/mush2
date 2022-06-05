@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092814599054",
+    "project_id": "mush2-7b62d",
+    "storage_bucket": "mush2-7b62d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092814599054:android:f42dac627f19d7dbda2adf",
+        "android_client_info": {
+          "package_name": "com.example.mush2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092814599054-675jidoi1uqtqtd9k31mo3tr23nrtfi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx7LSpf9qgeHc2SPzSQ9h-O0ro-zFslVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092814599054-675jidoi1uqtqtd9k31mo3tr23nrtfi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
