@@ -157,11 +157,12 @@ class _SignUpState extends State<SignUp> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
     } on FirebaseAuthException catch(e){
       print(e);
-      Utils.showSnackBar(e.message);
+      //Utils.showSnackBar(e.message);
 
     }
     //Navigator.of(context) not working!
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    Navigator.of(context).pop();
+    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
 }

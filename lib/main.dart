@@ -9,88 +9,79 @@ import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first
   await Firebase.initializeApp(); //Initialize database
   //await AuthService().getOrCreateUser();
-  runApp(MaterialApp(
-    initialRoute: '/main',
-    routes: {
-      '/main' : (context) => Main(),
-      '/login' : (context) => AuthService(),
-      '/homepage' : (context) => HomePage(),
-    },
+  runApp(MyApp(
+    // initialRoute: '/main',
+    // routes: {
+    //   '/main' : (context) => MyApp(),
+    //   '/login' : (context) => AuthService(),
+    //   '/homepage' : (context) => HomePage(),
 
+    // },
 
+  ));//MyApp
+} //main
 
+final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
 
-  ));
-}
-
-//final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
-
-
-
-class Main extends StatefulWidget {
-
-
-  @override
-  State<Main> createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  String name = "";
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+class MyApp extends StatelessWidget {
+  static final String title = 'Mush Mush';
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      //scaffoldMessengerKey: Utils.messengerKey,
+      navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
+      title: title,
+      //theme: ThemeData.dark().copyWith(),
+      home: MainPage(),
+    );
+  }
 
-    //for navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    //navigatorKey: navigatorKey,
-    //scaffoldMessengerKey: Utils.messengerKey;
+}//MyApp
+
+class MainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff946713),
       body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator());
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator());
+            }
+            else if(snapshot.hasError){
+              return Center (child: Text('Somethig went wrong!'));
+            }
+            else if(snapshot.hasData) {
+              return HomePage();
+              //Navigator.pushReplacementNamed(context, '/homepage'); //return HomePage();
+            }
+            else{
+              return AuthService();
+
+            }
 
           }
-
-          else if(snapshot.hasError){
-            return Center (child: Text('Somethig went wrong!'));
-          }
-          else if(snapshot.hasData) {
-            return HomePage();
-            //Navigator.pushReplacementNamed(context, '/homepage'); //return HomePage();
-          }
-          else{
-             return AuthService();
-
-          }
-
-        }
       ),
     );
   }
-}
+}//MainPage
+
+
+
 
 
 
 
 
           
+
 
 
 

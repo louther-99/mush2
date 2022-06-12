@@ -24,16 +24,5 @@ class _AuthServiceState extends State<AuthService> {
 }
 
 
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  //
-  // User? get currentUser => _firebaseAuth.currentUser;
-  //
-  // Future<User?> getOrCreateUser() async { //Must be called once and once the app was initialized
-  //   if(currentUser == null){
-  //     HomePage();
-  //     //await _firebaseAuth.signInAnonymously();
-  // }
-  //   return currentUser;
-
 
 

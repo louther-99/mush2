@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mush2/Utils.dart';
+import 'package:mush2/forgotPassword.dart';
+import 'package:email_validator/email_validator.dart';
+
 
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -31,13 +34,12 @@ class _LogInWidgetState extends State<LogInWidget> {
   void dispose(){
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    navigatorKey: navigatorKey;
+    // navigatorKey: navigatorKey;
     return Scaffold(
         backgroundColor: Color(0xff946713),
         body: Container(
@@ -54,7 +56,6 @@ class _LogInWidgetState extends State<LogInWidget> {
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                     ),
-
                   ),
                 ),
                 SizedBox(height: 50),
@@ -69,20 +70,13 @@ class _LogInWidgetState extends State<LogInWidget> {
                           cursorColor: Colors.white,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                              labelText: "Enter your name"
+                              labelText: "Enter your email"
                           ),
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return "Username cannot be empty!";
-                            }
-                            else if (value != null && value.length <= 5) {
-                              return "Username should be greater than 5 characters";
-                            }
-                            else {
-                              return null;
-                            }
-
-                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (email) =>
+                          email != null && !EmailValidator.validate(email)
+                              ? "Enter a valid email!"
+                              : null,
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -93,20 +87,14 @@ class _LogInWidgetState extends State<LogInWidget> {
                           decoration: InputDecoration(
                               labelText: "Enter your password"
                           ),
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return "Password cannot be empty!";
-                            }
-                            else if (value != null && value.length <= 8) {
-                              return "Password should be greater than 8 characters";
-                            }
-                            else {
-                              return null;
-                            }
-
-                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) =>
+                          value != null && value.length < 6
+                              ? "Password must be at least 6 characters long"
+                              : null,
                         ),
                         SizedBox(height: 20),
+
 
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
@@ -130,7 +118,9 @@ class _LogInWidgetState extends State<LogInWidget> {
                               fontSize: 20,
                             ),
                           ),
-                          onTap: => Navigator.of(context).push(MaterialPageRoute),
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(),
+                          )),
                         ),
                         RichText(
                           text: TextSpan(
@@ -169,6 +159,8 @@ class _LogInWidgetState extends State<LogInWidget> {
 
 
   Future signIn() async{
+
+    //Show a loading circle
     showDialog(
               context: context,
               barrierDismissible: false,
@@ -179,13 +171,13 @@ class _LogInWidgetState extends State<LogInWidget> {
             await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
           } on FirebaseAuthException catch(e){
             print(e);
-            Utils.showSnackBar(e.message);
-
+            //Utils.showSnackBar(e.message);
           }
 
-
           //Navigator.of(context) not working!
-          navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          Navigator.of(context).pop();
+          //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
   }
 
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/status.dart';
 import 'package:mush2/input.dart';
+import 'package:mush2/data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               child: Input(),
             ),
             Center(
-              //child: CallsScreen(),
+              child: Data(),
             ),
             Center(
               child: Text("NOTIFICATION"),
@@ -59,3 +60,5 @@ class _HomePageState extends State<HomePage> {
 
   }
 }
+
+

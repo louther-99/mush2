@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,6 +17,14 @@ class _InputState extends State<Input> {
   final roomHumidityController = TextEditingController();
   final productionController = TextEditingController();
   String name = "";
+  String outcome = 'none';
+  DateTime date = DateTime.now();
+  
+  final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
+
+  //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +140,10 @@ class _InputState extends State<Input> {
                               color: Colors.black
                           ),
                         ),
-                        onPressed: () {}
+                        onPressed: () {
+                          //final user = User(name: co)
+                          //createUser();
+                        },
                       ),
                       SizedBox(height: 20),
                       ElevatedButton.icon(
@@ -157,4 +169,48 @@ class _InputState extends State<Input> {
 
     );
   }
+
+  Future createUser() async{
+    final docUser = FirebaseFirestore.instance.collection('users').doc('my-id');
+
+    // final json = { //a map
+    //   'name': name,
+    //   'age': 21,
+    //   'birthday': DateTime(2001,7,28),
+    // };
+
+    final user = User(
+      id: docUser.id,
+      name: name,
+      age: 21,
+      birthday: DateTime(2001,7,28),
+    );
+    final json = user.toJson();
+
+    //Create document and write data to firebase
+    await docUser.set(json);
+
+  }//createUser()
+}
+
+class User{
+  String id;
+  final String name;
+  final int age;
+  final DateTime birthday;
+
+  User({
+    this.id = '',
+    required this.name,
+    required this.age,
+    required this.birthday,
+});
+
+  //To convert to json
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'age': age,
+    'birthday': birthday,
+  };
 }

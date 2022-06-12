@@ -29,11 +29,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^3.1.14
-  firebase_auth: ^3.3.18
-  firebase_core: ^1.17.0
+  cloud_firestore: ^3.1.17
+  firebase_auth: ^3.3.19
+  firebase_core: ^1.17.1
   http: ^0.13.4
-  provider: ^6.0.2
+  provider: ^6.0.3
   email_validator: ^2.0.1
 
 

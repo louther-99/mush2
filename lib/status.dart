@@ -37,7 +37,7 @@ class _StatusState extends State<Status> {
                   fontSize: 24,
                 ),
               ),
-              onPressed: FirebaseAuth.instance.signOut,
+              onPressed: () => FirebaseAuth.instance.signOut(),
             ),
           ],
         ),
