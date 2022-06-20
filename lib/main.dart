@@ -8,12 +8,18 @@ import 'package:mush2/home.dart';
 import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
+import 'package:mush2/verfiy_email.dart';
+
 
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first
   await Firebase.initializeApp(); //Initialize database
   //await AuthService().getOrCreateUser();
+
+  //Keep splash screen until initialization has complete
+  FlutterNativeSplash.removeAfter(initialization);
+
   runApp(MyApp(
     // initialRoute: '/main',
     // routes: {
@@ -25,6 +31,11 @@ Future main() async {
 
   ));//MyApp
 } //main
+
+Future initialization (BuildContext? context) async {
+  //load resources
+  await Future.delayed(Duration(seconds: 3));
+}
 
 final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
 
@@ -59,7 +70,8 @@ class MainPage extends StatelessWidget {
               return Center (child: Text('Somethig went wrong!'));
             }
             else if(snapshot.hasData) {
-              return HomePage();
+              //return HomePage();
+              return VerifyEmailPage();
               //Navigator.pushReplacementNamed(context, '/homepage'); //return HomePage();
             }
             else{
