@@ -78,18 +78,18 @@ class _DataState extends State<Data> {
                     final double? batchnumber = double.tryParse(_batchController.text);
                     final double? price = double.tryParse(_lightLevelController.text);
                     if(batchnumber != null){
-                      await _mushroom.doc.(documentSnapshot!.id).update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+                      await _mushroom.doc(documentSnapshot!.id).update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
                     _batchController.text = '';
                     _lightLevelController.text = '';
                     }
                   },
 
-                )
+                ),
               ],
             ),
-          )
+          );
         }
-    )
+    );
   } //Future update void
 
   Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
@@ -143,9 +143,9 @@ class _DataState extends State<Data> {
                 )
               ],
             ),
-          )
+          );
         }
-    )
+    );
   } //Future void _create
   Future <void> _delete(String productId ) async {
     await _mushroom.doc(productId).delete();
@@ -184,7 +184,6 @@ class _DataState extends State<Data> {
                             IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () => _update(documentSnapshot)),
-                            ),
                           ],
                         ),
                       ),

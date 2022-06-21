@@ -44,7 +44,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     await FirebaseAuth.instance.currentUser!.reload();
 
     setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser! emailVerified;
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     });
 
@@ -93,14 +93,14 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             style: ElevatedButton.styleFrom(
               minimumSize: Size.fromHeight(50),
             ),
-            icon: Icon(Icons.email, size: 35),
+            icon: Icon(Icons.email, size: 32),
             label: Text(
               'Resend Email',
               style: TextStyle(
                 fontSize: 24
               ),
             ),
-            onPressed: canResendEmail? sendVerificationEmail,
+            onPressed: canResendEmail? sendVerificationEmail: null,
           ),
           SizedBox(height: 8),
           TextButton(
@@ -112,7 +112,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               style: TextStyle(fontSize: 24),
             ),
             onPressed: () => FirebaseAuth.instance.signOut(),
-          )
+          ),
         ],
       ),
     ),

@@ -35,9 +35,8 @@ dependencies:
   http: ^0.13.4
   provider: ^6.0.3
   email_validator: ^2.0.1
-  flutter_native_splash: ^2.2.3+1
-#    image: assets/mac.png
-#    color: "#f5cb42" #yellow colors
+
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +46,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+#  flutter_native_splash: ^2.2.3+1
+#
+#flutter_native_splash:
+#  image: assets/art.png
+#  color: '#f5cb42'
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
