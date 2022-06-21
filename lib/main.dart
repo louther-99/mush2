@@ -20,6 +20,7 @@ Future main() async {
 
   //Keep splash screen until initialization has complete
   FlutterNativeSplash.removeAfter(initialization);
+  //FlutterNativeSplash.preserve(widgetsBinding: initialization);
 
   runApp(MyApp(
     // initialRoute: '/main',
