@@ -17,9 +17,6 @@ Future main() async {
   await Firebase.initializeApp(); //Initialize database
   //await AuthService().getOrCreateUser();
 
-  //Keep splash screen until initialization has complete
-  //FlutterNativeSplash.removeAfter(initialization);
-  //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding );
 
   runApp(MyApp(
     // initialRoute: '/main',
@@ -32,18 +29,6 @@ Future main() async {
 
   ));//MyApp
 } //main
-
-
-
-// Future initialization (BuildContext? context) async {
-//   //load resources
-//   await Future.delayed(Duration(seconds: 3));
-// }
-
-// Future initialization (BuildContext? context) async {
-//   //load resources
-//   await Future.delayed(Duration(seconds: 3));
-// }
 
 final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
 
