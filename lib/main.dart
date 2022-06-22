@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 //import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +21,7 @@ Future main() async {
 
   //Keep splash screen until initialization has complete
   //FlutterNativeSplash.removeAfter(initialization);
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding );
+  //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding );
 
   runApp(MyApp(
     // initialRoute: '/main',
