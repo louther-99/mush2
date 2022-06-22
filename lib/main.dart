@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+//import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
@@ -19,8 +20,8 @@ Future main() async {
   //await AuthService().getOrCreateUser();
 
   //Keep splash screen until initialization has complete
-  FlutterNativeSplash.removeAfter(initialization);
-  //FlutterNativeSplash.preserve(widgetsBinding: initialization);
+  //FlutterNativeSplash.removeAfter(initialization);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding );
 
   runApp(MyApp(
     // initialRoute: '/main',
@@ -34,14 +35,23 @@ Future main() async {
   ));//MyApp
 } //main
 
-Future initialization (BuildContext? context) async {
-  //load resources
-  await Future.delayed(Duration(seconds: 3));
-}
+
+
+// Future initialization (BuildContext? context) async {
+//   //load resources
+//   await Future.delayed(Duration(seconds: 3));
+// }
+
+// Future initialization (BuildContext? context) async {
+//   //load resources
+//   await Future.delayed(Duration(seconds: 3));
+// }
 
 final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
 
 class MyApp extends StatelessWidget {
+
+  
   static final String title = 'Mush Mush';
 
   @override
