@@ -47,8 +47,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  image: assets/art.png
-  background_image: assets/art.png
+  image: assets/mac-removebg.png
+  color: "#b56d2d"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
