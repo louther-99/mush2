@@ -9,7 +9,7 @@ import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
 import 'package:mush2/verfiy_email.dart';
-
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 
 Future main() async {
