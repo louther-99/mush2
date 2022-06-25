@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +19,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
 
 
+
 class Input extends StatefulWidget {
   const Input({Key? key}) : super(key: key);
 
@@ -35,6 +37,7 @@ class _InputState extends State<Input> {
   String name = "";
   String outcome = 'none';
   DateTime date = DateTime.now();
+
   
   final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
 
@@ -148,7 +151,7 @@ class _InputState extends State<Input> {
 
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                        icon: Icon(Icons.lock),
+                        icon: Icon(Icons.add),
                         label: Text(
                           'Save',
                           style: TextStyle(
