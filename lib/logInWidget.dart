@@ -42,19 +42,24 @@ class _LogInWidgetState extends State<LogInWidget> {
     return Scaffold(
         backgroundColor: Color(0xff946713),
         body: Container(
-            margin: EdgeInsets.fromLTRB(0, 70, 0, 0),
+            margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
             padding: const EdgeInsets.only(left:40, right: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children:[
                 Center(
-                  child: Text(
-                    "Log in to MushMush",
-                    style: TextStyle(
-                      color: Color(0xffdbc791),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
+                  child: Column(
+                    children: [
+                      buildLogo(),
+                      Text(
+                        "MushMush",
+                        style: TextStyle(
+                          color: Color(0xffdbc791),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 50),
@@ -96,8 +101,8 @@ class _LogInWidgetState extends State<LogInWidget> {
 
 
                         ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                          icon: Icon(Icons.lock),
+                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (40)),
+                          icon: Icon(Icons.login),
                           label: Text(
                             'Login',
                             style: TextStyle(
@@ -108,37 +113,42 @@ class _LogInWidgetState extends State<LogInWidget> {
                           onPressed: signIn,
                         ),
                         SizedBox(height: 24),
-                        GestureDetector(
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 20,
+                        Center(
+                          child: GestureDetector(
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 20,
+                              ),
                             ),
+                            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ForgotPasswordPage(),
+                            )),
                           ),
-                          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
-                          )),
                         ),
-                        RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                            text: 'No account? ',
-                            children: [
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = widget.onClickedSignUp,
-                                text: 'Sign Up',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Theme.of(context).colorScheme.secondary,
+                        SizedBox(height: 24),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              text: 'No account? ',
+                              children: [
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = widget.onClickedSignUp,
+                                  text: 'Sign Up',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: Theme.of(context).colorScheme.secondary,
+                                  )
                                 )
-                              )
-                            ]
+                              ]
+                            ),
                           ),
                         ),
 
@@ -177,6 +187,10 @@ class _LogInWidgetState extends State<LogInWidget> {
           Navigator.of(context).pop();
           //navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
+  }
+
+  buildLogo() {
+    // final urlLogo = assets
   }
 
 }

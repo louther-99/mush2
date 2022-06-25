@@ -96,8 +96,8 @@ class _SignUpState extends State<SignUp> {
                         SizedBox(height: 20),
 
                         ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                          icon: Icon(Icons.lock),
+                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (40)),
+                          icon: Icon(Icons.login),
                           label: Text(
                             'Sign Up',
                             style: TextStyle(
