@@ -36,6 +36,11 @@ dependencies:
   provider: ^6.0.3
   email_validator: ^2.0.1
   flutter_native_splash: ^2.2.3+1
+  tflite_flutter: ^0.9.0
+  sklite: ^0.0.1
+  ml_preprocessing: ^7.0.2
+  ml_algo: ^16.15.1
+
 
 
   # The following adds the Cupertino Icons font to your application.
