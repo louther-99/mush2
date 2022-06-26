@@ -38,24 +38,6 @@ class _InputState extends State<Input> {
   // final TextEditingController _dateController = TextEditingController();
 
 
-  final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
-
-  //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.doc(productId).delete();
-
-  Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
-    if(documentSnapshot != null){
-      _batchController.text = documentSnapshot['batch'].toString();
-      _lightLevelController.text = documentSnapshot['lightLevel'].toString();
-      _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
-      _roomHumidityController.text = documentSnapshot['humidity'].toString();
-      _productionController.text = documentSnapshot['outcome'].toString();
-      // _dateController.text = documentSnapshot['date'].toString();
-    }
-
-  } //Future void _create
 
   @override
   Widget build(BuildContext context) {
@@ -174,8 +156,6 @@ class _InputState extends State<Input> {
                       ),
                     ),
                     onPressed: () async {
-                      //final user = User(name: co)
-                      //createUser();
 
                       final double? batchNumber = double.tryParse(
                           _batchController.text);
@@ -188,21 +168,14 @@ class _InputState extends State<Input> {
                       final String? outcome = (_productionController.text);
                       final String? datetime = DateTime.now().toString();
 
-                      if (batchNumber != null) {
-                        await _mushroom.add({
-                          "batch": batchNumber,
-                          "lightLevel": lightLevel,
-                          "roomTemp": roomTemp,
-                          "humidity": humidity,
-                          "outcome": outcome,
-                          "date": datetime
-                        });
+                      createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
+
                         _batchController.text = '';
                         _lightLevelController.text = '';
                         _roomTemperatureController.text = '';
                         _roomHumidityController.text = '';
                         _productionController.text = '';
-                      }
+
                     },
                   ),
                   SizedBox(height: 20),
@@ -216,6 +189,21 @@ class _InputState extends State<Input> {
 
       ),
     );
+  }
+
+  Future createData({required double? batchNumber, required double? lightLevel, required double? roomTemp, required double? humidity, required String? outcome, required String? datetime}) async {
+    final docUser = FirebaseFirestore.instance.collection('mushroom');
+
+    final json = {
+      'batchNumber': batchNumber,
+      'lightLevel': lightLevel,
+      'roomTemp': roomTemp,
+      'humidity': humidity,
+      'outcome': outcome,
+      'datetime': datetime,
+
+    };
+    //await docUser.set(json);
   }
 
 

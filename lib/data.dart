@@ -28,7 +28,24 @@ class _DataState extends State<Data> {
   final TextEditingController _productionController = TextEditingController();
   // final TextEditingController _dateController = TextEditingController();
 
+//final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
 
+  //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.doc(productId).delete();
+
+  // Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
+  //   if(documentSnapshot != null){
+  //     _batchController.text = documentSnapshot['batch'].toString();
+  //     _lightLevelController.text = documentSnapshot['lightLevel'].toString();
+  //     _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
+  //     _roomHumidityController.text = documentSnapshot['humidity'].toString();
+  //     _productionController.text = documentSnapshot['outcome'].toString();
+  //     // _dateController.text = documentSnapshot['date'].toString();
+  //   }
+  //
+  // } //Future void _create
 
 
   Future <void> _delete(String productId ) async {
@@ -42,7 +59,7 @@ class _DataState extends State<Data> {
 
   Future <void> _update([DocumentSnapshot? documentSnapshot]) async {
     if(documentSnapshot != null){
-      _batchController.text = documentSnapshot['batch'].toString();
+      _batchController.text = documentSnapshot['batchNumber'].toString();
       _lightLevelController.text = documentSnapshot['lightLevel'].toString();
       _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
       _roomHumidityController.text = documentSnapshot['humidity'].toString();
@@ -130,7 +147,7 @@ class _DataState extends State<Data> {
 
 
                     if(batchNumber != null){
-                      await _mushroom.doc(documentSnapshot!.id).update({"batch": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "date": datetime });
+                      await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": datetime });
                     _batchController.text = '';
                     _lightLevelController.text = '';
                     _roomTemperatureController.text = '';
@@ -176,12 +193,12 @@ class _DataState extends State<Data> {
                         spacing: 32,
                         runSpacing: 32,
                         children: [
-                          Text("Batch Number: " + documentSnapshot['batch'].toString()),
-                          Text("Light Level: " +documentSnapshot['lightLevel'].toString()),
-                          Text("Room Temp: " +documentSnapshot['roomTemp'].toString()),
+                          Text("Batch Number: " + documentSnapshot['batchNumber'].toString()),
+                          Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
+                          Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
                           Text("Humidity: " +documentSnapshot['humidity'].toString()),
                           Text("Outcome: " +documentSnapshot['outcome'].toString()),
-                          Text("Date: " + documentSnapshot['date'].toString()),
+                          Text("Date: " + documentSnapshot['datetime'].toString()),
                           // Text("Date: "  + date ),
                         ],
                       ),
