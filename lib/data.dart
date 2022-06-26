@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,31 +18,40 @@ class Data extends StatefulWidget {
 }
 
 class _DataState extends State<Data> {
-  final batchController = TextEditingController();
-  final lightLevelController = TextEditingController();
-  final roomTemperatureController = TextEditingController();
-  final roomHumidityController = TextEditingController();
-  final productionController = TextEditingController();
-  String name = "";
-  String outcome = 'none';
-  DateTime date = DateTime.now();
 
   final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
-
+  DateTime datetime = DateTime(2022, 6, 26);
   final TextEditingController _batchController = TextEditingController();
   final TextEditingController _lightLevelController = TextEditingController();
   final TextEditingController _roomTemperatureController = TextEditingController();
   final TextEditingController _roomHumidityController = TextEditingController();
   final TextEditingController _productionController = TextEditingController();
-  String _name = "";
-  String _outcome = 'none';
-  DateTime _date = DateTime.now();
+  // final TextEditingController _dateController = TextEditingController();
+
+
+
+
+  Future <void> _delete(String productId ) async {
+    await _mushroom.doc(productId).delete();
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+            'You have successfully deleted a product'
+        )));
+  }
 
   Future <void> _update([DocumentSnapshot? documentSnapshot]) async {
     if(documentSnapshot != null){
       _batchController.text = documentSnapshot['batch'].toString();
       _lightLevelController.text = documentSnapshot['lightLevel'].toString();
+      _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
+      _roomHumidityController.text = documentSnapshot['humidity'].toString();
+      _productionController.text = documentSnapshot['outcome'].toString();
+      // _dateController.text = documentSnapshot['date'].toString();
+
     }
+
+
 
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -66,7 +77,39 @@ class _DataState extends State<Data> {
                 TextField(
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _lightLevelController,
-                  decoration: const InputDecoration(labelText: "Batch"),
+                  decoration: const InputDecoration(labelText: "Light Level"),
+                ),
+                TextField(
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  controller: _roomTemperatureController,
+                  decoration: const InputDecoration(labelText: "Room Temperature"),
+                ),
+                TextField(
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  controller: _roomHumidityController,
+                  decoration: const InputDecoration(labelText: "Humidity"),
+                ),
+                TextField(
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  controller: _productionController,
+                  decoration: const InputDecoration(labelText: "Production"),
+                ),
+                ElevatedButton(
+                  child: Text("Select Date"),
+                  onPressed: () async {
+                    DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: datetime,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+
+
+                    );
+                    if (newDate == null) return;
+
+                    setState(() => datetime = newDate);
+                  }
+
                 ),
                 const SizedBox(
                   height: 20,
@@ -74,13 +117,27 @@ class _DataState extends State<Data> {
                 ElevatedButton(
                   child: const Text('Update'),
                   onPressed: () async {
-                    //final double batchnumber = _batchController.text;
-                    final double? batchnumber = double.tryParse(_batchController.text);
-                    final double? price = double.tryParse(_lightLevelController.text);
-                    if(batchnumber != null){
-                      await _mushroom.doc(documentSnapshot!.id).update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+
+                    final double? batchNumber = double.tryParse(
+                        _batchController.text);
+                    final double? lightLevel = double.tryParse(
+                        _lightLevelController.text);
+                    final double? roomTemp = double.tryParse(
+                        _roomTemperatureController.text);
+                    final double? humidity = double.tryParse(
+                        _roomHumidityController.text);
+                    final String? outcome = (_productionController.text);
+
+
+                    if(batchNumber != null){
+                      await _mushroom.doc(documentSnapshot!.id).update({"batch": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "date": datetime });
                     _batchController.text = '';
                     _lightLevelController.text = '';
+                    _roomTemperatureController.text = '';
+                    _roomHumidityController.text = '';
+                    _productionController.text = '';
+
+
                     }
                   },
 
@@ -92,69 +149,7 @@ class _DataState extends State<Data> {
     );
   } //Future update void
 
-  Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
-    if(documentSnapshot != null){
-      _batchController.text = documentSnapshot['batch'].toString();
-      _lightLevelController.text = documentSnapshot['lightLevel'].toString();
-    }
 
-    await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext ctx){
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-                //prevent keyboard from covering the text fields
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  controller: _batchController,
-                  decoration: const InputDecoration(labelText: "Batch"),
-                ),
-                TextField(
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  controller: _lightLevelController,
-                  decoration: const InputDecoration(labelText: "Batch"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  child: const Text('Update'),
-                  onPressed: () async {
-                    //final double batchnumber = _batchController.text;
-                    final double? batchnumber = double.tryParse(_batchController.text);
-                    final double? price = double.tryParse(_lightLevelController.text);
-                    if(batchnumber != null){
-                      await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-                    _batchController.text = '';
-                    _lightLevelController.text = '';
-                  }
-                  },
-
-                )
-              ],
-            ),
-          );
-        }
-    );
-  } //Future void _create
-  Future <void> _delete(String productId ) async {
-    await _mushroom.doc(productId).delete();
-
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'You have successfully deleted a product'
-        )));
-  }
 
   //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
   // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
@@ -172,21 +167,40 @@ class _DataState extends State<Data> {
                 itemCount: streamSnapshot.data!.docs.length, //docs mean row
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+                  // date = documentSnapshot['date'].toString() as DateTime;
+                  //DateTime myDateTime = DateTime.parse(date.toDate().toString());
                   return Card(
                     margin: const EdgeInsets.all(10),
                     child: ListTile(
-                      title: Text(documentSnapshot['batch'].toString()),
-                      subtitle: Text(documentSnapshot['lightLevel'].toString()),
+                      title: Wrap(
+                        spacing: 32,
+                        runSpacing: 32,
+                        children: [
+                          Text("Batch Number: " + documentSnapshot['batch'].toString()),
+                          Text("Light Level: " +documentSnapshot['lightLevel'].toString()),
+                          Text("Room Temp: " +documentSnapshot['roomTemp'].toString()),
+                          Text("Humidity: " +documentSnapshot['humidity'].toString()),
+                          Text("Outcome: " +documentSnapshot['outcome'].toString()),
+                          Text("Date: " + documentSnapshot['date'].toString()),
+                          // Text("Date: "  + date ),
+                        ],
+                      ),
+                      subtitle: Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
                       trailing: SizedBox(
-                        width: 10,
+                        width: 100,
                         child: Row(
                           children: [
                             IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () => _update(documentSnapshot)),
+                            IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () => _delete(documentSnapshot.id)),
+
                           ],
                         ),
                       ),
+
                     ),
                   );
                 },
@@ -200,7 +214,7 @@ class _DataState extends State<Data> {
     );
   }
 
-  // _update(DocumentSnapshot<Object?> documentSnapshot) {
-  //
-  // }
+
+
+
 }

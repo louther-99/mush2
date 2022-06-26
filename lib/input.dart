@@ -29,205 +29,250 @@ class Input extends StatefulWidget {
 
 class _InputState extends State<Input> {
   final formKey = GlobalKey<FormState>();
-  final batchController = TextEditingController();
-  final lightLevelController = TextEditingController();
-  final roomTemperatureController = TextEditingController();
-  final roomHumidityController = TextEditingController();
-  final productionController = TextEditingController();
-  String name = "";
-  String outcome = 'none';
-  DateTime date = DateTime.now();
+  DateTime datetime = DateTime(2022, 6, 26);
+  final TextEditingController _batchController = TextEditingController();
+  final TextEditingController _lightLevelController = TextEditingController();
+  final TextEditingController _roomTemperatureController = TextEditingController();
+  final TextEditingController _roomHumidityController = TextEditingController();
+  final TextEditingController _productionController = TextEditingController();
+  // final TextEditingController _dateController = TextEditingController();
 
-  
+
   final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
 
   //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
   // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
   // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
+  // await _mushroom.doc(productId).delete();
+
+  Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
+    if(documentSnapshot != null){
+      _batchController.text = documentSnapshot['batch'].toString();
+      _lightLevelController.text = documentSnapshot['lightLevel'].toString();
+      _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
+      _roomHumidityController.text = documentSnapshot['humidity'].toString();
+      _productionController.text = documentSnapshot['outcome'].toString();
+      // _dateController.text = documentSnapshot['date'].toString();
+    }
+
+  } //Future void _create
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        padding: const EdgeInsets.only(left:40, right: 40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children:[
-            Center(
-              child: Text(
-                "Enter your data",
-                style: TextStyle(
-                  color: Color(0xffdbc791),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      padding: const EdgeInsets.only(left: 40, right: 40),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: 50),
+          Center(
+            child: Text(
+              "Enter your data",
+              style: TextStyle(
+                color: Color(0xffdbc791),
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+
+            ),
+          ),
+          SizedBox(height: 50),
+          Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+
+                TextFormField(
+                  controller: _batchController,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      labelText: "Batch Number"
+                  ),
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Username cannot be empty!";
+                    }
+                    else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _lightLevelController,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true),
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      labelText: "Light Level(Lumens)"
+                  ),
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Password cannot be empty!";
+                    }
+                    else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _roomTemperatureController,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true),
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      labelText: "Room Temperature"
+                  ),
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Username cannot be empty!";
+                    }
+                    else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _roomHumidityController,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true),
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                      labelText: "Humidity(Milibar)"
+                  ),
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Username cannot be empty!";
+                    }
+                    else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50)),
+                  icon: Icon(Icons.add),
+                  label: Text(
+                    'Save',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black
+                    ),
+                  ),
+                  onPressed: () async {
+                    //final user = User(name: co)
+                    //createUser();
+
+                    final double? batchNumber = double.tryParse(
+                        _batchController.text);
+                    final double? lightLevel = double.tryParse(
+                        _lightLevelController.text);
+                    final double? roomTemp = double.tryParse(
+                        _roomTemperatureController.text);
+                    final double? humidity = double.tryParse(
+                        _roomHumidityController.text);
+                    final String? outcome = (_productionController.text);
+                    final String? datetime = DateTime.now().toString();
+
+                    if (batchNumber != null) {
+                      await _mushroom.add({
+                        "batch": batchNumber,
+                        "lightLevel": lightLevel,
+                        "roomTemp": roomTemp,
+                        "humidity": humidity,
+                        "outcome": outcome,
+                        "date": datetime
+                      });
+                      _batchController.text = '';
+                      _lightLevelController.text = '';
+                      _roomTemperatureController.text = '';
+                      _roomHumidityController.text = '';
+                      _productionController.text = '';
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: Size.fromHeight(50)),
+                    icon: Icon(Icons.lock),
+                    label: Text(
+                      'Reset',
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.black
+                      ),
+                    ),
+                    onPressed: () {}
                 ),
 
-              ),
+              ],
             ),
-            SizedBox(height: 50),
-            Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
+          ),
 
-                    TextFormField(
-                      controller: batchController,
-                      cursorColor: Colors.white,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          labelText: "Batch Number"
-                      ),
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "Username cannot be empty!";
-                        }
-                        else {
-                          return null;
-                        }
-
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: lightLevelController,
-                      cursorColor: Colors.white,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          labelText: "Light Level(Lumens)"
-                      ),
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "Password cannot be empty!";
-                        }
-                        else {
-                          return null;
-                        }
-
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: roomTemperatureController,
-                      cursorColor: Colors.white,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          labelText: "Room Temperature"
-                      ),
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "Username cannot be empty!";
-                        }
-                        else {
-                          return null;
-                        }
-
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: roomHumidityController,
-                      cursorColor: Colors.white,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                          labelText: "Humidity(Milibar)"
-                      ),
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "Username cannot be empty!";
-                        }
-                        else {
-                          return null;
-                        }
-
-                      },
-                    ),
-                    SizedBox(height: 20),
-
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                      icon: Icon(Icons.add),
-                      label: Text(
-                        'Save',
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.black
-                        ),
-                      ),
-                      onPressed: () {
-                        //final user = User(name: co)
-                        //createUser();
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                        icon: Icon(Icons.lock),
-                        label: Text(
-                          'Reset',
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black
-                          ),
-                        ),
-                        onPressed: () {}
-                    ),
-
-                  ],
-                )
-            ),
-
-          ],
-        )
+        ],
+      ),
 
     );
   }
 
-  Future createUser() async{
-    final docUser = FirebaseFirestore.instance.collection('users').doc('my-id');
 
-    // final json = { //a map
-    //   'name': name,
-    //   'age': 21,
-    //   'birthday': DateTime(2001,7,28),
-    // };
 
-    final user = User(
-      id: docUser.id,
-      name: name,
-      age: 21,
-      birthday: DateTime(2001,7,28),
-    );
-    final json = user.toJson();
+    // Future createUser() async {
+    //   final docUser = FirebaseFirestore.instance.collection('users').doc(
+    //       'my-id');
+    //
+    //   // final json = { //a map
+    //   //   'name': name,
+    //   //   'age': 21,
+    //   //   'birthday': DateTime(2001,7,28),
+    //   // };
+    //
+    //   final user = User(
+    //     id: docUser.id,
+    //     name: name,
+    //     age: 21,
+    //     birthday: DateTime(2001, 7, 28),
+    //   );
+    //   final json = user.toJson();
+    //
+    //   //Create document and write data to firebase
+    //   await docUser.set(json);
+    // } //createUser()
 
-    //Create document and write data to firebase
-    await docUser.set(json);
 
-  }//createUser()
-}
+  // class User{
+  // String id;
+  // final String name;
+  // final int age;
+  // final DateTime birthday;
+  //
+  // User({
+  // this.id = '',
+  // required this.name,
+  // required this.age,
+  // required this.birthday,
+  // });
+  //
+  // //To convert to json
+  // Map<String, dynamic> toJson() => {
+  // 'id': id,
+  // 'name': name,
+  // 'age': age,
+  // 'birthday': birthday,
+  // };
+  // }
 
-class User{
-  String id;
-  final String name;
-  final int age;
-  final DateTime birthday;
-
-  User({
-    this.id = '',
-    required this.name,
-    required this.age,
-    required this.birthday,
-});
-
-  //To convert to json
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'age': age,
-    'birthday': birthday,
-  };
 }

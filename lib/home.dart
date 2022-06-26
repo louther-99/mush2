@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.insert_drive_file), text: 'INPUT'),
-              Tab(icon: Icon(Icons.info), text: 'DATA'),
+              Tab(icon: Icon(Icons.table_view), text: 'DATA'),
               Tab(icon: Icon(Icons.notifications), text: 'NOTIFICATION'),
               Tab(icon: Icon(Icons.menu), text: 'MENU'),
 
