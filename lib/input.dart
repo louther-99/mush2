@@ -62,7 +62,7 @@ class _InputState extends State<Input> {
     return SingleChildScrollView(
       reverse: true,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 120),
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
