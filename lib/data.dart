@@ -193,16 +193,30 @@ class _DataState extends State<Data> {
                         spacing: 32,
                         runSpacing: 32,
                         children: [
-                          Text("Batch Number: " + documentSnapshot['batchNumber'].toString()),
-                          Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
-                          Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
-                          Text("Humidity: " +documentSnapshot['humidity'].toString()),
-                          Text("Outcome: " +documentSnapshot['outcome'].toString()),
-                          Text("Date: " + documentSnapshot['datetime'].toString()),
-                          // Text("Date: "  + date ),
+                          Center(
+                            //padding: const EdgeInsets.all(8.0),
+                            child: Text("Batch Number: " + documentSnapshot['batchNumber'].toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                          ),
+
                         ],
                       ),
-                      subtitle: Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
+                      subtitle: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
+                            Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
+                            Text("Humidity: " +documentSnapshot['humidity'].toString()),
+                            Text("Outcome: " +documentSnapshot['outcome'].toString()),
+                            Text("Date: " + documentSnapshot['datetime'].toString()),
+                            // Text("Date: "  + date ),
+                          ],
+
+                        )
+
+
+                          ),
                       trailing: SizedBox(
                         width: 100,
                         child: Row(

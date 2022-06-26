@@ -30,11 +30,11 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   final formKey = GlobalKey<FormState>();
   DateTime datetime = DateTime(2022, 6, 26);
-  final TextEditingController _batchController = TextEditingController();
-  final TextEditingController _lightLevelController = TextEditingController();
-  final TextEditingController _roomTemperatureController = TextEditingController();
-  final TextEditingController _roomHumidityController = TextEditingController();
-  final TextEditingController _productionController = TextEditingController();
+  final TextEditingController batchController = TextEditingController();
+  final TextEditingController lightLevelController = TextEditingController();
+  final TextEditingController roomTemperatureController = TextEditingController();
+  final TextEditingController roomHumidityController = TextEditingController();
+  final TextEditingController productionController = TextEditingController();
   // final TextEditingController _dateController = TextEditingController();
 
 
@@ -69,7 +69,7 @@ class _InputState extends State<Input> {
                 children: <Widget>[
 
                   TextFormField(
-                    controller: _batchController,
+                    controller: batchController,
                     cursorColor: Colors.white,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
@@ -87,7 +87,7 @@ class _InputState extends State<Input> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: _lightLevelController,
+                    controller: lightLevelController,
                     cursorColor: Colors.white,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true),
@@ -106,7 +106,7 @@ class _InputState extends State<Input> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: _roomTemperatureController,
+                    controller: roomTemperatureController,
                     cursorColor: Colors.white,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true),
@@ -125,7 +125,7 @@ class _InputState extends State<Input> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: _roomHumidityController,
+                    controller: roomHumidityController,
                     cursorColor: Colors.white,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true),
@@ -157,24 +157,27 @@ class _InputState extends State<Input> {
                     ),
                     onPressed: () async {
 
-                      final double? batchNumber = double.tryParse(
-                          _batchController.text);
-                      final double? lightLevel = double.tryParse(
-                          _lightLevelController.text);
-                      final double? roomTemp = double.tryParse(
-                          _roomTemperatureController.text);
-                      final double? humidity = double.tryParse(
-                          _roomHumidityController.text);
-                      final String? outcome = (_productionController.text);
-                      final String? datetime = DateTime.now().toString();
-
+                      final double batchNumber = double.parse(
+                          batchController.text);
+                      final double lightLevel = double.parse(
+                          lightLevelController.text);
+                      final double roomTemp = double.parse(
+                          roomTemperatureController.text);
+                      final double humidity = double.parse(
+                          roomHumidityController.text);
+                      final String outcome = (productionController.text);
+                      final DateTime datetime = DateTime.now();
+                      //final user = User(batchNumber: double.parse(batchController.text), lightLevel: double.parse(lightLevelController.text), roomTemp: double.parse(roomTemperatureController.text), humidity: double.parse( roomHumidityController.text), outcome: productionController.text, datetime: datetime);
+                      //final user = User(batchNumber: double.parse(_batchController.text), lightLevel: double.parse(_lightLevelController.text), roomTemp: double.parse(_roomTemperatureController.text), humidity: double.parse( _roomHumidityController.text), outcome: _productionController.text, datetime: datetime);
+                      final user = User(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
                       createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
 
-                        _batchController.text = '';
-                        _lightLevelController.text = '';
-                        _roomTemperatureController.text = '';
-                        _roomHumidityController.text = '';
-                        _productionController.text = '';
+
+                        batchController.text = '';
+                        lightLevelController.text = '';
+                        roomTemperatureController.text = '';
+                        roomHumidityController.text = '';
+                        productionController.text = '';
 
                     },
                   ),
@@ -191,66 +194,61 @@ class _InputState extends State<Input> {
     );
   }
 
-  Future createData({required double? batchNumber, required double? lightLevel, required double? roomTemp, required double? humidity, required String? outcome, required String? datetime}) async {
-    final docUser = FirebaseFirestore.instance.collection('mushroom');
+  Future createData({required double batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required DateTime datetime}) async {
+  //Future createData(User user) async {
+  final docUser = FirebaseFirestore.instance.collection('mushroom').doc();
 
-    final json = {
+    // final json = {
+    //   'batchNumber': batchNumber,
+    //   'lightLevel': lightLevel,
+    //   'roomTemp': roomTemp,
+    //   'humidity': humidity,
+    //   'outcome': outcome,
+    //   'datetime': datetime,
+    //
+    // };
+    // await docUser.set(json);
+
+    final user  = User(
+      batchNumber: batchNumber,
+      lightLevel: lightLevel,
+      roomTemp: roomTemp,
+      humidity: humidity,
+      outcome: outcome,
+      datetime: datetime,
+    );
+
+    final json = user.toJson();
+    await docUser.set(json);
+  }
+}//class _inputstate
+
+class User {
+  final double batchNumber;
+  final double lightLevel;
+  final double roomTemp;
+  final double humidity;
+  final String outcome;
+  final DateTime datetime;
+
+  User({
+    required this.batchNumber,
+    required this.lightLevel,
+    required this.roomTemp,
+    required this.humidity,
+    required this.outcome,
+    required this.datetime,
+});
+
+  Map<String, dynamic> toJson() => {
       'batchNumber': batchNumber,
       'lightLevel': lightLevel,
       'roomTemp': roomTemp,
       'humidity': humidity,
       'outcome': outcome,
       'datetime': datetime,
+  };
 
-    };
-    //await docUser.set(json);
-  }
-
-
-
-    // Future createUser() async {
-    //   final docUser = FirebaseFirestore.instance.collection('users').doc(
-    //       'my-id');
-    //
-    //   // final json = { //a map
-    //   //   'name': name,
-    //   //   'age': 21,
-    //   //   'birthday': DateTime(2001,7,28),
-    //   // };
-    //
-    //   final user = User(
-    //     id: docUser.id,
-    //     name: name,
-    //     age: 21,
-    //     birthday: DateTime(2001, 7, 28),
-    //   );
-    //   final json = user.toJson();
-    //
-    //   //Create document and write data to firebase
-    //   await docUser.set(json);
-    // } //createUser()
-
-
-  // class User{
-  // String id;
-  // final String name;
-  // final int age;
-  // final DateTime birthday;
-  //
-  // User({
-  // this.id = '',
-  // required this.name,
-  // required this.age,
-  // required this.birthday,
-  // });
-  //
-  // //To convert to json
-  // Map<String, dynamic> toJson() => {
-  // 'id': id,
-  // 'name': name,
-  // 'age': age,
-  // 'birthday': birthday,
-  // };
-  // }
 
 }
+
