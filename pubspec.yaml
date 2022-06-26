@@ -51,7 +51,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  image: assets/log.png
+  image: assets/mac-removebg.png
   color: "#b56d2d"
 
   # The "flutter_lints" package below contains a set of recommended lints to
