@@ -59,172 +59,162 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-      padding: const EdgeInsets.only(left: 40, right: 40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(height: 50),
-          Center(
-            child: Text(
-              "Enter your data",
-              style: TextStyle(
-                color: Color(0xffdbc791),
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+    return SingleChildScrollView(
+      reverse: true,
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        padding: const EdgeInsets.only(left: 40, right: 40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // SizedBox(height: 50),
+            Center(
+              child: Text(
+                "Enter your data",
+                style: TextStyle(
+                  color: Color(0xffdbc791),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+
               ),
-
             ),
-          ),
-          SizedBox(height: 50),
-          Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+            SizedBox(height: 20),
+            Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
 
-                TextFormField(
-                  controller: _batchController,
-                  cursorColor: Colors.white,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      labelText: "Batch Number"
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Username cannot be empty!";
-                    }
-                    else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _lightLevelController,
-                  cursorColor: Colors.white,
-                  keyboardType: TextInputType.numberWithOptions(
-                      decimal: true),
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      labelText: "Light Level(Lumens)"
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Password cannot be empty!";
-                    }
-                    else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _roomTemperatureController,
-                  cursorColor: Colors.white,
-                  keyboardType: TextInputType.numberWithOptions(
-                      decimal: true),
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      labelText: "Room Temperature"
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Username cannot be empty!";
-                    }
-                    else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _roomHumidityController,
-                  cursorColor: Colors.white,
-                  keyboardType: TextInputType.numberWithOptions(
-                      decimal: true),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                      labelText: "Humidity(Milibar)"
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "Username cannot be empty!";
-                    }
-                    else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(50)),
-                  icon: Icon(Icons.add),
-                  label: Text(
-                    'Save',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black
+                  TextFormField(
+                    controller: _batchController,
+                    cursorColor: Colors.white,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                        labelText: "Batch Number"
                     ),
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Username cannot be empty!";
+                      }
+                      else {
+                        return null;
+                      }
+                    },
                   ),
-                  onPressed: () async {
-                    //final user = User(name: co)
-                    //createUser();
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _lightLevelController,
+                    cursorColor: Colors.white,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true),
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                        labelText: "Light Level(Lumens)"
+                    ),
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Password cannot be empty!";
+                      }
+                      else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _roomTemperatureController,
+                    cursorColor: Colors.white,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true),
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                        labelText: "Room Temperature"
+                    ),
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Username cannot be empty!";
+                      }
+                      else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _roomHumidityController,
+                    cursorColor: Colors.white,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true),
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                        labelText: "Humidity(Milibar)"
+                    ),
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Username cannot be empty!";
+                      }
+                      else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(height: 30),
 
-                    final double? batchNumber = double.tryParse(
-                        _batchController.text);
-                    final double? lightLevel = double.tryParse(
-                        _lightLevelController.text);
-                    final double? roomTemp = double.tryParse(
-                        _roomTemperatureController.text);
-                    final double? humidity = double.tryParse(
-                        _roomHumidityController.text);
-                    final String? outcome = (_productionController.text);
-                    final String? datetime = DateTime.now().toString();
-
-                    if (batchNumber != null) {
-                      await _mushroom.add({
-                        "batch": batchNumber,
-                        "lightLevel": lightLevel,
-                        "roomTemp": roomTemp,
-                        "humidity": humidity,
-                        "outcome": outcome,
-                        "date": datetime
-                      });
-                      _batchController.text = '';
-                      _lightLevelController.text = '';
-                      _roomTemperatureController.text = '';
-                      _roomHumidityController.text = '';
-                      _productionController.text = '';
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-                ElevatedButton.icon(
+                  ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         minimumSize: Size.fromHeight(50)),
-                    icon: Icon(Icons.lock),
+                    icon: Icon(Icons.add),
                     label: Text(
-                      'Reset',
+                      'Save',
                       style: TextStyle(
                           fontSize: 24,
                           color: Colors.black
                       ),
                     ),
-                    onPressed: () {}
-                ),
+                    onPressed: () async {
+                      //final user = User(name: co)
+                      //createUser();
 
-              ],
+                      final double? batchNumber = double.tryParse(
+                          _batchController.text);
+                      final double? lightLevel = double.tryParse(
+                          _lightLevelController.text);
+                      final double? roomTemp = double.tryParse(
+                          _roomTemperatureController.text);
+                      final double? humidity = double.tryParse(
+                          _roomHumidityController.text);
+                      final String? outcome = (_productionController.text);
+                      final String? datetime = DateTime.now().toString();
+
+                      if (batchNumber != null) {
+                        await _mushroom.add({
+                          "batch": batchNumber,
+                          "lightLevel": lightLevel,
+                          "roomTemp": roomTemp,
+                          "humidity": humidity,
+                          "outcome": outcome,
+                          "date": datetime
+                        });
+                        _batchController.text = '';
+                        _lightLevelController.text = '';
+                        _roomTemperatureController.text = '';
+                        _roomHumidityController.text = '';
+                        _productionController.text = '';
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20),
+
+                ],
+              ),
             ),
-          ),
 
-        ],
+          ],
+        ),
+
       ),
-
     );
   }
 

@@ -24,51 +24,56 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('Receive an email to reset your password',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-              )),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: emailController,
-                cursorColor: Colors.white,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                    labelText: "Enter your email"
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (email) =>
-                email != null && !EmailValidator.validate(email)
-                    ? "Enter a valid email!"
-                    : null,
-              ),
-              SizedBox(height: 20),
-
-
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                icon: Icon(Icons.mail),
-                label: Text(
-                  'Reset Password',
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.black
+    return Scaffold(
+      backgroundColor: Color(0xff946713),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+        padding: const EdgeInsets.only(left:40, right: 40),
+        child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:  <Widget> [
+                Text('Receive an email to reset your password',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                )),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: emailController,
+                  cursorColor: Colors.white,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      labelText: "Enter your email"
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? "Enter a valid email!"
+                      : null,
                 ),
-                onPressed: resetPassword,
-              ),
-              SizedBox(height: 24),
+                SizedBox(height: 20),
 
 
-            ],
-          )
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
+                  icon: Icon(Icons.mail),
+                  label: Text(
+                    'Reset Password',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black
+                    ),
+                  ),
+                  onPressed: resetPassword,
+                ),
+                SizedBox(height: 24),
+
+
+              ],
+            )
+        ),
       ),
     );
   }

@@ -19,21 +19,31 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        appBar: AppBar(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage('assets/M1_effects2.jpeg'),
-          ),
-          backgroundColor: Color(0xff946713),
-          bottom: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.insert_drive_file), text: 'INPUT'),
-              Tab(icon: Icon(Icons.table_view), text: 'DATA'),
-              Tab(icon: Icon(Icons.notifications), text: 'NOTIFICATION'),
-              Tab(icon: Icon(Icons.menu), text: 'MENU'),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(120),
+          child: AppBar(
+            toolbarHeight: 90,
+            //leadingWidth: 50,
+            // leading: CircleAvatar(
+            //   // backgroundImage: AssetImage('assets/MushMush.png'),
+            //   // radius: 20
+            // ),
+            backgroundColor: Color(0xff946713),
+            //titleSpacing: 40,
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.insert_drive_file), text: 'INPUT'),
+                Tab(icon: Icon(Icons.table_view), text: 'DATA'),
+                Tab(icon: Icon(Icons.notifications), text: 'NOTIFICATION'),
+                Tab(icon: Icon(Icons.menu), text: 'MENU'),
 
-            ],
+              ],
+            ),
+            title: Text("MushMush",
+            style: TextStyle(
+                fontSize: 30,
+            ),),
           ),
-          title: Text("MushMush"),
         ),
         body: TabBarView(
           children: [
