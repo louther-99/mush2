@@ -42,14 +42,16 @@ class _LogInWidgetState extends State<LogInWidget> {
     return Scaffold(
         backgroundColor: Color(0xff946713),
         body: Container(
-
+          margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+          padding: const EdgeInsets.only(left:40, right: 40),
             child: Column(
+
               mainAxisAlignment: MainAxisAlignment.start,
               children:[
                 Center(
                   child: Column(
                     children: [
-                      buildLogo(),
+                      //buildLogo(),
                       Text(
                         "MushMush",
                         style: TextStyle(
@@ -158,7 +160,7 @@ class _LogInWidgetState extends State<LogInWidget> {
               ],
             ),
 
-        )
+        ),
 
     );
 
@@ -187,10 +189,10 @@ class _LogInWidgetState extends State<LogInWidget> {
           //navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
   }
-
-  buildLogo() {
-    // final urlLogo = assets
-  }
+  //
+  // buildLogo() {
+  //   // final urlLogo = assets
+  // }
 
 }
 
