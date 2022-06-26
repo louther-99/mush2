@@ -42,8 +42,7 @@ class _LogInWidgetState extends State<LogInWidget> {
     return Scaffold(
         backgroundColor: Color(0xff946713),
         body: Container(
-            margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
-            padding: const EdgeInsets.only(left:40, right: 40),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children:[
@@ -157,7 +156,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                 ),
 
               ],
-            )
+            ),
 
         )
 
