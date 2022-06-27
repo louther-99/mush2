@@ -53,7 +53,7 @@ class _DataState extends State<Data> {
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-            'You have successfully deleted a product'
+            'You have successfully deleted a record'
         )));
   }
 
@@ -135,7 +135,7 @@ class _DataState extends State<Data> {
                   child: const Text('Update'),
                   onPressed: () async {
 
-                    final double? batchNumber = double.tryParse(
+                    final int? batchNumber = int.tryParse(
                         _batchController.text);
                     final double? lightLevel = double.tryParse(
                         _lightLevelController.text);
@@ -145,14 +145,14 @@ class _DataState extends State<Data> {
                         _roomHumidityController.text);
                     final String? outcome = (_productionController.text);
 
-
                     if(batchNumber != null){
                       await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": datetime });
-                    _batchController.text = '';
-                    _lightLevelController.text = '';
-                    _roomTemperatureController.text = '';
-                    _roomHumidityController.text = '';
-                    _productionController.text = '';
+                      _batchController.text = '';
+                      _lightLevelController.text = '';
+                      _roomTemperatureController.text = '';
+                      _roomHumidityController.text = '';
+                      _productionController.text = '';
+
 
 
                     }
@@ -187,7 +187,7 @@ class _DataState extends State<Data> {
                   // date = documentSnapshot['date'].toString() as DateTime;
                   //DateTime myDateTime = DateTime.parse(date.toDate().toString());
                   return Card(
-                    margin: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(15),
                     child: ListTile(
                       title: Wrap(
                         spacing: 32,
@@ -201,18 +201,38 @@ class _DataState extends State<Data> {
                         ],
                       ),
                       subtitle: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.grey),
+                        ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
-                            Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
-                            Text("Humidity: " +documentSnapshot['humidity'].toString()),
-                            Text("Outcome: " +documentSnapshot['outcome'].toString()),
-                            Text("Date: " + documentSnapshot['datetime'].toString()),
-                            // Text("Date: "  + date ),
-                          ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Humidity: " +documentSnapshot['humidity'].toString()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Outcome: " +documentSnapshot['outcome'].toString()),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Date: " + documentSnapshot['datetime'].toString()),
+                            ),
 
+                          ],
                         )
 
 
@@ -220,6 +240,8 @@ class _DataState extends State<Data> {
                       trailing: SizedBox(
                         width: 100,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
                               icon: const Icon(Icons.edit),

@@ -10,7 +10,10 @@ import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
 import 'package:mush2/verfiy_email.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+// import 'package:open_document/open_document.dart';
+// import 'package:pdf/pdf.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:chaquopy/chaquopy.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first

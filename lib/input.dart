@@ -17,6 +17,9 @@ import 'package:flutter/material.dart';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+
 
 
 
@@ -36,7 +39,10 @@ class _InputState extends State<Input> {
   final TextEditingController roomHumidityController = TextEditingController();
   final TextEditingController productionController = TextEditingController();
   // final TextEditingController _dateController = TextEditingController();
-
+  // String greetings = '';
+  // String response = '';
+  //
+  // String final_response = "";
 
 
   @override
@@ -44,7 +50,7 @@ class _InputState extends State<Input> {
     return SingleChildScrollView(
       reverse: true,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 120),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 90),
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -61,6 +67,17 @@ class _InputState extends State<Input> {
 
               ),
             ),
+            // Center(
+            //   child: Text(
+            //       //greetings,
+            //     final_response,
+            //     style: TextStyle(
+            //       color: Color(0xffdbc791),
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 30,
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 20),
             Form(
               key: formKey,
@@ -157,7 +174,7 @@ class _InputState extends State<Input> {
                     ),
                     onPressed: () async {
 
-                      final double batchNumber = double.parse(
+                      final int batchNumber = int.parse(
                           batchController.text);
                       final double lightLevel = double.parse(
                           lightLevelController.text);
@@ -172,12 +189,34 @@ class _InputState extends State<Input> {
                       final user = User(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
                       createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
 
+                      // final url = 'http://127.0.0.1:5000/name';
+                      // final response = await http.post(url, body: json.encode({'name' : name}));
+                      // final response = await http.get(url, body: json.encode({'name' : name}));
+                      //
+                      // final decode = json.decode(response.body) as Map<String, dynamic>;
+
+
+                      //final response = await http.get('http://127.0.0.1:5000/name');
+                      //final decoded = json.decode(response.body) as Map<String, dynamic>;
+
+                      // setState((){
+                      //   final_response = decoded['response'];
+                      // });
+                      //
+                      // setState((){
+                      //   greetings = decoded['greetings'];
+                      // });
+                      //var data = postData(batchNumber, lightLevel, roomTemp, humidity, outcome, datetime );
 
                         batchController.text = '';
                         lightLevelController.text = '';
                         roomTemperatureController.text = '';
                         roomHumidityController.text = '';
                         productionController.text = '';
+
+                        final snackBar = SnackBar(content: Text("Data has been added."));
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                     },
                   ),
@@ -194,7 +233,7 @@ class _InputState extends State<Input> {
     );
   }
 
-  Future createData({required double batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required DateTime datetime}) async {
+  Future createData({required int batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required DateTime datetime}) async {
   //Future createData(User user) async {
   final docUser = FirebaseFirestore.instance.collection('mushroom').doc();
 
@@ -224,7 +263,7 @@ class _InputState extends State<Input> {
 }//class _inputstate
 
 class User {
-  final double batchNumber;
+  final int batchNumber;
   final double lightLevel;
   final double roomTemp;
   final double humidity;
@@ -249,6 +288,22 @@ class User {
       'datetime': datetime,
   };
 
+  // Future<http.Response>postData(int batchNumber, double lightLevel, double roomTemp, double humidity, String outcome,DateTime datetime ){
+  //   return http.post(
+  //     'http://0.0.0.0:5000/',
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       'batchNumber': batchNumber,
+  //       'lightLevel': lightLevel,
+  //       'roomTemp': roomTemp,
+  //       'humidity': humidity,
+  //       'outcome': outcome,
+  //       'datetime' : datetime,
+  //     }),
+  //   );
+  // }
 
 }
 
