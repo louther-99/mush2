@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 // import 'package:sklite/utils/exceptions.dart';
 // import 'package:sklite/utils/io.dart';
 // import 'package:sklite/utils/mathutils.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
@@ -31,6 +33,7 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  String greetings = '';
   final formKey = GlobalKey<FormState>();
   DateTime datetime = DateTime(2022, 6, 26);
   final TextEditingController batchController = TextEditingController();
@@ -84,6 +87,47 @@ class _InputState extends State<Input> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
+                  Text(
+                    'Greetings: ' + greetings,
+                    style: TextStyle(
+                      color: Color(0xffdbc791),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                  Container(
+                    child: (
+                    //start
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(50)),
+                          icon: Icon(Icons.add),
+                          label: Text(
+                            'Press',
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black
+                            ),
+                          ),
+                          onPressed: () async {
+
+                            try{
+                              final url = 'http://127.0.0.1:53838/greet';
+                              final response = await http.get(Uri.parse(url));
+                              final decoded = json.decode(response.body) as Map<String, dynamic>;
+
+                              setState(() {
+                                greetings = decoded['greetings'];
+                              });
+                            }catch(err){
+                              print(err);
+                            }
+                          },
+                        )
+                    //end
+                    ),
+                  ),
 
                   TextFormField(
                     controller: batchController,
