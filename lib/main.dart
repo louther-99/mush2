@@ -22,6 +22,7 @@ Future main() async {
   await Firebase.initializeApp(); //Initialize database
   //await AuthService().getOrCreateUser();
 
+//added comment in the main
 
   runApp(MyApp(
     // initialRoute: '/main',
