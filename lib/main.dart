@@ -9,6 +9,8 @@ import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
 import 'package:mush2/verfiy_email.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 // import 'package:open_document/open_document.dart';
 // import 'package:pdf/pdf.dart';
