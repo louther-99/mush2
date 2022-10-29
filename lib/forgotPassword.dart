@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_auth_forgot_password/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/Utils.dart';
+import 'package:mush2/utils/colors.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -14,18 +15,18 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  Utils m = Utils();
 
   @override
   void dispose(){
     emailController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff946713),
+      backgroundColor: bgColor,
       body: Container(
         margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
         padding: const EdgeInsets.only(left:40, right: 40),
@@ -35,17 +36,26 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  <Widget> [
                 Text('Receive an email to reset your password',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                )),
-                SizedBox(height: 20),
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 30,
+                    )),
+                SizedBox(height: 30),
                 TextFormField(
                   controller: emailController,
                   cursorColor: Colors.white,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                      labelText: "Enter your email"
+                    labelText: "Enter your email",
+                    fillColor: textColor,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: textColor, width: 32.0),
+                        borderRadius: BorderRadius.circular(25.0)),
+                    prefixIcon: Icon(Icons.email_outlined),
+                    // focusedBorder:OutlineInputBorder(
+                    // borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                    // borderRadius: BorderRadius.circular(25.0),
+                    // ),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
@@ -53,21 +63,30 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ? "Enter a valid email!"
                       : null,
                 ),
-                SizedBox(height: 20),
-
-
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (50)),
-                  icon: Icon(Icons.mail),
+                SizedBox(height: 24),
+                OutlinedButton.icon(
+                  onPressed: resetPassword,
+                  icon: Icon(
+                    Icons.mail_outline_outlined,
+                    size: 24.0,
+                    color: textColor,
+                  ),
                   label: Text(
                     'Reset Password',
                     style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black
+                      fontSize: 24,
+
+                      color: textColor,
                     ),
                   ),
-                  onPressed: resetPassword,
+                  style: OutlinedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    minimumSize: Size.fromHeight (40),
+                    backgroundColor: Colors.white70,
+                  ),
+
                 ),
+
                 SizedBox(height: 24),
 
 
@@ -88,12 +107,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try{
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
 
-      Utils.showSnackBar('Password email has been sent');
+      //m.showSnackBar('Password email has been sent');
       Navigator.of(context).popUntil((route) => route.isFirst);
     }on FirebaseAuthException catch(e){
       print(e);
 
-      Utils.showSnackBar(e.message);
+      //m.showSnackBar(e.message);
       Navigator.of(context).pop();
 
     }

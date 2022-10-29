@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:mush2/Utils.dart';
+import 'package:mush2/utils/colors.dart';
 
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -39,104 +40,141 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     navigatorKey: navigatorKey;
-    return Scaffold(
-        backgroundColor: Color(0xff946713),
-        body: Container(
-            margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
-            padding: const EdgeInsets.only(left:40, right: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children:[
-                Center(
-                  child: Text(
-                    "Sign up to MushMush",
-                    style: TextStyle(
-                      color: Color(0xffdbc791),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+
+      },
+      child: Scaffold(
+          backgroundColor: bgColor,
+          body: Container(
+              margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+              padding: const EdgeInsets.only(left:40, right: 40),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(0,32,0,0),
+                reverse: true,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children:[
+                    Center(
+                      child: Text(
+                        "Sign up to MushMush",
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+
+                      ),
+                    ),
+                    SizedBox(height: 50),
+                    Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+
+                            TextFormField(
+                              controller: emailController,
+                              cursorColor: Colors.white,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                labelText: "Enter your email",
+                                fillColor: textColor,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                prefixIcon: Icon(Icons.email_outlined),
+                                // focusedBorder:OutlineInputBorder(
+                                // borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                                // borderRadius: BorderRadius.circular(25.0),
+                                // ),
+                              ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (email) =>
+                              email != null && !EmailValidator.validate(email)
+                                  ? "Enter a valid email!"
+                                  : null,
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              controller: passwordController,
+                              cursorColor: Colors.white,
+                              obscureText: true,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                fillColor: textColor,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                prefixIcon: Icon(Icons.lock_outlined),
+                                labelText: "Enter your password",
+                                //   focusedBorder:OutlineInputBorder(
+                                //   borderSide: const BorderSide(color: Colors.white, width: 2.0),
+                                //   borderRadius: BorderRadius.circular(25.0),
+                                // ),
+                              ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                              value != null && value.length < 6
+                                  ? "Password must be at least 6 characters long"
+                                  : null,
+                            ),
+                            SizedBox(height: 20),
+
+                            OutlinedButton(
+                              onPressed: signUp,
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontSize: 24,
+
+                                  color: textColor,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                shape: StadiumBorder(),
+                                minimumSize: Size.fromHeight (40),
+                                backgroundColor: Colors.white70,
+                              ),
+
+                            ),
+                            SizedBox(height: 24),
+                            RichText(
+                              text: TextSpan(
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 20,
+                                  ),
+                                  text: 'Already have an account? ',
+                                  children: [
+                                    TextSpan(
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = widget.onClickedSignIn,
+                                        text: 'Log In',
+                                        style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: textColor,
+                                        )
+                                    )
+                                  ]
+                              ),
+                            ),
+                          ],
+                        )
                     ),
 
-                  ),
+                  ],
                 ),
-                SizedBox(height: 50),
-                Form(
-                    key: formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+              )
 
-                        TextFormField(
-                          controller: emailController,
-                          cursorColor: Colors.white,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                              labelText: "Enter your email"
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (email) =>
-                            email != null && !EmailValidator.validate(email)
-                            ? "Enter a valid email!"
-                            : null,
-                        ),
-                        SizedBox(height: 20),
-                        TextFormField(
-                          controller: passwordController,
-                          cursorColor: Colors.white,
-                          obscureText: true,
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                              labelText: "Enter your password"
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value != null && value.length < 6
-                              ? "Password must be at least 6 characters long"
-                              : null,
-                        ),
-                        SizedBox(height: 20),
+          )
 
-                        ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (40)),
-                          icon: Icon(Icons.login),
-                          label: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.black
-                            ),
-                          ),
-                          onPressed: signUp,
-                        ),
-                        SizedBox(height: 24),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                              text: 'Already have an account? ',
-                              children: [
-                                TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = widget.onClickedSignIn,
-                                    text: 'Log In',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Theme.of(context).colorScheme.secondary,
-                                    )
-                                )
-                              ]
-                          ),
-                        ),
-                      ],
-                    )
-                ),
-
-              ],
-            )
-
-        )
-
+      ),
     );
 
   }
@@ -147,7 +185,7 @@ class _SignUpState extends State<SignUp> {
     final isValid = formKey.currentState!.validate();
     if(!isValid) return;
 
-    showDialog(
+    showDialog( //Loading progress indicator
               context: context,
               barrierDismissible: false,
               builder: (context) => Center(child: CircularProgressIndicator()),

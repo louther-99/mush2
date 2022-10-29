@@ -41,6 +41,7 @@ dependencies:
   ml_dataframe: ^1.6.0
   ml_preprocessing: ^7.0.2
   ml_algo: ^16.17.3
+  google_maps_flutter: ^2.2.1
 #  tflite: ^1.1.2
 #  pdf: ^3.8.1
 #  open_document: ^1.0.4

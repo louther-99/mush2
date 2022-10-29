@@ -3,6 +3,7 @@ import 'package:mush2/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/home.dart';
+import 'package:mush2/utils/colors.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
+  Utils m = Utils();
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
@@ -61,7 +63,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         await Future.delayed(Duration(seconds: 5));
         setState(() => canResendEmail = true);
       }catch (e){
-        Utils.showSnackBar(e.toString());
+        m.showSnackBar(e.toString());
       }
     }
 
@@ -73,7 +75,13 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ? HomePage()
       : Scaffold(
     appBar: AppBar(
-      title: Text('Verify Email'),
+      backgroundColor:  bgColor,
+      title: Text(
+          'Verify Email',
+        style: TextStyle(
+          color: textColor,
+        ),
+      ),
     ),
     body: Padding(
       padding: EdgeInsets.all(16),
@@ -84,23 +92,29 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             'A verification email has been sent to your email.',
             style: TextStyle(
               fontSize: 20,
+              color: textColor,
 
             ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 24),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size.fromHeight(50),
-            ),
-            icon: Icon(Icons.email, size: 32),
+          OutlinedButton.icon(
+            icon: Icon(Icons.mail, color: textColor,),
+            onPressed: canResendEmail? sendVerificationEmail: null,
             label: Text(
               'Resend Email',
               style: TextStyle(
-                fontSize: 24
+                fontSize: 24,
+
+                color: textColor,
               ),
             ),
-            onPressed: canResendEmail? sendVerificationEmail: null,
+            style: OutlinedButton.styleFrom(
+              shape: StadiumBorder(),
+              minimumSize: Size.fromHeight (40),
+              backgroundColor: Colors.white70,
+            ),
+
           ),
           SizedBox(height: 8),
           TextButton(
@@ -109,7 +123,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             ),
             child: Text(
                 'Cancel',
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(
+                  fontSize: 24,
+              color: textColor,
+              ),
             ),
             onPressed: () => FirebaseAuth.instance.signOut(),
           ),

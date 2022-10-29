@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mush2/forgotPassword.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:mush2/utils/colors.dart';
+// import 'Utils.dart';
 
 
 
@@ -24,6 +26,7 @@ class LogInWidget extends StatefulWidget {
 }
 
 class _LogInWidgetState extends State<LogInWidget> {
+  //Utils m = Utils();
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -39,129 +42,192 @@ class _LogInWidgetState extends State<LogInWidget> {
   @override
   Widget build(BuildContext context) {
     // navigatorKey: navigatorKey;
-    return Scaffold(
-        backgroundColor: Color(0xff946713),
-        body: Container(
-          margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
-          padding: const EdgeInsets.only(left:40, right: 40),
-            child: Column(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
 
-              mainAxisAlignment: MainAxisAlignment.start,
-              children:[
-                Center(
-                  child: Column(
-                    children: [
-                      //buildLogo(),
-                      Text(
-                        "MushMush",
-                        style: TextStyle(
-                          color: Color(0xffdbc791),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 50),
-                Form(
-                    key: formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
 
-                        TextFormField(
-                          controller: emailController,
-                          cursorColor: Colors.white,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                              labelText: "Enter your email"
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (email) =>
-                          email != null && !EmailValidator.validate(email)
-                              ? "Enter a valid email!"
-                              : null,
-                        ),
-                        SizedBox(height: 20),
-                        TextFormField(
-                          controller: passwordController,
-                          cursorColor: Colors.white,
-                          obscureText: true,
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                              labelText: "Enter your password"
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value != null && value.length < 6
-                              ? "Password must be at least 6 characters long"
-                              : null,
-                        ),
-                        SizedBox(height: 20),
+      },
+      child: Scaffold(
+          backgroundColor: bgColor,
+          body: Container(
+            margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+            padding: const EdgeInsets.only(left:40, right: 40),
+              child: SingleChildScrollView(
+                // padding: EdgeInsets.fromLTRB(0,45,0,0),
+                reverse: true,
+                child: Column(
 
-
-                        ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight (40)),
-                          icon: Icon(Icons.login),
-                          label: Text(
-                            'Login',
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children:[
+                    Center(
+                      child: Column(
+                        children: [
+                          //buildLogo(),
+                          Text(
+                            "MushMush",
                             style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
                             ),
                           ),
-                          onPressed: signIn,
-                        ),
-                        SizedBox(height: 24),
-                        Center(
-                          child: GestureDetector(
-                            child: Text(
-                              'Forgot Password?',
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 60),
+                    Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+
+                            TextFormField(
+                              controller: emailController,
+                              cursorColor: Colors.white,
+                              textInputAction: TextInputAction.next,
                               style: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontSize: 20,
+                                color: textColor,
                               ),
+                              decoration: InputDecoration(
+                                labelText: "Enter your email",
+                                fillColor: textColor,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                prefixIcon: Icon(Icons.email_outlined),
+                                // focusedBorder:OutlineInputBorder(
+                                // borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                                // borderRadius: BorderRadius.circular(25.0),
+                                // ),
+                              ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (email) =>
+                              email != null && !EmailValidator.validate(email)
+                                  ? "Enter a valid email!"
+                                  : null,
                             ),
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ForgotPasswordPage(),
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: 24),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
+                            SizedBox(height: 20),
+                            TextFormField(
+                              controller: passwordController,
+                              cursorColor: Colors.white,
+                              obscureText: true,
+                              textInputAction: TextInputAction.done,
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                                color: textColor,
                               ),
-                              text: 'No account? ',
-                              children: [
-                                TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = widget.onClickedSignUp,
-                                  text: 'Sign Up',
+                              decoration: InputDecoration(
+                                fillColor: textColor,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                prefixIcon: Icon(Icons.lock_outlined),
+                                labelText: "Enter your password",
+                                //   focusedBorder:OutlineInputBorder(
+                                //   borderSide: const BorderSide(color: Colors.white, width: 2.0),
+                                //   borderRadius: BorderRadius.circular(25.0),
+                                // ),
+                              ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                              value != null && value.length < 6
+                                  ? "Password must be at least 6 characters long"
+                                  : null,
+                            ),
+                            SizedBox(height: 20),
+
+
+                            OutlinedButton(
+                              onPressed: signIn,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontSize: 24,
+
+                                  color: textColor,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                shape: StadiumBorder(),
+                                minimumSize: Size.fromHeight (40),
+                                backgroundColor: Colors.white70,
+                              ),
+
+                            ),
+                            SizedBox(height: 24),
+                            Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Divider(
+                                      height: 20,
+                                      thickness: 2,
+                                      color: textColor,
+                                    ),
+                                  ),
+
+                                  Text("OR", style: TextStyle(color: textColor)),
+
+
+                                  Expanded(
+                                    child: Divider(
+                                      height: 20,
+                                      thickness: 2,
+                                      color: textColor,
+                                    ),
+                                  ),
+                                ]
+                            ),
+                            SizedBox(height: 24),
+
+                            OutlinedButton(
+                              onPressed: widget.onClickedSignUp,
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontSize: 24,
+
+                                  color: textColor,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                shape: StadiumBorder(),
+                                minimumSize: Size.fromHeight (40),
+                                backgroundColor: Colors.white70,
+                              ),
+
+                            ),
+                            SizedBox(height: 24),
+                            Center(
+                              child: GestureDetector(
+                                child: Text(
+                                  'Forgot Password?',
                                   style: TextStyle(
                                     decoration: TextDecoration.none,
-                                    color: Theme.of(context).colorScheme.secondary,
-                                  )
-                                )
-                              ]
+                                    color: textColor,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ForgotPasswordPage(),
+                                )),
+                              ),
                             ),
-                          ),
-                        ),
+                            SizedBox(height: 24),
 
-                      ],
-                    )
+                          ],
+                        )
+                    ),
+
+                  ],
                 ),
+              ),
 
-              ],
-            ),
+          ),
 
-        ),
-
+      ),
     );
 
 
@@ -181,7 +247,7 @@ class _LogInWidgetState extends State<LogInWidget> {
             await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
           } on FirebaseAuthException catch(e){
             print(e);
-            //Utils.showSnackBar(e.message);
+            //m.showSnackBar(e.message);
           }
 
           //Navigator.of(context) not working!

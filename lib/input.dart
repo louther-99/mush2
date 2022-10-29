@@ -1,4 +1,4 @@
-
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,13 +17,39 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
+import 'package:mush2/utils/colors.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
+import 'package:ml_algo/ml_algo.dart';
+import 'package:ml_dataframe/ml_dataframe.dart';
+import 'package:ml_preprocessing/ml_preprocessing.dart';
 
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:ml_dataframe/ml_dataframe.dart';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart'; // For google maps
+
+//Before:
+// final  rawCsvContent = await rootBundle.loadString('assets/diabetes.csv');
+
+// Future<String> rawCsvContent = (await rootBundle.loadString('assets/diabetes.csv')) as Future<String>;
+// Future<String> raw = rawCsvContent;
+// final samples = DataFrame.fromRawCsv(raw);
+
+//The Async function always returns Future Values.
+
+void main() async {
+  Future<String> stringFuture = _getMockData();
+  String message = await stringFuture;
+  print(message); // will print one on console.
+}
+
+Future<String> _getMockData() async{
+  return Future.value("one");
+}
 
 class Input extends StatefulWidget {
   const Input({Key? key}) : super(key: key);
@@ -53,7 +79,8 @@ class _InputState extends State<Input> {
     return SingleChildScrollView(
       reverse: true,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 90),
+        color: bgCard,
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 115),
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

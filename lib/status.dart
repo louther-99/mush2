@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/home.dart';
+import 'package:mush2/utils/colors.dart';
 
 class Status extends StatefulWidget {
   const Status({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _StatusState extends State<Status> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     return Container(
+      color: bgCard,
       child: Padding(
         padding: EdgeInsets.all(32),
         child: Column(

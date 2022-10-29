@@ -10,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mush2/utils/colors.dart';
+
 class Data extends StatefulWidget {
   const Data({Key? key}) : super(key: key);
 
@@ -68,8 +70,6 @@ class _DataState extends State<Data> {
       // _dateController.text = documentSnapshot['date'].toString();
 
     }
-
-
 
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -177,6 +177,8 @@ class _DataState extends State<Data> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: bgCard,
+      // margin: EdgeInsets.fromLTRB(0, 0, 0, 115),
       child: StreamBuilder(
         stream: _mushroom.snapshots(), //persistent connection to the database
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database

@@ -16,6 +16,21 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 // import 'package:pdf/pdf.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:chaquopy/chaquopy.dart';
+import 'package:ml_algo/ml_algo.dart';
+import 'package:ml_dataframe/ml_dataframe.dart';
+import 'package:ml_preprocessing/ml_preprocessing.dart';
+
+
+//Protips
+//Named parameters
+//Required tags
+//Check for nulll values (assert that something is not null assert ( content != null, 'content is empty')) - null in Lists
+//Default value
+//Immutable (final String name; to make it immutable
+//getter method int get favNum {return 12;}
+//setter method == set age (int years) {}
+//toString
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first
@@ -39,14 +54,14 @@ Future main() async {
 final navigatorKey = GlobalKey<NavigatorState>(); //navigatorKey: navigatorKey;
 
 class MyApp extends StatelessWidget {
-
-  
+  Utils m = Utils();
   static final String title = 'Mush Mush';
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //scaffoldMessengerKey: Utils.messengerKey,
+      //scaffoldMessengerKey: Utils m = Utils();
+      scaffoldMessengerKey: m.messengerKey,
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: title,
@@ -61,14 +76,14 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
+      body: StreamBuilder<User?>( //Question mark for null content
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if(snapshot.connectionState == ConnectionState.waiting){
               return Center(child: CircularProgressIndicator());
             }
             else if(snapshot.hasError){
-              return Center (child: Text('Somethig went wrong!'));
+              return Center (child: Text('Something went wrong!'));
             }
             else if(snapshot.hasData) {
               //return HomePage();
