@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:mush2/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:sklite/SVM/SVM.dart';
@@ -59,6 +62,8 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  final user = FirebaseAuth.instance.currentUser!;
+  final String userID = FirebaseAuth.instance.currentUser!.uid;
   String greetings = '';
   final formKey = GlobalKey<FormState>();
   DateTime datetime = DateTime(2022, 6, 26);
@@ -255,9 +260,12 @@ class _InputState extends State<Input> {
                           roomHumidityController.text);
                       final String outcome = (productionController.text);
                       final DateTime datetime = DateTime.now();
+
+                      //final uid = await Provider.of(context).auth.getCurrentId();
+                      //print(uid + "This is the uid bitch!");
                       //final user = User(batchNumber: double.parse(batchController.text), lightLevel: double.parse(lightLevelController.text), roomTemp: double.parse(roomTemperatureController.text), humidity: double.parse( roomHumidityController.text), outcome: productionController.text, datetime: datetime);
                       //final user = User(batchNumber: double.parse(_batchController.text), lightLevel: double.parse(_lightLevelController.text), roomTemp: double.parse(_roomTemperatureController.text), humidity: double.parse( _roomHumidityController.text), outcome: _productionController.text, datetime: datetime);
-                      final user = User(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
+                      //final user = User( batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
                       createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
 
                       // final url = 'http://127.0.0.1:5000/name';
@@ -319,7 +327,8 @@ class _InputState extends State<Input> {
     // };
     // await docUser.set(json);
 
-    final user  = User(
+    final user  = Users(
+      id: userID,
       batchNumber: batchNumber,
       lightLevel: lightLevel,
       roomTemp: roomTemp,
@@ -333,7 +342,8 @@ class _InputState extends State<Input> {
   }
 }//class _inputstate
 
-class User {
+class Users {
+  final String id;
   final int batchNumber;
   final double lightLevel;
   final double roomTemp;
@@ -341,7 +351,8 @@ class User {
   final String outcome;
   final DateTime datetime;
 
-  User({
+  Users({
+    required this.id,
     required this.batchNumber,
     required this.lightLevel,
     required this.roomTemp,
@@ -350,7 +361,8 @@ class User {
     required this.datetime,
 });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => { //Converts object to JSON
+      'id': id,
       'batchNumber': batchNumber,
       'lightLevel': lightLevel,
       'roomTemp': roomTemp,
@@ -358,6 +370,17 @@ class User {
       'outcome': outcome,
       'datetime': datetime,
   };
+
+  static Users fromJson (Map<String, dynamic> json) => Users(
+    id: json['id'],
+    batchNumber: json['batchNumber'],
+    lightLevel: json['lightLevel'],
+    roomTemp: json['roomTemp'],
+    humidity: json['humidity'],
+    outcome: json['outcome'],
+    datetime: json['datetime'],
+  );//Converts object to JSON
+
 
   // Future<http.Response>postData(int batchNumber, double lightLevel, double roomTemp, double humidity, String outcome,DateTime datetime ){
   //   return http.post(

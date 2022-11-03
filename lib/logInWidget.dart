@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mush2/forgotPassword.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:mush2/utils/colors.dart';
+import 'package:mush2/services/auth_service.dart';
+import 'package:mush2/model/user.dart';
 // import 'Utils.dart';
 
 
@@ -233,8 +236,14 @@ class _LogInWidgetState extends State<LogInWidget> {
 
     }
 
+  //
+  Future signIn() async {
 
-  Future signIn() async{
+    //Create user based on FirebaseUser
+    // User return type called _userFromFirebaseUser
+  //   User _userFromFirebaseUser(Firebase user) {//Accepts Firebase user
+  //     return user !=null ? : User(userId: user.uid);
+  // }
 
     //Show a loading circle
     showDialog(
@@ -245,6 +254,7 @@ class _LogInWidgetState extends State<LogInWidget> {
 
           try{
             await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+
           } on FirebaseAuthException catch(e){
             print(e);
             //m.showSnackBar(e.message);
@@ -254,7 +264,7 @@ class _LogInWidgetState extends State<LogInWidget> {
           Navigator.of(context).pop();
           //navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
-  }
+  }//Future Signin end
   //
   // buildLogo() {
   //   // final urlLogo = assets

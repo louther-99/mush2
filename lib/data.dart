@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:mush2/Utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:mush2/model/user.dart';
 
 import 'package:mush2/utils/colors.dart';
 
@@ -21,6 +23,23 @@ class Data extends StatefulWidget {
 }
 
 class _DataState extends State<Data> {
+
+  Stream<List<Users>> readUser() => FirebaseFirestore.instance
+      .collection('mushroom')
+      .snapshots()
+      .map((snapshot) =>
+      snapshot.docs.map((doc) =>Users.fromJson(doc.data())).toList());
+
+
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  // FirebaseUser user = await FirebaseAuth.instance.currentUser(); i
+  final String userID = FirebaseAuth.instance.currentUser!.uid;
+  final user = FirebaseAuth.instance.currentUser!;
+  // final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  // final FirebaseUser user = await auth.currentUser();
+  // FirebaseUser user = await FirebaseAuth.getInstance().getCurrentUser();
+  // FirebaseUser user = await FirebaseAuth.instance.currentUser();
 
   final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
   DateTime datetime = DateTime(2022, 6, 26);
@@ -174,13 +193,43 @@ class _DataState extends State<Data> {
   // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
 
 
+
+
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance;
     return Container(
       color: bgCard,
       // margin: EdgeInsets.fromLTRB(0, 0, 0, 115),
+
+      // child: StreamBuilder(
+      //   stream: readUser(),
+      //   builder: (context, snapshot){ //streamSnapshot: all data available on the database
+      //     if(snapshot.hasError) {
+      //       return Text('${snapshot.error}');
+      //     }
+      //     else if(snapshot.hasData){
+      //       final users = snapshot.data!;
+      //
+      //       return ListView(
+      //       children: users.map(buildUser).toList(),
+      //       );
+      //
+      //       }
+      //     //widget build
+      //       return const Center(
+      //           child: CircularProgressIndicator(),
+      //
+      //     );
+      //   },
+      // ),
+
+
       child: StreamBuilder(
-        stream: _mushroom.snapshots(), //persistent connection to the database
+        // stream: _mushroom.snapshots(), //persistent connection to the database
+        stream: FirebaseFirestore.instance.collection('mushroom')
+              .where("id", isEqualTo: currentUser.currentUser!.uid)
+              .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
           if(streamSnapshot.hasData){
             return ListView.builder(
@@ -261,16 +310,32 @@ class _DataState extends State<Data> {
                   );
                 },
                 );
+
+
           }//widget build
           return const Center(
             child: CircularProgressIndicator(),
           );
         },
       ),
+
+
     );
+    // return Container(
+    //   child: Text(user.uid),
+    // );
   }
-
-
-
-
+  // Widget buildUser (Users user ) => ListTile(
+  //   leading: CircleAvatar(
+  //     child: Text(
+  //       '${user.id}',
+  //     ),
+  //   ),
+  //   title: Text(
+  //     '${user.batchNumber}',
+  //   ),
+  //   subtitle: Text(
+  //     '${user.datetime}',
+  //   ),
+  // );
 }

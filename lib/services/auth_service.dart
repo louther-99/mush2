@@ -1,7 +1,7 @@
 import 'package:mush2/logInWidget.dart';
 import 'package:mush2/signup.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService extends StatefulWidget {
   const AuthService({Key? key}) : super(key: key);
@@ -11,7 +11,12 @@ class AuthService extends StatefulWidget {
 }
 
 class _AuthServiceState extends State<AuthService> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  Future<String> getCurrentId() async {
+    return (await _firebaseAuth.currentUser!).uid;
+
+}
   bool isLogin = true;
 
   @override
