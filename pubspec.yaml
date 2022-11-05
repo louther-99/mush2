@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  meta: ^1.8.0
   cloud_firestore: ^3.1.17
   firebase_auth: ^3.3.19
   firebase_core: ^1.17.1
@@ -42,6 +43,10 @@ dependencies:
   ml_preprocessing: ^7.0.2
   ml_algo: ^16.17.3
   google_maps_flutter: ^2.2.1
+  shared_preferences: ^2.0.15
+  image_picker: ^0.8.6
+  path_provider: ^2.0.11
+  grouped_list: ^5.1.2
 
 #  tflite: ^1.1.2
 #  pdf: ^3.8.1

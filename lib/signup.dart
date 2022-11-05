@@ -12,7 +12,6 @@ final navigatorKey = GlobalKey<NavigatorState>();
 class SignUp extends StatefulWidget {
 
   final Function() onClickedSignIn;
-
   const SignUp({
     Key? key,
     required this.onClickedSignIn,
@@ -40,10 +39,9 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     navigatorKey: navigatorKey;
-    return GestureDetector(
+    return GestureDetector( //Gesture detector to tap on the widget to perform action
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
@@ -127,7 +125,7 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(height: 20),
 
                             OutlinedButton(
-                              onPressed: signUp,
+                              onPressed: signUp, //Calling the function signUp below
                               child: Text(
                                 'Sign Up',
                                 style: TextStyle(
@@ -180,9 +178,9 @@ class _SignUpState extends State<SignUp> {
   }
 
 
-  Future signUp() async{
+  Future signUp() async{ //Function
 
-    final isValid = formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate(); //Assigning valid state of the form to isValid as true
     if(!isValid) return;
 
     showDialog( //Loading progress indicator
@@ -191,7 +189,7 @@ class _SignUpState extends State<SignUp> {
               builder: (context) => Center(child: CircularProgressIndicator()),
           );
 
-    try{
+    try{ //Creating user with email and password accepting the email and password
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
     } on FirebaseAuthException catch(e){
       print(e);

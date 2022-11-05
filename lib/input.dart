@@ -82,26 +82,27 @@ class _InputState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      reverse: true,
+      // clipBehavior: Clip.none,
+      // reverse: true,
       child: Container(
         color: bgCard,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 115),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 235),
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // SizedBox(height: 50),
-            Center(
-              child: Text(
-                "Enter your data",
-                style: TextStyle(
-                  color: Color(0xffdbc791),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-
-              ),
-            ),
+            // Center(
+            //   child: Text(
+            //     "Enter your data",
+            //     style: TextStyle(
+            //       color: Color(0xffdbc791),
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 30,
+            //     ),
+            //
+            //   ),
+            // ),
             // Center(
             //   child: Text(
             //       //greetings,
@@ -120,45 +121,45 @@ class _InputState extends State<Input> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
 
-                  Text(
-                    'Greetings: ' + greetings,
-                    style: TextStyle(
-                      color: Color(0xffdbc791),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                  ),
+                  // Text(
+                  //   'Greetings: ' + greetings,
+                  //   style: TextStyle(
+                  //     color: Color(0xffdbc791),
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 30,
+                  //   ),
+                  // ),
                   Container(
-                    child: (
-                    //start
-                        ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size.fromHeight(50)),
-                          icon: Icon(Icons.add),
-                          label: Text(
-                            'Press',
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.black
-                            ),
-                          ),
-                          onPressed: () async {
-
-                            try{
-                              final url = 'http://127.0.0.1:53838/greet';
-                              final response = await http.get(Uri.parse(url));
-                              final decoded = json.decode(response.body) as Map<String, dynamic>;
-
-                              setState(() {
-                                greetings = decoded['greetings'];
-                              });
-                            }catch(err){
-                              print(err);
-                            }
-                          },
-                        )
-                    //end
-                    ),
+                    // child: (
+                    // //start
+                    //     ElevatedButton.icon(
+                    //       style: ElevatedButton.styleFrom(
+                    //           minimumSize: Size.fromHeight(50)),
+                    //       icon: Icon(Icons.add),
+                    //       label: Text(
+                    //         'Press',
+                    //         style: TextStyle(
+                    //             fontSize: 24,
+                    //             color: Colors.black
+                    //         ),
+                    //       ),
+                    //       onPressed: () async {
+                    //
+                    //         try{
+                    //           final url = 'http://127.0.0.1:53838/greet';
+                    //           final response = await http.get(Uri.parse(url));
+                    //           final decoded = json.decode(response.body) as Map<String, dynamic>;
+                    //
+                    //           setState(() {
+                    //             greetings = decoded['greetings'];
+                    //           });
+                    //         }catch(err){
+                    //           print(err);
+                    //         }
+                    //       },
+                    //     )
+                    // //end
+                    // ),
                   ),
 
                   TextFormField(

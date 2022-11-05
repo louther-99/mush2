@@ -25,9 +25,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     //user needs to be created first
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
-    if (!isEmailVerified) {
+    if (!isEmailVerified) { //if the user is not verified, send verification email
       sendVerificationEmail();
-
       timer = Timer.periodic(
         Duration(seconds: 3),
           (_) => checkEmailVerified(),
@@ -36,7 +35,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   @override
-  void dispose(){
+  void dispose(){ //Dispose the time if not needed
     timer?.cancel();
     super.dispose();
   }
@@ -54,7 +53,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   }
 
-    Future sendVerificationEmail() async {
+    Future sendVerificationEmail() async { //Function
       try{
         final user = FirebaseAuth.instance.currentUser!;
         await user.sendEmailVerification();
@@ -63,7 +62,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         await Future.delayed(Duration(seconds: 5));
         setState(() => canResendEmail = true);
       }catch (e){
-        m.showSnackBar(e.toString());
+        m.showSnackBar(e.toString()); //Snackbar for showing message error
       }
     }
 

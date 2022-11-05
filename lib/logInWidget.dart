@@ -7,7 +7,7 @@ import 'package:mush2/forgotPassword.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:mush2/services/auth_service.dart';
-import 'package:mush2/model/user.dart';
+import 'package:mush2/model/mushroomData.dart';
 // import 'Utils.dart';
 
 
@@ -30,13 +30,13 @@ class LogInWidget extends StatefulWidget {
 
 class _LogInWidgetState extends State<LogInWidget> {
   //Utils m = Utils();
-  final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>(); //To access the form key
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String name = "";
 
   @override
-  void dispose(){
+  void dispose(){ //Dispose the controller if not needed
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -237,7 +237,7 @@ class _LogInWidgetState extends State<LogInWidget> {
     }
 
   //
-  Future signIn() async {
+  Future signIn() async { //Function sign in
 
     //Create user based on FirebaseUser
     // User return type called _userFromFirebaseUser
@@ -252,7 +252,7 @@ class _LogInWidgetState extends State<LogInWidget> {
               builder: (context) => Center(child: CircularProgressIndicator()),
           );
 
-          try{
+          try{ //Signing in with user's email and password
             await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
 
           } on FirebaseAuthException catch(e){
@@ -261,7 +261,7 @@ class _LogInWidgetState extends State<LogInWidget> {
           }
 
           //Navigator.of(context) not working!
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(); //Removing the snackbar error message
           //navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
   }//Future Signin end

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mush2/messages.dart';
+import 'package:mush2/profile.dart';
 import 'package:mush2/status.dart';
 import 'package:mush2/input.dart';
 import 'package:mush2/data.dart';
@@ -14,12 +16,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // bool profileclick = false;
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(120),
@@ -34,7 +37,16 @@ class _HomePageState extends State<HomePage> {
             backgroundColor:  bgColor,
             // elevation: 10,
             // titleSpacing: 40,
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => M()),
+                    );
+                    },
+                  icon: Icon(Icons.message)),
+            ],
             bottom: TabBar(
+
               indicatorColor: textColor,
               indicatorWeight: 5,
               labelColor: textColor, //<-- selected text color
@@ -46,6 +58,7 @@ class _HomePageState extends State<HomePage> {
                 // Tab(icon: Icon(Icons.menu), text: 'MENU'),
                 Tab(icon: Icon(Icons.insert_drive_file)),
                 Tab(icon: Icon(Icons.table_view)),
+                Tab(icon: Icon(Icons.person)),
                 Tab(icon: Icon(Icons.notifications)),
                 Tab(icon: Icon(Icons.menu)),
               ],
@@ -64,6 +77,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Center(
               child: Data(),
+            ),
+            Center(
+              child: Profile(),
             ),
 
             Center(

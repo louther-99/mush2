@@ -65,7 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 24),
                 OutlinedButton.icon(
-                  onPressed: resetPassword,
+                  onPressed: resetPassword, //Calling resetPassword function below
                   icon: Icon(
                     Icons.mail_outline_outlined,
                     size: 24.0,
@@ -97,14 +97,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  Future resetPassword() async{
+  Future resetPassword() async{ //Function to reset password
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
 
-    try{
+    try{ //Sending password reset email
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
 
       //m.showSnackBar('Password email has been sent');
@@ -113,7 +113,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       print(e);
 
       //m.showSnackBar(e.message);
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(); //Removing snackbar error message
 
     }
 

@@ -1,4 +1,4 @@
-class Users {
+class MushroomData {
   final String id;
   final int batchNumber;
   final double lightLevel;
@@ -7,7 +7,7 @@ class Users {
   final String outcome;
   final DateTime datetime;
 
-  Users({
+  MushroomData({
     required this.id,
     required this.batchNumber,
     required this.lightLevel,
@@ -27,7 +27,7 @@ class Users {
     'datetime': datetime,
   };
 
-  static Users fromJson (Map<String, dynamic> json) => Users(
+  static MushroomData fromJson (Map<String, dynamic> json) => MushroomData(
     id: json['id'],
     batchNumber: json['batchNumber'],
     lightLevel: json['lightLevel'],
