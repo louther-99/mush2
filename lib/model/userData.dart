@@ -43,7 +43,7 @@ class UserData{
 
   );
 
-  static UserData fromJson(Map<String, dynamic> json) => UserData(
+  static UserData fromJson(Map<String, dynamic> json) => UserData( //String = key, dynamic = value. Converting json back to user Object
       IDUser: json['IDUser'],
       imagePath: json['imagePath'],
       name: json['name'],
@@ -54,7 +54,7 @@ class UserData{
 
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => { //To convert UserData object to JSON
     'IDUser': IDUser,
     'imagePath': imagePath,
     'name': name,

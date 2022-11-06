@@ -48,12 +48,13 @@ class _EditProfileState extends State<EditProfile> {
               isEdit: true,
               onClicked: () async {
                 final image = await ImagePicker()
-                    .pickImage(source: ImageSource.gallery);
-                if(image == null) return;
-                final directory = await getApplicationDocumentsDirectory();//store directory
-                final name = basename(image.path);
-                final imageFile = File('${directory.path}/$name');
+                    .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
+                if(image == null) return; //Check image if null or not
+                final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
+                final name = basename(image.path); //Getting the name of the file and the extension using the package path
+                final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
                 final newImage = await File(image.path).copy(imageFile.path);
+
                 setState(() => user = user.copyWith(imagePath: newImage.path));
                 // setState(() => userData = userData.copyWith(imagePath: newImage.path));
 
@@ -64,7 +65,7 @@ class _EditProfileState extends State<EditProfile> {
             label: 'Full Name',
             text: user.name,
             // onChanged: (name) {},
-            onChanged: (name) => user = user.copyWith(name: name),
+            onChanged: (name) => user = user.copyWith(name: name), //Create copy of the user object in the UserData class
             // onChanged: (name) => userData = userData.copyWith(name: name),
 
           ),
@@ -73,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
             label: 'Email',
             text: user.email,
             // onChanged: (email) {},
-            onChanged: (email) => user = user.copyWith(email: email),
+            onChanged: (email) => user = user.copyWith(email: email), //Create copy of the user object in the UserData class
 
           ),
           const SizedBox(height: 24),
@@ -89,8 +90,8 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
       OutlinedButton(
         onPressed: (){
-          UserPreferences.setUser(user);
-          Navigator.of(context).pop();
+          UserPreferences.setUser(user); //Calling setUSer method passing the user object
+          Navigator.of(context).pop(); //Pop the editing page to show up the profile page
         },
         child: Text(
           'Save',

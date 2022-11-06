@@ -55,7 +55,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           ),
           controller: controller,
           maxLines: widget.maxLines,
-          onChanged: widget.onChanged, //onChanged callback at the top
+          onChanged: widget.onChanged, //Calling the onChanged callback at the top to get the new value that we type in the text field
         ),
       ],
     );

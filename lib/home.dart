@@ -7,6 +7,7 @@ import 'package:mush2/input.dart';
 import 'package:mush2/data.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:mush2/notification.dart';
+import 'package:mush2/utils/userPreferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final u = UserPreferences.getUser();
     final user = FirebaseAuth.instance.currentUser!;
     return DefaultTabController(
       length: 5,

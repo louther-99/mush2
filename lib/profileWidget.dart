@@ -18,7 +18,6 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
-  
     return Center(
       child:  Stack( //To overlap multitple image
         children: [
@@ -34,8 +33,9 @@ class ProfileWidget extends StatelessWidget {
   }
 
    Widget buildImage() {
-    final image  = imagePath.contains('https://') ? NetworkImage(imagePath) : FileImage(File(imagePath));
-    
+    final image  = imagePath.contains('https://')
+        ? NetworkImage(imagePath) //Image contains https
+        : FileImage(File(imagePath)); //Image doesn't contain https
     return ClipOval( //make pic rounded
       child: Material(
         color: Colors.transparent,

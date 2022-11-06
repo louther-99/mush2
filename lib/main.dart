@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mush2/utils/userPreferences.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
@@ -35,6 +36,7 @@ import 'package:ml_preprocessing/ml_preprocessing.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first
   await Firebase.initializeApp(); //Initialize database
+  await UserPreferences.init(); //Execute user preferences init
   //await AuthService().getOrCreateUser();
 
 //added comment in the main
