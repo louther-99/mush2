@@ -78,7 +78,7 @@ class _SignUpState extends State<SignUp> {
 
                             TextFormField(
                               controller: emailController,
-                              cursorColor: Colors.white,
+                              cursorColor: textColor,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 labelText: "Enter your email",
@@ -101,7 +101,7 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(height: 20),
                             TextFormField(
                               controller: passwordController,
-                              cursorColor: Colors.white,
+                              cursorColor: textColor,
                               obscureText: true,
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(

@@ -90,7 +90,7 @@ class _LogInWidgetState extends State<LogInWidget> {
 
                             TextFormField(
                               controller: emailController,
-                              cursorColor: Colors.white,
+                              cursorColor: textColor,
                               textInputAction: TextInputAction.next,
                               style: TextStyle(
                                 color: textColor,
@@ -116,7 +116,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                             SizedBox(height: 20),
                             TextFormField(
                               controller: passwordController,
-                              cursorColor: Colors.white,
+                              cursorColor: textColor,
                               obscureText: true,
                               textInputAction: TextInputAction.done,
                               style: TextStyle(
@@ -149,14 +149,13 @@ class _LogInWidgetState extends State<LogInWidget> {
                                 'Login',
                                 style: TextStyle(
                                   fontSize: 24,
-
                                   color: textColor,
                                 ),
                               ),
                               style: OutlinedButton.styleFrom(
                                 shape: StadiumBorder(),
                                 minimumSize: Size.fromHeight (40),
-                                backgroundColor: Colors.white70,
+                                backgroundColor: bgCard,
                               ),
 
                             ),
@@ -198,7 +197,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                               style: OutlinedButton.styleFrom(
                                 shape: StadiumBorder(),
                                 minimumSize: Size.fromHeight (40),
-                                backgroundColor: Colors.white70,
+                                backgroundColor: bgCard,
                               ),
 
                             ),

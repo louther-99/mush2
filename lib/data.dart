@@ -88,9 +88,11 @@ class _DataState extends State<Data> {
       _productionController.text = documentSnapshot['outcome'].toString();
       // _dateController.text = documentSnapshot['date'].toString();
 
+
     }
 
     await showModalBottomSheet( //Modal for updating, deleting
+
         shape: const RoundedRectangleBorder(
         borderRadius:  BorderRadius.only(topLeft:
         Radius.circular(24),topRight:Radius.circular(24) ),),
@@ -113,50 +115,162 @@ class _DataState extends State<Data> {
                 TextField(
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _batchController,
-                  decoration: const InputDecoration(labelText: "Batch"),
+                  cursorColor: textColor,style: TextStyle(
+                  color: textColor,
                 ),
+                  decoration: InputDecoration(
+                    // focusColor: textColor,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: textColor, width: 32.0),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      prefixIcon: Icon(
+                        Icons.numbers,
+                        color: textColor,
+                      ),
+                      labelText: "Batch Number",
+                      labelStyle: TextStyle(
+                        color: textColor,
+                      )
+                  ),
+                ),
+                SizedBox(height: 20),
                 TextField(
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _lightLevelController,
-                  decoration: const InputDecoration(labelText: "Light Level"),
+                  cursorColor: textColor,
+                  style: TextStyle(
+                    color: textColor,
+                  ),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: textColor, width: 32.0),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      prefixIcon: Icon(
+                        Icons.lightbulb,
+                        color: textColor,
+                      ),
+                      labelText: "Light Level(Lumens)",
+                      labelStyle: TextStyle(
+                        color: textColor,
+                      )
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextField(
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _roomTemperatureController,
-                  decoration: const InputDecoration(labelText: "Room Temperature"),
+                  cursorColor: textColor,
+                  style: TextStyle(
+                    color: textColor,
+                  ),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: textColor, width: 32.0),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      prefixIcon: Icon(
+                        Icons.thermostat,
+                        color: textColor,
+                      ),
+                      labelText: "Room Temperature",
+                      labelStyle: TextStyle(
+                        color: textColor,
+                      )
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextField(
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _roomHumidityController,
-                  decoration: const InputDecoration(labelText: "Humidity"),
+                  cursorColor: textColor,
+                  style: TextStyle(
+                    color: textColor,
+                  ),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: textColor, width: 32.0),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      prefixIcon: Icon(
+                        Icons.water_drop,
+                        color: textColor,
+                      ),
+                      labelText: "Humidity(Milibar)",
+                      labelStyle: TextStyle(
+                        color: textColor,
+                      )
+                  ),
                 ),
+                SizedBox(height: 20),
                 TextField(
+                  cursorColor: textColor,
+                  style: TextStyle(
+                    color: textColor,
+                  ),
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _productionController,
-                  decoration: const InputDecoration(labelText: "Production"),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: textColor, width: 32.0),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      prefixIcon: Icon(
+                        Icons.info,
+                        color: textColor,
+                      ),
+                      labelText: "Production",
+                      labelStyle: TextStyle(
+                        color: textColor,
+                      )
+                  ),
                 ),
-                ElevatedButton(
-                  child: Text("Select Date"),
+                SizedBox(height: 20),
+
+                OutlinedButton.icon(
+                  icon: Icon(Icons.date_range, color: textColor),
                   onPressed: () async {
                     DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: datetime,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
+                    context: context,
+                    initialDate: datetime,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
 
 
                     );
                     if (newDate == null) return;
 
                     setState(() => datetime = newDate);
-                  }
+                    },
+                  label: Text(
+                    'Select Date',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: textColor,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    minimumSize: Size.fromHeight (40),
+                    backgroundColor: bgCard,
+                  ),
 
                 ),
+
+
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                  child: const Text('Update'),
+                OutlinedButton.icon(
+                  icon: Icon(Icons.update, color: textColor),
+                  label: Text(
+                    'Update',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: textColor,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    minimumSize: Size.fromHeight (40),
+                    backgroundColor: bgCard,
+                  ),
                   onPressed: () async {
 
                     final int? batchNumber = int.tryParse(
@@ -180,6 +294,7 @@ class _DataState extends State<Data> {
 
 
                     }
+
                   },
 
                 ),
@@ -250,7 +365,26 @@ class _DataState extends State<Data> {
                         children: [
                           Center(
                             //padding: const EdgeInsets.all(8.0),
-                            child: Text("Batch Number: " + documentSnapshot['batchNumber'].toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                            child: RichText(
+                              text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                              children: [
+                                // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                    child: Icon(Icons.numbers, color: textColor),
+                                  ),
+                                ),
+                                TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: textColor,
+                                  ),),
+                              ],
+                            ),
+                          ),
                           ),
 
                         ],
@@ -268,23 +402,118 @@ class _DataState extends State<Data> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Light Level: " + documentSnapshot['lightLevel'].toString()),
+                              child: RichText(
+                                text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                                  children: [
+                                    // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                        child: Icon(Icons.lightbulb, color: textColor),
+                                      ),
+                                    ),
+                                    TextSpan(text: "Light Level: " + documentSnapshot['lightLevel'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                        color: textColor,
+                                      ),),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Room Temp: " + documentSnapshot['roomTemp'].toString()),
+                              child: RichText(
+                                text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                                  children: [
+                                    // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                        child: Icon(Icons.thermostat, color: textColor),
+                                      ),
+                                    ),
+                                    TextSpan(text: "Room Temp: " + documentSnapshot['roomTemp'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                        color: textColor,
+                                      ),),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Humidity: " +documentSnapshot['humidity'].toString()),
+                              child: RichText(
+                                text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                                  children: [
+                                    // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                        child: Icon(Icons.water_drop, color: textColor),
+                                      ),
+                                    ),
+                                    TextSpan(text:   "Humidity: " +documentSnapshot['humidity'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                        color: textColor,
+                                      ),),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Outcome: " +documentSnapshot['outcome'].toString()),
+                              child: RichText(
+                                text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                                  children: [
+                                    // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                        child: Icon(Icons.info, color: textColor),
+                                      ),
+                                    ),
+                                    TextSpan(text:   "Outcome: " +documentSnapshot['outcome'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                        color: textColor,
+                                      ),),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Date: " + documentSnapshot['datetime'].toString()),
+                              child: RichText(
+                                text: TextSpan(
+                                  //style: Theme.of(context).textTheme.body1,
+                                  children: [
+                                    // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                        child: Icon(Icons.date_range, color: textColor),
+                                      ),
+                                    ),
+                                    TextSpan(text:   "Date: " + documentSnapshot['datetime'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                        color: textColor,
+                                      ),),
+                                  ],
+                                ),
+                              ),
                             ),
 
                           ],
@@ -299,10 +528,10 @@ class _DataState extends State<Data> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.edit),
+                              icon:  Icon(Icons.edit, color: textColor ),
                               onPressed: () => _update(documentSnapshot)),
                             IconButton(
-                                icon: const Icon(Icons.delete),
+                                icon:  Icon(Icons.delete, color: textColor),
                                 onPressed: () => _delete(documentSnapshot.id)),
 
                           ],

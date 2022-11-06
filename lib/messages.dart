@@ -63,6 +63,7 @@ class _MState extends State<M> {
                 alignment: message.isSentByMe
                     ? Alignment.centerRight : Alignment.centerLeft,
                 child: Card(
+                  color: bgCard,
                   elevation: 8,
                   child: Padding(
                     padding: const EdgeInsets.all(12),
