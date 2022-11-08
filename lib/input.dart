@@ -34,7 +34,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:ml_dataframe/ml_dataframe.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // For google maps
-
+import 'package:intl/intl.dart';
 //Before:
 // final  rawCsvContent = await rootBundle.loadString('assets/diabetes.csv');
 
@@ -67,7 +67,7 @@ class _InputState extends State<Input> {
   final String userID = FirebaseAuth.instance.currentUser!.uid;
   String greetings = '';
   final formKey = GlobalKey<FormState>();
-  DateTime datetime = DateTime(2022, 6, 26);
+  DateTime datetime = DateTime.now();
   final TextEditingController batchController = TextEditingController();
   final TextEditingController lightLevelController = TextEditingController();
   final TextEditingController roomTemperatureController = TextEditingController();
@@ -89,6 +89,18 @@ class _InputState extends State<Input> {
   //   _focusNode.dispose();
   //   super.dispose();
   // }
+
+  @override
+  void dispose(){ //Dispose the controller if not needed
+    batchController.dispose();
+    lightLevelController.dispose();
+    roomTemperatureController.dispose();
+    roomHumidityController.dispose();
+    productionController.dispose();
+
+
+    super.dispose();
+  }
 
 
   @override
@@ -348,7 +360,8 @@ class _InputState extends State<Input> {
                           final double humidity = double.parse(
                               roomHumidityController.text);
                           final String outcome = (productionController.text);
-                          final DateTime datetime = DateTime.now();
+                          final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
+
 
                           //final uid = await Provider.of(context).auth.getCurrentId();
                           //print(uid + "This is the uid bitch!");
@@ -418,7 +431,7 @@ class _InputState extends State<Input> {
     );
   }
 
-  Future createData({required int batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required DateTime datetime}) async {
+  Future createData({required int batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required String datetime}) async {
   //Future createData(User user) async {
   final docUser = FirebaseFirestore.instance.collection('mushroom').doc();
 
@@ -461,7 +474,7 @@ class Users {
   final double roomTemp;
   final double humidity;
   final String outcome;
-  final DateTime datetime;
+  final String datetime;
 
   Users({
     required this.id,

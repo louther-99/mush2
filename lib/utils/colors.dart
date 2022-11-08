@@ -7,6 +7,7 @@ final bgColorThree = Color(0xffffaf49);
 final textColor = Color(0xff84A59D);
 final pinkColor = Color(0xffF5CAC3);
 final bgCard = Color(0xffF7EDE2);
+final cardTile = Colors.grey[150];
 
 //For Mush
 // final bgColor = Color(0xffF6BD60);
