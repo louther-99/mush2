@@ -9,21 +9,21 @@ class UserField {
 
 class UserData{
   final String IDUser;
-  final String profilePath;
+  final String? profilePath;
   final String name;
   final String email;
-  final String about;
-  final String coverPath;
-  final String lastMessageTime;
+  final String? about;
+  final String? coverPath;
+  final String? lastMessageTime;
 
   const UserData({
     required this.IDUser,
-    required this.profilePath,
+    this.profilePath,
     required this.name,
     required this.email,
-    required this.about,
-    required this.coverPath,
-    required this.lastMessageTime
+    this.about,
+    this.coverPath,
+    this.lastMessageTime
   });
 
   factory UserData.fromDocument(DocumentSnapshot doc){

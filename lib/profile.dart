@@ -204,7 +204,7 @@ class _ProfileState extends State<Profile> {
           ),
           const SizedBox(height: 24),
           Text(
-            user.about,
+            user.about!,
             style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
           ),
           ],
@@ -227,7 +227,7 @@ class _ProfileState extends State<Profile> {
 
   Widget buildProfileWidget(UserData user) {
     return ProfileWidget(
-      imagePath: user.profilePath,
+      imagePath: user.profilePath!,
       onClicked: () async{
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => EditProfile()),

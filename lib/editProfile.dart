@@ -68,7 +68,7 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'About',
-            text: user.about,
+            text: user.about!,
             maxLines: 5,
             // onChanged: (about) {},
             onChanged: (about) => user = user.copyWith(about: about),
@@ -137,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget buildProfileWidget() {
     return ProfileWidget(
-      imagePath: user.profilePath,
+      imagePath: user.profilePath!,
       isEdit: true,
       onClicked: () async {
         final image = await ImagePicker()
