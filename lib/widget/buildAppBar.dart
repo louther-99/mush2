@@ -6,7 +6,7 @@ import 'package:mush2/utils/userPreferences.dart';
 import '../utils/colors.dart';
 
 AppBar buildAppBar(BuildContext context){
-  final user = UserPreferences.getUser();
+  // final user = UserPreferences.getUser();
   final icon = CupertinoIcons.moon_stars;
 
   return AppBar(

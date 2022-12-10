@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:mush2/Utils.dart';
 import 'package:mush2/utils/colors.dart';
+
+import 'model/userData.dart';
 
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -23,6 +26,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String userID = "";
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -191,6 +195,22 @@ class _SignUpState extends State<SignUp> {
 
     try{ //Creating user with email and password accepting the email and password
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+      userID = await FirebaseAuth.instance.currentUser!.uid;
+
+      final docUser = await FirebaseFirestore.instance.collection('user').doc();
+      final user = UserData(
+      IDUser: userID,
+      profilePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+      name: 'Louther Olayres',
+      email: 'diazlouther@gmail.com',
+      about: 'Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf',
+      coverPath: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60',
+      lastMessageTime: DateTime.now().toString(),
+  );
+
+      final json = user.toJson();
+      docUser.set(json);
+
     } on FirebaseAuthException catch(e){
       print(e);
       //Utils.showSnackBar(e.message);
@@ -198,7 +218,7 @@ class _SignUpState extends State<SignUp> {
     }
     //Navigator.of(context) not working!
     Navigator.of(context).pop();
-    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
 }

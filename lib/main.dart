@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mush2/services/google_signIn.dart';
+import 'package:mush2/utils/colors.dart';
 import 'package:mush2/utils/userPreferences.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,7 +38,7 @@ import 'package:ml_preprocessing/ml_preprocessing.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); //Binding first
   await Firebase.initializeApp(); //Initialize database
-  await UserPreferences.init(); //Execute user preferences init
+  // await UserPreferences.init(); //Execute user preferences init
   //await AuthService().getOrCreateUser();
 
 //added comment in the main
@@ -62,14 +64,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //scaffoldMessengerKey: Utils m = Utils();
-      scaffoldMessengerKey: m.messengerKey,
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      title: title,
-      //theme: ThemeData.dark().copyWith(),
-      home: MainPage(),
+    return ChangeNotifierProvider(
+      create: (context) => GoogleSignIn(),
+      child: MaterialApp(
+        //scaffoldMessengerKey: Utils m = Utils();
+        scaffoldMessengerKey: m.messengerKey,
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        title: title,
+        // theme: ThemeData(primaryColor: bgColor, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: textColor)),
+        home: MainPage(),
+      ),
     );
   }
 

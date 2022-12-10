@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/editProfile.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +23,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+
+
+final CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
+
+final String userID = FirebaseAuth.instance.currentUser!.uid;
+bool hide = false;
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -29,35 +38,107 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool hide = false;
+
+
   final double coverHeight = 200;
   final double profileHeight = 150;
-  final user = UserPreferences.getUser(); //To change myUser to get the user instead of the default value
+
+  // final user = UserPreferences.getUser(); //To change myUser to get the user instead of the default value
+  // final Stream<QuerySnapshot> _usersStream =
+  // FirebaseFirestore.instance.collection('users').snapshots();
+  //
+  // final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('user')
+  //     .where("id", isEqualTo: userID) //id should match the id field in the database
+  //     .snapshots();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchRecords();
+    super.initState();
+  }
+
+
+  fetchRecords () async {
+    var records = await FirebaseFirestore.instance.collection('mushroom')
+        .where("id", isEqualTo: userID) //id should match the id field in the database
+        .snapshots();
+  }
+
+  mapRecords(QuerySnapshot<Map<String, dynamic>> records ){
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
 
+
     // final user = FirebaseAuth.instance.currentUser!;
     // final user = UserPreferences.myUser;
     // final user = UserPreferences.myUser; //Pointing to the default user
-    final user = UserPreferences.getUser(); //To change myUser to get the user instead of the default value
+    // final user = UserPreferences.getUser(); //To change myUser to get the user instead of the default value
     return Scaffold(
-      body: ListView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            buildTop(),
-            const SizedBox(height: 24),
-            buildName(user),
-            const SizedBox(height: 24),
-            NumbersWidget(),
-            const SizedBox(height: 48),
-            buildAbout(user),
-            const SizedBox(height: 24),
-            Center(child: buildUpgradeButton()),
-            const SizedBox(height: 24),
-          ]
+      // body: StreamBuilder<UserData>(
+      //   body: StreamBuilder<List<UserData>>(
+          // stream: readUsers(),
+          // stream: FirebaseFirestore.instance.collection('user')
+          //     .where("id", isEqualTo: userID) //id should match the id field in the database
+          //     .snapshots()
+          //     .map((snapshot) =>
+          //     snapshot.docs.map((doc) => UserData.fromJson(doc.data()))),
+
+        // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+        //   builder: (context, snapshot) {
+            // if (streamSnapshot.hasData) {
+
+
+        body: StreamBuilder<List<UserData>>(
+        stream: readUsers(),
+        builder: (context,snapshot){
+          // final DocumentSnapshot documentSnapshot = snapshot.data;
+          // final List<UserData>? documentSnapshot = snapshot.data;
+          // final user = documentSnapshot;
+          // final user = snapshot.data;
+          print("The user: $snapshot");
+        // body: StreamBuilder (
+        // stream: _usersStream,
+        // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
+          if (snapshot.hasData) {
+            // final DocumentSnapshot documentSnapshot = streamSnapshot.data!;
+            // UserData user = documentSnapshot.toObject(UserData.class);
+            // UserData user = documentSnapshot.toObject;
+            final user = snapshot.data!;
+          print("this is user: " + user.toString()); //The user: AsyncSnapshot<List<UserData>>(ConnectionState.none, null, null, null)print("this is user: " + user.toString());
+          print("this is user: " + user[1].toString());
+
+
+            return ListView(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  // buildTop(user), //Error
+                  const SizedBox(height: 24),
+                  // buildName(user), //Error
+                  const SizedBox(height: 24),
+                  NumbersWidget(),
+                  const SizedBox(height: 48),
+                  // buildAbout(user), //Error
+                  const SizedBox(height: 24),
+                  Center(child: buildUpgradeButton()),
+                  const SizedBox(height: 24),
+                ]
+            );
+          }
+          return Center(
+            // child: Text("No Data was fetch"),
+            child: CircularProgressIndicator(
+              color:  textColor,
+            ),
+          );
+  }
       ),
     );
   }
@@ -132,7 +213,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildCoverPhoto() {
+  Widget buildCoverPhoto(UserData user) {
     return Container(
       color: Colors.grey,
       child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
@@ -144,9 +225,9 @@ class _ProfileState extends State<Profile> {
     
   }
 
-  Widget buildProfileWidget() {
+  Widget buildProfileWidget(UserData user) {
     return ProfileWidget(
-      imagePath: user.imagePath,
+      imagePath: user.profilePath,
       onClicked: () async{
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => EditProfile()),
@@ -180,7 +261,7 @@ class _ProfileState extends State<Profile> {
   //   ),
   }
 
-  Widget buildTop() {
+  Widget buildTop(UserData user) {
     final  top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
     return Stack(
@@ -189,15 +270,31 @@ class _ProfileState extends State<Profile> {
       children: [
         Container(
           margin: EdgeInsets.only(bottom: bottom),
-            child: buildCoverPhoto(),
+            child: buildCoverPhoto(user),
         ),
         Positioned(
             top: top,
-            child: buildProfileWidget(),
+            child: buildProfileWidget(user),
         ),
       ],
     );
   }
+
+ Stream<List<UserData>> ? readUsers() {
+    // FirebaseFirestore.instance.collection('user')
+    //     .where("id", isEqualTo: userID) //id should match the id field in the database
+    //     .snapshots()
+    //     .map((snapshot) =>
+    //     snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+ }
+
+  // Stream<List<UserData>>readUsers() {
+  //   FirebaseFirestore.instance.collection('user')
+  //       .where("id", isEqualTo: userID) //id should match the id field in the database
+  //       .snapshots()
+  //       .map((snapshot) =>
+  //       snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+  // }
   
   
 } //end of class _ProfileState extends State<Profile>

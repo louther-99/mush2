@@ -30,24 +30,45 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.8.0
-  cloud_firestore: ^3.1.17
-  firebase_auth: ^3.3.19
-  firebase_core: ^1.17.1
-  http: ^0.13.4
+  cloud_firestore: ^4.1.0
+  firebase_auth: ^4.1.5
+  firebase_core: ^2.3.0
+  http: ^0.13.5
   provider: ^6.0.4
   email_validator: ^2.0.1
   flutter_native_splash: ^2.2.3+1
-  tflite_flutter: ^0.9.0
-  sklite: ^0.0.1
-  ml_dataframe: ^1.6.0
-  ml_preprocessing: ^7.0.2
-  ml_algo: ^16.17.3
   google_maps_flutter: ^2.2.1
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
   path_provider: ^2.0.11
   grouped_list: ^5.1.2
   intl: ^0.17.0
+#  google_sign_in: ^5.4.2
+  google_sign_in: ^5.4.2
+  font_awesome_flutter: ^10.2.1
+
+# Machine Learning
+  ml_algo: ^16.17.4 #import 'package:ml_algo/ml_algo.dart';
+  ml_dataframe: ^1.6.0 #import 'package:ml_dataframe/ml_dataframe.dart';
+  ml_preprocessing: ^7.0.2  #import 'package:ml_preprocessing/ml_preprocessing.dart';
+  tflite_flutter: ^0.9.0 #import 'package:tflite_flutter/tflite_flutter.dart';
+#  sklite: ^0.0.1
+  tflite: ^1.1.2 #import 'package:tflite/tflite.dart';
+#  chaquopy: ^0.0.19
+  csv: ^5.0.1 #import 'package:csv/csv.dart';
+
+#sklite:
+#  import 'package:sklite/SVM/SVM.dart';
+#  import 'package:sklite/base.dart';
+#  import 'package:sklite/ensemble/forest.dart';
+#  import 'package:sklite/naivebayes/naive_bayes.dart';
+#  import 'package:sklite/neighbors/neighbors.dart';
+#  import 'package:sklite/neural_network/neural_network.dart';
+#  import 'package:sklite/pipeline/pipeline.dart';
+#  import 'package:sklite/tree/tree.dart';
+#  import 'package:sklite/utils/exceptions.dart';
+#  import 'package:sklite/utils/io.dart';
+#  import 'package:sklite/utils/mathutils.dart';
 
 #  tflite: ^1.1.2
 #  pdf: ^3.8.1
@@ -61,6 +82,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_ml_model_downloader: ^0.2.0+5
 
 dev_dependencies:
   flutter_test:
@@ -90,7 +112,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/MyDataSetCSV2.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +23,9 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   // User user = UserPreferences.myUser;
+  // final String userID = FirebaseAuth.instance.currentUser!.uid;
+  final double coverHeight = 200;
+  final double profileHeight = 150;
 
   late UserData user;
   // UserData user = UserPreferences.myUser;
@@ -31,7 +35,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState(){
     super.initState();
-    user = UserPreferences.getUser();
+    // user = UserPreferences.getUser();
     // userData = UserPreferences.getUser(); //persistent image edit
   }
   @override
@@ -43,23 +47,7 @@ class _EditProfileState extends State<EditProfile> {
         padding: EdgeInsets.symmetric(horizontal: 32),
         physics: BouncingScrollPhysics(),
         children: [
-          ProfileWidget(
-              imagePath: user.imagePath,
-              isEdit: true,
-              onClicked: () async {
-                final image = await ImagePicker()
-                    .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
-                if(image == null) return; //Check image if null or not
-                final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
-                final name = basename(image.path); //Getting the name of the file and the extension using the package path
-                final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
-                final newImage = await File(image.path).copy(imageFile.path);
-
-                setState(() => user = user.copyWith(imagePath: newImage.path));
-                // setState(() => userData = userData.copyWith(imagePath: newImage.path));
-
-                },
-          ),
+          buildTop(),
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'Full Name',
@@ -90,9 +78,14 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
       OutlinedButton(
         onPressed: (){
-          UserPreferences.setUser(user); //Calling setUSer method passing the user object
+          // UserPreferences.setUser(user); //Calling setUSer method passing the user object
           Navigator.of(context).pop(); //Pop the editing page to show up the profile page
+          createUser(IDUser: userID, profilePath: user.profilePath, name: user.name, email: user.email, about: user.about, coverPath: user.coverPath, lastMessageTime: user.lastMessageTime);
+
+          final snackBar = SnackBar(content: Text("Data has been updated."));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
+        //required IDUser, required profilePath, required name, required email, required about, required coverPath, required lastMessageTime
         child: Text(
           'Save',
           style: TextStyle(
@@ -120,4 +113,74 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-}
+
+ Widget buildTop() {
+
+    final  top = coverHeight - profileHeight / 2;
+    final bottom = profileHeight / 2;
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        Container(
+          // padding: EdgeInsets.all(0),
+          margin: EdgeInsets.only(bottom: bottom),
+          child: buildCoverPhoto(),
+        ),
+        Positioned(
+          top: top,
+          child: buildProfileWidget(),
+        ),
+      ],
+    );
+  }
+
+  Widget buildProfileWidget() {
+    return ProfileWidget(
+      imagePath: user.profilePath,
+      isEdit: true,
+      onClicked: () async {
+        final image = await ImagePicker()
+            .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
+        if(image == null) return; //Check image if null or not
+        final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
+        final name = basename(image.path); //Getting the name of the file and the extension using the package path
+        final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
+        final newImage = await File(image.path).copy(imageFile.path);
+
+        setState(() => user = user.copyWith(profilePath: newImage.path));
+        // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+
+      },
+    );
+  }
+
+  Widget buildCoverPhoto() {
+    return Container(
+      // padding: EdgeInsets.all(0),
+      color: Colors.grey,
+      child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+        width: double.infinity,
+        height: coverHeight,
+        fit: BoxFit.cover,),
+
+    );
+  }
+
+  Future createUser({   required IDUser, required profilePath, required name, required email, required about, required coverPath, required lastMessageTime}) async {
+    final docUser = FirebaseFirestore.instance.collection('user').doc();
+    final user  = UserData(
+      IDUser: IDUser,
+      profilePath: profilePath,
+      name: name,
+      email: email,
+      about: about,
+      coverPath: coverPath,
+      lastMessageTime: lastMessageTime,
+    );
+
+    final json = user.toJson();
+    await docUser.set(json);
+  }
+  }
+

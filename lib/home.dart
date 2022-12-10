@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/messages.dart';
@@ -8,6 +10,7 @@ import 'package:mush2/data.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:mush2/notification.dart';
 import 'package:mush2/utils/userPreferences.dart';
+import 'package:mush2/timeline.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,10 +24,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final u = UserPreferences.getUser();
+    // final u = UserPreferences.getUser();
     final user = FirebaseAuth.instance.currentUser!;
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(120),
@@ -39,14 +42,14 @@ class _HomePageState extends State<HomePage> {
             backgroundColor:  bgColor,
             // elevation: 10,
             // titleSpacing: 40,
-            actions: [
-              IconButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => M()),
-                    );
-                    },
-                  icon: Icon(Icons.message)),
-            ],
+            // actions: [
+            //   IconButton(
+            //       onPressed: (){
+            //         Navigator.push(context, MaterialPageRoute(builder: (context) => M()),
+            //         );
+            //         },
+            //       icon: Icon(Icons.message)),
+            // ],
             bottom: TabBar(
 
               indicatorColor: textColor,
@@ -60,8 +63,9 @@ class _HomePageState extends State<HomePage> {
                 // Tab(icon: Icon(Icons.menu), text: 'MENU'),
                 Tab(icon: Icon(Icons.insert_drive_file)),
                 Tab(icon: Icon(Icons.table_view)),
+                // Tab(icon: Icon(Icons.home)),
                 Tab(icon: Icon(Icons.person)),
-                Tab(icon: Icon(Icons.notifications)),
+                // Tab(icon: Icon(Icons.notifications)),
                 Tab(icon: Icon(Icons.menu)),
               ],
             ),
@@ -80,13 +84,16 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: Data(),
             ),
+            // Center(
+            //   // child: Timeline(),
+            // ),
             Center(
               child: Profile(),
             ),
 
-            Center(
-              child: Notif(),
-            ),
+            // Center(
+            //   child: Notif(),
+            // ),
             Center(
               child: Status(),
               //child: Text("STATUS"),
