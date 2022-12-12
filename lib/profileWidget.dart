@@ -1,5 +1,7 @@
 // import 'dart.io';
 import 'dart:io';
+import 'package:lottie/lottie.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:mush2/profile.dart';

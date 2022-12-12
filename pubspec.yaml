@@ -46,6 +46,7 @@ dependencies:
 #  google_sign_in: ^5.4.2
   google_sign_in: ^5.4.2
   font_awesome_flutter: ^10.2.1
+  lottie: ^2.0.0
 
 # Machine Learning
   ml_algo: ^16.17.4 #import 'package:ml_algo/ml_algo.dart';

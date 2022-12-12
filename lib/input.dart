@@ -28,7 +28,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-
+import 'package:lottie/lottie.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:ml_preprocessing/ml_preprocessing.dart';

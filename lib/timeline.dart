@@ -14,7 +14,7 @@ import 'dart:convert';
 import 'package:mush2/model/mushroomData.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:intl/intl.dart';
-
+import 'package:lottie/lottie.dart';
 import 'newTile.dart';
 
 

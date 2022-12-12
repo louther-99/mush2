@@ -22,7 +22,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
-
+import 'package:lottie/lottie.dart';
 
 //Protips
 //Named parameters

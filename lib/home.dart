@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mush2/messages.dart';

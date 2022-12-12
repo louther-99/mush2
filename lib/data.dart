@@ -14,6 +14,7 @@ import 'package:mush2/model/mushroomData.dart';
 import 'package:mush2/searchWidget.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class Data extends StatefulWidget {
   const Data({Key? key}) : super(key: key);
@@ -359,7 +360,6 @@ class _DataState extends State<Data> {
                           _dateController.text  = " ";
 
 
-
                         }
 
                       },
@@ -404,6 +404,7 @@ class _DataState extends State<Data> {
     if(_focus.hasFocus.toString() == "true"){
       hasFocus = true;
       print("Nakafocus");
+      // _searchController.text = '';
     }
     else{
       hasFocus = false;
@@ -720,8 +721,9 @@ class _DataState extends State<Data> {
 
 
                 }//widget build
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  // child: CircularProgressIndicator(),
+                  child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
                 );
               },
             )
@@ -730,10 +732,11 @@ class _DataState extends State<Data> {
               // stream: _mushroom.snapshots(), //persistent connection to the database
               stream: FirebaseFirestore.instance.collection('mushroom')
                   .where("id", isEqualTo: currentUser.currentUser!.uid)
-                  // .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+                  .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){
+
                   return ListView.builder(
                     itemCount: streamSnapshot.data!.docs.length, //docs mean row
                     // itemCount: searchResult.length,
@@ -944,8 +947,8 @@ class _DataState extends State<Data> {
 
 
                 }//widget build
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
                 );
               },
             ),

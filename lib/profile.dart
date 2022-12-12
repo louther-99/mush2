@@ -22,7 +22,7 @@ import 'package:mush2/verfiy_email.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'package:lottie/lottie.dart';
 
 
 final CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
 
 
   fetchRecords () async {
-    var records = await FirebaseFirestore.instance.collection('mushroom')
+    var records = await FirebaseFirestore.instance.collection('user')
         .where("id", isEqualTo: userID) //id should match the id field in the database
         .snapshots();
   }
@@ -93,8 +93,6 @@ class _ProfileState extends State<Profile> {
         // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
         //   builder: (context, snapshot) {
             // if (streamSnapshot.hasData) {
-
-
         body: StreamBuilder<List<UserData>>(
         stream: readUsers(),
         builder: (context,snapshot){
@@ -119,13 +117,13 @@ class _ProfileState extends State<Profile> {
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  // buildTop(user), //Error
+                  buildTop(), //Error
                   const SizedBox(height: 24),
-                  // buildName(user), //Error
+                  buildName(), //Error
                   const SizedBox(height: 24),
                   NumbersWidget(),
                   const SizedBox(height: 48),
-                  // buildAbout(user), //Error
+                  buildAbout(), //Error
                   const SizedBox(height: 24),
                   Center(child: buildUpgradeButton()),
                   const SizedBox(height: 24),
@@ -134,23 +132,25 @@ class _ProfileState extends State<Profile> {
           }
           return Center(
             // child: Text("No Data was fetch"),
-            child: CircularProgressIndicator(
-              color:  textColor,
-            ),
+            // child: CircularProgressIndicator(
+            //   color:  textColor,
+            // ),
+            child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+
           );
   }
       ),
     );
   }
 
-  Widget buildName(UserData user) {
+  Widget buildName() {
     return Column(
       children: [
-        Text(user.name,
+        Text("user.name",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
         ),
         Text(
-          user.email,
+         "user.email",
           style: TextStyle(color: textColor),
         ),
 
@@ -184,7 +184,7 @@ class _ProfileState extends State<Profile> {
     // );
   }
 
-  buildAbout(UserData user) {
+  buildAbout() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 48),
       child: Container(
@@ -204,7 +204,7 @@ class _ProfileState extends State<Profile> {
           ),
           const SizedBox(height: 24),
           Text(
-            user.about!,
+            'user.about!',
             style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
           ),
           ],
@@ -213,7 +213,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildCoverPhoto(UserData user) {
+  Widget buildCoverPhoto() {
     return Container(
       color: Colors.grey,
       child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
@@ -225,9 +225,10 @@ class _ProfileState extends State<Profile> {
     
   }
 
-  Widget buildProfileWidget(UserData user) {
+  Widget buildProfileWidget() {
     return ProfileWidget(
-      imagePath: user.profilePath!,
+      // imagePath: user.profilePath!,
+      imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
       onClicked: () async{
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => EditProfile()),
@@ -261,7 +262,7 @@ class _ProfileState extends State<Profile> {
   //   ),
   }
 
-  Widget buildTop(UserData user) {
+  Widget buildTop( ) {
     final  top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
     return Stack(
@@ -270,23 +271,25 @@ class _ProfileState extends State<Profile> {
       children: [
         Container(
           margin: EdgeInsets.only(bottom: bottom),
-            child: buildCoverPhoto(user),
+            child: buildCoverPhoto(),
         ),
         Positioned(
             top: top,
-            child: buildProfileWidget(user),
+            child: buildProfileWidget(),
         ),
       ],
     );
   }
 
  Stream<List<UserData>> ? readUsers() {
-    // FirebaseFirestore.instance.collection('user')
-    //     .where("id", isEqualTo: userID) //id should match the id field in the database
-    //     .snapshots()
-    //     .map((snapshot) =>
-    //     snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
- }
+    FirebaseFirestore.instance.collection('user')
+        .where("id", isEqualTo: userID) //id should match the id field in the database
+        .snapshots()
+        .map((snapshot) =>
+        // snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+         snapshot.docs.map((doc) => print(doc.data())));
+
+  }
 
   // Stream<List<UserData>>readUsers() {
   //   FirebaseFirestore.instance.collection('user')

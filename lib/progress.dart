@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mush2/utils/colors.dart';
+import 'package:lottie/lottie.dart';
 
 Container circularProgress(){
   return Container(
