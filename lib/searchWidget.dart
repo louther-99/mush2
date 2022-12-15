@@ -2441,3 +2441,454 @@ class _SearchBatchNumberState extends State<SearchBatchNumber> {
 // // }
 // //
 // //
+
+
+//child: hasFocus ? StreamBuilder(
+//               // stream: _mushroom.snapshots(), //persistent connection to the database
+//               stream: FirebaseFirestore.instance.collection('mushroom')
+//                   .where("id", isEqualTo: currentUser.currentUser!.uid)
+//                   .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+//                   .snapshots(),
+//               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
+//                 if(streamSnapshot.hasData){
+//                   return ListView.builder(
+//                     itemCount: streamSnapshot.data!.docs.length, //docs mean row
+//                     // itemCount: searchResult.length,
+//                     itemBuilder: (context, index) {
+//                       final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+//                       // date = documentSnapshot['date'].toString() as DateTime;
+//                       //DateTime myDateTime = DateTime.parse(date.toDate().toString());
+//                       return Card(
+//                         margin: const EdgeInsets.all(15),
+//                         // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(15.0),
+//                         ),
+//                         color: pinkColor,
+//                         elevation: 10,
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           children: [
+//                             ListTile(
+//
+//                               // leading: Icon(
+//                               //   Icons.numbers,
+//                               //   size: 50,
+//                               //   color:  textColor,
+//                               // ),
+//                               title: RichText(
+//                                 text: TextSpan(
+//                                   //style: Theme.of(context).textTheme.body1,
+//                                   children: [
+//                                     // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                     WidgetSpan(
+//                                       child: Padding(
+//                                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                         child: Icon(Icons.numbers, color: textColor, size: 30,),
+//                                       ),
+//                                     ),
+//                                     TextSpan(text:  "Batch: " + documentSnapshot['batchNumber'].toString(),
+//                                       style: TextStyle(
+//                                         fontWeight: FontWeight.bold,
+//                                         fontSize: 30,
+//                                         color: textColor,
+//
+//                                       ),),
+//                                   ],
+//                                 ),
+//                               ),
+//
+//                               subtitle: Container(
+//
+//                                 // padding: const EdgeInsets.all(12),
+//                                 // decoration: BoxDecoration(
+//                                 //   color: Colors.grey.shade200,
+//                                 //   borderRadius: BorderRadius.circular(20),
+//                                 //   border: Border.all(color: Colors.grey),
+//                                 // ),
+//                                   margin: EdgeInsets.fromLTRB(0, 0 , 0, 0),
+//                                   child: Column(
+//
+//                                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                     crossAxisAlignment: CrossAxisAlignment.start,
+//                                     children: [
+//                                       SizedBox(height: 10),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(5.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.lightbulb, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text: "Light Level: " + documentSnapshot['lightLevel'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.thermostat, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text: "Room Temp: " + documentSnapshot['roomTemp'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.water_drop, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Humidity: " +documentSnapshot['humidity'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.info, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Outcome: " +documentSnapshot['outcome'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.date_range, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Date: " + documentSnapshot['datetime'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//
+//                                     ],
+//                                   )
+//
+//                               ),//Subtitle
+//
+//                             ),
+//                             Center(
+//                               child: Row(
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 children: [
+//                                   ButtonBar(
+//                                     children: [
+//                                       IconButton(
+//                                           icon:  Icon(Icons.edit, color: textColor ),
+//                                           onPressed: () => _update(documentSnapshot)),
+//                                       IconButton(
+//                                           icon:  Icon(Icons.delete, color: textColor),
+//                                           onPressed: () => _delete(documentSnapshot.id)),
+//                                     ],
+//                                   ),
+//                                 ],
+//                               ),
+//                             )
+//                           ],
+//                         ),
+//                       );
+//                     },
+//                   );
+//
+//
+//                 }//widget build
+//                 return Center(
+//                   // child: CircularProgressIndicator(),
+//                   child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+//                 );
+//               },
+//             )
+//                 :
+//             StreamBuilder(
+//               // stream: _mushroom.snapshots(), //persistent connection to the database
+//               stream: FirebaseFirestore.instance.collection('mushroom')
+//                   .where("id", isEqualTo: currentUser.currentUser!.uid)
+//                   .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+//                   .snapshots(),
+//               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
+//                 if(streamSnapshot.hasData){
+//
+//                   return ListView.builder(
+//                     itemCount: streamSnapshot.data!.docs.length, //docs mean row
+//                     // itemCount: searchResult.length,
+//                     itemBuilder: (context, index) {
+//                       final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+//                       // date = documentSnapshot['date'].toString() as DateTime;
+//                       //DateTime myDateTime = DateTime.parse(date.toDate().toString());
+//                       return Card(
+//                         margin: const EdgeInsets.all(15),
+//                         // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(15.0),
+//                         ),
+//                         color: pinkColor,
+//                         elevation: 10,
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           children: [
+//                             ListTile(
+//
+//                               // leading: Icon(
+//                               //   Icons.numbers,
+//                               //   size: 50,
+//                               //   color:  textColor,
+//                               // ),
+//                               title: RichText(
+//                                 text: TextSpan(
+//                                   //style: Theme.of(context).textTheme.body1,
+//                                   children: [
+//                                     // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                     WidgetSpan(
+//                                       child: Padding(
+//                                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                         child: Icon(Icons.numbers, color: textColor, size: 30,),
+//                                       ),
+//                                     ),
+//                                     TextSpan(text:  "Batch: " + documentSnapshot['batchNumber'].toString(),
+//                                       style: TextStyle(
+//                                         fontWeight: FontWeight.bold,
+//                                         fontSize: 30,
+//                                         color: textColor,
+//
+//                                       ),),
+//                                   ],
+//                                 ),
+//                               ),
+//
+//                               subtitle: Container(
+//
+//                                 // padding: const EdgeInsets.all(12),
+//                                 // decoration: BoxDecoration(
+//                                 //   color: Colors.grey.shade200,
+//                                 //   borderRadius: BorderRadius.circular(20),
+//                                 //   border: Border.all(color: Colors.grey),
+//                                 // ),
+//                                   margin: EdgeInsets.fromLTRB(0, 0 , 0, 0),
+//                                   child: Column(
+//
+//                                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                                     crossAxisAlignment: CrossAxisAlignment.start,
+//                                     children: [
+//                                       SizedBox(height: 10),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(5.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.lightbulb, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text: "Light Level: " + documentSnapshot['lightLevel'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.thermostat, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text: "Room Temp: " + documentSnapshot['roomTemp'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.water_drop, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Humidity: " +documentSnapshot['humidity'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.info, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Outcome: " +documentSnapshot['outcome'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//                                       Padding(
+//                                         padding: const EdgeInsets.all(8.0),
+//                                         child: RichText(
+//                                           text: TextSpan(
+//                                             //style: Theme.of(context).textTheme.body1,
+//                                             children: [
+//                                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
+//                                               WidgetSpan(
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
+//                                                   child: Icon(Icons.date_range, color: textColor),
+//                                                 ),
+//                                               ),
+//                                               TextSpan(text:   "Date: " + documentSnapshot['datetime'].toString(),
+//                                                 style: TextStyle(
+//                                                   fontWeight: FontWeight.normal,
+//                                                   fontSize: 15,
+//                                                   color: textColor,
+//                                                 ),),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ),
+//
+//                                     ],
+//                                   )
+//
+//                               ),//Subtitle
+//
+//                             ),
+//                             Center(
+//                               child: Row(
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 children: [
+//                                   ButtonBar(
+//                                     children: [
+//                                       IconButton(
+//                                           icon:  Icon(Icons.edit, color: textColor ),
+//                                           onPressed: () => _update(documentSnapshot)),
+//                                       IconButton(
+//                                           icon:  Icon(Icons.delete, color: textColor),
+//                                           onPressed: () => _delete(documentSnapshot.id)),
+//                                     ],
+//                                   ),
+//                                 ],
+//                               ),
+//                             )
+//                           ],
+//                         ),
+//                       );
+//                     },
+//                   );
+//
+//
+//                 }//widget build
+//                 return Center(
+//                   child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+//                 );
+//               },
+//             ),

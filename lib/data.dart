@@ -27,6 +27,7 @@ class Data extends StatefulWidget {
 class _DataState extends State<Data> {
   FocusNode _focus = FocusNode();
   bool hasFocus = false;
+  bool hasData = false;
 
   int bitch = 0;
   late int passMe = 0;
@@ -439,6 +440,7 @@ class _DataState extends State<Data> {
                       cursorColor: textColor,
                       onChanged: (query) {
                          setState(()  {
+                           _searchController.text.isEmpty ? hasData = false : hasData = true;
                            this.bitch = int.parse(
                                _searchController.text);
                             // passMe = query as int;
@@ -503,7 +505,7 @@ class _DataState extends State<Data> {
       //         if(_focus.hasFocus.toString()){
       // print('a');
       // }
-            child: hasFocus ? StreamBuilder(
+            child: hasData ? StreamBuilder(
               // stream: _mushroom.snapshots(), //persistent connection to the database
               stream: FirebaseFirestore.instance.collection('mushroom')
                   .where("id", isEqualTo: currentUser.currentUser!.uid)
@@ -732,7 +734,7 @@ class _DataState extends State<Data> {
               // stream: _mushroom.snapshots(), //persistent connection to the database
               stream: FirebaseFirestore.instance.collection('mushroom')
                   .where("id", isEqualTo: currentUser.currentUser!.uid)
-                  .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+                  // .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){

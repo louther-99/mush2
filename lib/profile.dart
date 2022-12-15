@@ -70,6 +70,16 @@ class _ProfileState extends State<Profile> {
 
   }
 
+  Stream<List<UserData>> ? readUsers() {
+    FirebaseFirestore.instance.collection('user')
+        .where("id", isEqualTo: userID) //id should match the id field in the database
+        .snapshots()
+        .map((snapshot) =>
+    // snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+    snapshot.docs.map((doc) => print(doc.data())));
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -281,15 +291,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
- Stream<List<UserData>> ? readUsers() {
-    FirebaseFirestore.instance.collection('user')
-        .where("id", isEqualTo: userID) //id should match the id field in the database
-        .snapshots()
-        .map((snapshot) =>
-        // snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
-         snapshot.docs.map((doc) => print(doc.data())));
 
-  }
 
   // Stream<List<UserData>>readUsers() {
   //   FirebaseFirestore.instance.collection('user')

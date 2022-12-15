@@ -92,8 +92,11 @@ class Input extends StatefulWidget {
 
 class _InputState extends State<Input> {
   String url = "";
+  String urls = "";
   var data;
+  var d;
   String output = 'Initial output';
+  String pred = "Initial pred";
   FocusNode _focusNode = new FocusNode();
   final user = FirebaseAuth.instance.currentUser!;
   final String userID = FirebaseAuth.instance.currentUser!.uid;
@@ -432,6 +435,34 @@ class _InputState extends State<Input> {
                           final String outcome = (productionController.text);
                           final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
 
+                          var data = {
+                            'id' : userID,
+                            'batchNumber': batchController.text,
+                            'lightLevel': lightLevelController.text,
+                            'roomTemp': roomTemperatureController.text,
+                            'humidity': roomHumidityController.text,
+                            'outcome': 'ewan',
+                            'datetime': datetime,
+                             // 'IDUser': batchController.text,
+                             // 'profilePath':
+                             // 'name',
+                             // 'email',
+                             // 'about',
+                             // 'coverPath',
+                             // 'lastMessageTime',
+                          };
+
+                          //Passing the data and the endpoint
+                          var r = await CallApi().postData(data, 'predict');
+
+                          // url = 'http://10.0.2.2:5000/api?query=' + value.toString();
+                          // urls = 'http://127.0.0.1:5000/api?query=2';
+                          // d = await fetchData(url);
+                          // var decoded = jsonDecode(d);
+                          // setState(() {
+                          //   pred = decoded['output'];
+                          // });
+
 
 
                           //final uid = await Provider.of(context).auth.getCurrentId();
@@ -630,7 +661,11 @@ class _InputState extends State<Input> {
   }
 
   fetchData (String url) async{
-    http.Response response = await http.get(Uri.parse(url));
+    // #before
+    // http.Response response = await http.get(Uri.parse(url));
+
+    //after
+    final response = await http.get(Uri.parse(url));
     return response.body;
 
   }
@@ -640,7 +675,29 @@ class _InputState extends State<Input> {
   //     FocusScope.of(context).requestFocus(_focusNode);
   //   });
   // }
-}//class _inputstate
+}
+
+class CallApi {
+  final String _url = "http://127.0.0.1:5000/";
+
+  postData(data, apiurl) async {
+    var fullUrl = _url+apiurl;
+    http.post(
+        Uri.parse(fullUrl),
+        body: jsonEncode(data),
+        headers: _setHeaders(),
+    );
+  }
+
+  _setHeaders() => {
+    'Content-type':'application/json',
+    'Accept': 'application/json',
+  };
+
+
+}
+
+//class _inputstate
 
 
 

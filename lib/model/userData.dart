@@ -26,6 +26,10 @@ class UserData{
     this.lastMessageTime
   });
 
+  // factory UserData.fromMap(Map<String, dynamic> e){
+  //
+  // }
+
   factory UserData.fromDocument(DocumentSnapshot doc){
     return UserData(
         IDUser: doc['IDUser'],
