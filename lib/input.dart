@@ -127,7 +127,7 @@ class _InputState extends State<Input> {
 
   @override
   void initState() {
-    Get_Dataset();
+    // Get_Dataset();
     super.initState();
   }
 
@@ -168,29 +168,6 @@ class _InputState extends State<Input> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // SizedBox(height: 50),
-                // Center(
-                //   child: Text(
-                //     "Enter your data",
-                //     style: TextStyle(
-                //       color: Color(0xffdbc791),
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 30,
-                //     ),
-                //
-                //   ),
-                // ),
-                // Center(
-                //   child: Text(
-                //       //greetings,
-                //     final_response,
-                //     style: TextStyle(
-                //       color: Color(0xffdbc791),
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 30,
-                //     ),
-                //   ),
-                // ),
                 SizedBox(height: 30),
                 Center(
                   child: Text(
@@ -240,45 +217,51 @@ class _InputState extends State<Input> {
                     children: <Widget>[
 
                       SizedBox(height: 50),
-                      // Text(
-                      //   'Greetings: ' + greetings,
-                      //   style: TextStyle(
-                      //     color: Color(0xffdbc791),
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 30,
-                      //   ),
-                      // ),
+                      Text(
+                        'Greetings: ' + greetings,
+                        style: TextStyle(
+                          color: Color(0xffdbc791),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
                       Container(
-                        // child: (
-                        // //start
-                        //     ElevatedButton.icon(
-                        //       style: ElevatedButton.styleFrom(
-                        //           minimumSize: Size.fromHeight(50)),
-                        //       icon: Icon(Icons.add),
-                        //       label: Text(
-                        //         'Press',
-                        //         style: TextStyle(
-                        //             fontSize: 24,
-                        //             color: Colors.black
-                        //         ),
-                        //       ),
-                        //       onPressed: () async {
-                        //
-                        //         try{
-                        //           final url = 'http://127.0.0.1:53838/greet';
-                        //           final response = await http.get(Uri.parse(url));
-                        //           final decoded = json.decode(response.body) as Map<String, dynamic>;
-                        //
-                        //           setState(() {
-                        //             greetings = decoded['greetings'];
-                        //           });
-                        //         }catch(err){
-                        //           print(err);
-                        //         }
-                        //       },
-                        //     )
-                        // //end
-                        // ),
+                        child: (
+                        //start
+                            ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size.fromHeight(50)),
+                              icon: Icon(Icons.add),
+                              label: Text(
+                                'Press',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.black
+                                ),
+                              ),
+                              onPressed: () async {
+
+                                try{
+                                  final String urlp = "http://10.0.2.2:5000/print";
+                                  final responses = await http.get(Uri.parse(urlp));
+                                  print(responses.body + " is body bitch!");
+                                  // final url = 'http://127.0.0.1:5000/print';
+                                  // final response = await http.get(Uri.parse(url));
+
+                                  final decoded = json.decode(json.encode(responses.body));// as Map<String, dynamic>;
+                                  print(decoded + " is decoded");
+
+                                  setState(() {
+                                    greetings = decoded;
+                                    // decoded;
+                                  });
+                                }catch(err){
+                                  print(err);
+                                }
+                              },
+                            )
+                        //end
+                        ),
                       ),
 
                       TextFormField(
@@ -422,7 +405,7 @@ class _InputState extends State<Input> {
                         icon: Icon(Icons.query_stats, color: textColor),
                         onPressed: () async {
 
-                          final preprocess = Get_Dataset();
+                          // final preprocess = Get_Dataset();
 
                           final int batchNumber = int.parse(
                               batchController.text);
@@ -435,7 +418,7 @@ class _InputState extends State<Input> {
                           final String outcome = (productionController.text);
                           final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
 
-                          var data = {
+                          var datas = {
                             'id' : userID,
                             'batchNumber': batchController.text,
                             'lightLevel': lightLevelController.text,
@@ -443,77 +426,35 @@ class _InputState extends State<Input> {
                             'humidity': roomHumidityController.text,
                             'outcome': 'ewan',
                             'datetime': datetime,
-                             // 'IDUser': batchController.text,
-                             // 'profilePath':
-                             // 'name',
-                             // 'email',
-                             // 'about',
-                             // 'coverPath',
-                             // 'lastMessageTime',
                           };
+                          
+                          
+
+                          
+                          // var c = await http.get(
+                          //   // Uri.parse(fullUrl),
+                          //   Uri.parse("http://127.0.0.1:5000/print"),
+                          //   // body: jsonEncode(datas),
+                          //   // headers: _setHeaders(),
+                          // );
+                          //
+                          // if(c.statusCode == 200){
+                          //   var json = c.body;
+                          //   print(json);
+                          // }
 
                           //Passing the data and the endpoint
-                          var r = await CallApi().postData(data, 'predict');
-
-                          // url = 'http://10.0.2.2:5000/api?query=' + value.toString();
-                          // urls = 'http://127.0.0.1:5000/api?query=2';
-                          // d = await fetchData(url);
-                          // var decoded = jsonDecode(d);
-                          // setState(() {
-                          //   pred = decoded['output'];
-                          // });
-
-
-
-                          //final uid = await Provider.of(context).auth.getCurrentId();
-                          //print(uid + "This is the uid bitch!");
-                          //final user = User(batchNumber: double.parse(batchController.text), lightLevel: double.parse(lightLevelController.text), roomTemp: double.parse(roomTemperatureController.text), humidity: double.parse( roomHumidityController.text), outcome: productionController.text, datetime: datetime);
-                          //final user = User(batchNumber: double.parse(_batchController.text), lightLevel: double.parse(_lightLevelController.text), roomTemp: double.parse(_roomTemperatureController.text), humidity: double.parse( _roomHumidityController.text), outcome: _productionController.text, datetime: datetime);
-                          //final user = User( batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
-
-                          // final dataFrame = await fromCsv('/Users/loutherolayres/mush2 9.10.15 AM trashing/assets/MyDataSetCSV2.csv',
-                          //     columns: [2, 3, 5, 6, 7, 11]);
-
-                          // final dataFrame = await fromCsv('/Users/loutherolayres/mush2 9.10.15 AM trashing/assets/MyDataSetCSV2.csv');
-                          // print(dataFrame);
-                          // final targetColumnName = 'outcome';
-                          // final splits = splitData(dataFrame, [0.7]);
-                          // final trainData = splits.first;
-                          // final testData = splits.last;
+                          // var r = await CallApi().postData(datas, 'try');
+                          // var bo = json.decode(r.body);
+                          // print(r);
 
                           createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
-
-                          // final url = 'http://127.0.0.1:5000/name';
-                          // final response = await http.post(url, body: json.encode({'name' : name}));
-                          // final response = await http.get(url, body: json.encode({'name' : name}));
-                          //
-                          // final decode = json.decode(response.body) as Map<String, dynamic>;
-
-
-                          //final response = await http.get('http://127.0.0.1:5000/name');
-                          //final decoded = json.decode(response.body) as Map<String, dynamic>;
-
-                          // setState((){
-                          //   final_response = decoded['response'];
-                          // });
-                          //
-                          // setState((){
-                          //   greetings = decoded['greetings'];
-                          // });
-                          //var data = postData(batchNumber, lightLevel, roomTemp, humidity, outcome, datetime );
 
                           batchController.text = '';
                           lightLevelController.text = '';
                           roomTemperatureController.text = '';
                           roomHumidityController.text = '';
                           productionController.text = '';
-
-                          // final interpreter = await Interpreter.fromAddress('.tflite');
-                          // var input = [
-                          //   [1.0,1.0,1.0]
-                          // ];
-                          // var output = List.filled(1, 0).reshape([1,1]);
-                          // interpreter.run(input, output);
 
 
 
@@ -640,30 +581,27 @@ class _InputState extends State<Input> {
     await docUser.set(json);
   }
 
-  Get_Dataset() async {
-    final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
-    // final dataFrame = getWineQualityDataframe();
-    // final dataFrame = await fromCsv('/Users/loutherolayres/Documents/MyDataSetCSV2.csv.csv',
-    //     columns: [2,3]);
-    // final dataFrame = await fromCsv('/Users/loutherolayres/mush2 9.10.15 AM trashing/assets/MyDataSetCSV2.csv');
-    // final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
-
-    // final dataFrame = await fromCsv('assets/MyDataSetCSV2.csv');
-    print(dataFrame2);
-    final targetColumnName = 'outcome';
-    final splits = splitData(dataFrame2, [0.7]);
-    final splits2 = splitData(dataFrame2, [0.7]);
-    final trainData = splits.first;
-    final testData = splits.last;
-
-
-
-  }
+  // Get_Dataset() async {
+  //   final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
+  //   // final dataFrame = getWineQualityDataframe();
+  //   // final dataFrame = await fromCsv('/Users/loutherolayres/Documents/MyDataSetCSV2.csv.csv',
+  //   //     columns: [2,3]);
+  //   // final dataFrame = await fromCsv('/Users/loutherolayres/mush2 9.10.15 AM trashing/assets/MyDataSetCSV2.csv');
+  //   // final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
+  //
+  //   // final dataFrame = await fromCsv('assets/MyDataSetCSV2.csv');
+  //   print(dataFrame2);
+  //   final targetColumnName = 'outcome';
+  //   final splits = splitData(dataFrame2, [0.7]);
+  //   final splits2 = splitData(dataFrame2, [0.7]);
+  //   final trainData = splits.first;
+  //   final testData = splits.last;
+  //
+  // }
 
   fetchData (String url) async{
     // #before
     // http.Response response = await http.get(Uri.parse(url));
-
     //after
     final response = await http.get(Uri.parse(url));
     return response.body;
@@ -678,15 +616,23 @@ class _InputState extends State<Input> {
 }
 
 class CallApi {
-  final String _url = "http://127.0.0.1:5000/";
 
-  postData(data, apiurl) async {
-    var fullUrl = _url+apiurl;
-    http.post(
-        Uri.parse(fullUrl),
-        body: jsonEncode(data),
+  postData(datas, apiurl) async {
+    String _url = "http://127.0.0.1:5000/";
+    String fullUrl = _url + apiurl;
+    print(fullUrl + " is full url");
+    var respo = await http.post(
+        // Uri.parse(fullUrl),
+        Uri.parse("http://127.0.0.1:5000/print"),
+        body: jsonEncode(datas),
         headers: _setHeaders(),
     );
+
+    if(respo.statusCode == 200){
+      var json = respo.body;
+      // print(json );
+    }
+
   }
 
   _setHeaders() => {
@@ -698,229 +644,4 @@ class CallApi {
 }
 
 //class _inputstate
-
-
-
-//child: StreamBuilder(
-//         // stream: _mushroom.snapshots(), //persistent connection to the database
-//         stream: FirebaseFirestore.instance.collection('mushroom')
-//               .where("id", isEqualTo: currentUser.currentUser!.uid) //id should match the id field in the database
-//               .snapshots(),
-//         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
-//           if(streamSnapshot.hasData){
-//             return ListView.builder(
-//                 itemCount: streamSnapshot.data!.docs.length, //docs mean row
-//                 itemBuilder: (context, index) {
-//                   final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
-//                   // date = documentSnapshot['date'].toString() as DateTime;
-//                   //DateTime myDateTime = DateTime.parse(date.toDate().toString());
-//                   return Card(
-//                     margin: const EdgeInsets.all(15),
-//                     shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(15.0),
-//                     ),
-//                   color: pinkColor,
-//                   elevation: 10,
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       ListTile(
-//
-//                         // leading: Icon(
-//                         //   Icons.numbers,
-//                         //   size: 50,
-//                         //   color:  textColor,
-//                         // ),
-//                         title: RichText(
-//                           text: TextSpan(
-//                             //style: Theme.of(context).textTheme.body1,
-//                             children: [
-//                               // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                               WidgetSpan(
-//                                 child: Padding(
-//                                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                   child: Icon(Icons.numbers, color: textColor, size: 30,),
-//                                 ),
-//                               ),
-//                               TextSpan(text:  "Batch: " + documentSnapshot['batchNumber'].toString(),
-//                                 style: TextStyle(
-//                                   fontWeight: FontWeight.bold,
-//                                   fontSize: 30,
-//                                   color: textColor,
-//
-//                                 ),),
-//                             ],
-//                           ),
-//                         ),
-//
-//                           subtitle: Container(
-//
-//                             // padding: const EdgeInsets.all(12),
-//                             // decoration: BoxDecoration(
-//                             //   color: Colors.grey.shade200,
-//                             //   borderRadius: BorderRadius.circular(20),
-//                             //   border: Border.all(color: Colors.grey),
-//                             // ),
-//                             margin: EdgeInsets.fromLTRB(0, 0 , 0, 0),
-//                             child: Column(
-//
-//                               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 SizedBox(height: 10),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(5.0),
-//                                   child: RichText(
-//                                     text: TextSpan(
-//                                       //style: Theme.of(context).textTheme.body1,
-//                                       children: [
-//                                         // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                                         WidgetSpan(
-//                                           child: Padding(
-//                                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                             child: Icon(Icons.lightbulb, color: textColor),
-//                                           ),
-//                                         ),
-//                                         TextSpan(text: "Light Level: " + documentSnapshot['lightLevel'].toString(),
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.normal,
-//                                             fontSize: 15,
-//                                             color: textColor,
-//                                           ),),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: RichText(
-//                                     text: TextSpan(
-//                                       //style: Theme.of(context).textTheme.body1,
-//                                       children: [
-//                                         // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                                         WidgetSpan(
-//                                           child: Padding(
-//                                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                             child: Icon(Icons.thermostat, color: textColor),
-//                                           ),
-//                                         ),
-//                                         TextSpan(text: "Room Temp: " + documentSnapshot['roomTemp'].toString(),
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.normal,
-//                                             fontSize: 15,
-//                                             color: textColor,
-//                                           ),),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: RichText(
-//                                     text: TextSpan(
-//                                       //style: Theme.of(context).textTheme.body1,
-//                                       children: [
-//                                         // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                                         WidgetSpan(
-//                                           child: Padding(
-//                                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                             child: Icon(Icons.water_drop, color: textColor),
-//                                           ),
-//                                         ),
-//                                         TextSpan(text:   "Humidity: " +documentSnapshot['humidity'].toString(),
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.normal,
-//                                             fontSize: 15,
-//                                             color: textColor,
-//                                           ),),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: RichText(
-//                                     text: TextSpan(
-//                                       //style: Theme.of(context).textTheme.body1,
-//                                       children: [
-//                                         // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                                         WidgetSpan(
-//                                           child: Padding(
-//                                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                             child: Icon(Icons.info, color: textColor),
-//                                           ),
-//                                         ),
-//                                         TextSpan(text:   "Outcome: " +documentSnapshot['outcome'].toString(),
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.normal,
-//                                             fontSize: 15,
-//                                             color: textColor,
-//                                           ),),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: RichText(
-//                                     text: TextSpan(
-//                                       //style: Theme.of(context).textTheme.body1,
-//                                       children: [
-//                                         // TextSpan(text: "Batch Number: " + documentSnapshot['batchNumber'].toString(),),
-//                                         WidgetSpan(
-//                                           child: Padding(
-//                                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
-//                                             child: Icon(Icons.date_range, color: textColor),
-//                                           ),
-//                                         ),
-//                                         TextSpan(text:   "Date: " + documentSnapshot['datetime'].toString(),
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.normal,
-//                                             fontSize: 15,
-//                                             color: textColor,
-//                                           ),),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//
-//                               ],
-//                             )
-//
-//                               ),//Subtitle
-//
-//                         ),
-//                       Center(
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             ButtonBar(
-//                               children: [
-//                                 IconButton(
-//                                     icon:  Icon(Icons.edit, color: textColor ),
-//                                     onPressed: () => _update(documentSnapshot)),
-//                                 IconButton(
-//                                     icon:  Icon(Icons.delete, color: textColor),
-//                                     onPressed: () => _delete(documentSnapshot.id)),
-//
-//                               ],
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                     ],
-//                   ),
-//                   );
-//                 },
-//                 );
-//
-//
-//           }//widget build
-//           return const Center(
-//             child: CircularProgressIndicator(),
-//           );
-//         },
-//       ),
-
 
