@@ -24,7 +24,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
 import 'package:mush2/utils/colors.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+// import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -42,8 +42,8 @@ import 'package:intl/intl.dart';
 import 'package:ml_algo/ml_algo.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-
+// import 'package:tflite_flutter/tflite_flutter.dart';
+//
 // import 'package:sklite/SVM/SVM.dart';
 // import 'package:sklite/base.dart';
 // import 'package:sklite/ensemble/forest.dart';
@@ -58,11 +58,13 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 // import 'package:tflite/tflite.dart';
 import 'package:tflite/tflite.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+// import 'package:tflite_flutter/tflite_flutter.dart';
 // import 'package:chaquopy/chaquopy.dart';
 import 'package:csv/csv.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:http/http.dart';
+import 'package:file_picker/file_picker.dart';
+// import 'package:open_file/open_file.dart';
 
 //Before:
 // final  rawCsvContent = await rootBundle.loadString('assets/diabetes.csv');
@@ -419,34 +421,24 @@ class _InputState extends State<Input> {
                           final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
 
                           var datas = {
-                            'id' : userID,
-                            'batchNumber': batchController.text,
+                            // 'id' : userID,
+                            // 'batchNumber': batchController.text,
                             'lightLevel': lightLevelController.text,
                             'roomTemp': roomTemperatureController.text,
                             'humidity': roomHumidityController.text,
-                            'outcome': 'ewan',
-                            'datetime': datetime,
+                            // 'outcome': 'ewan',
+                            // 'datetime': datetime,
                           };
-                          
-                          
 
-                          
-                          // var c = await http.get(
-                          //   // Uri.parse(fullUrl),
-                          //   Uri.parse("http://127.0.0.1:5000/print"),
-                          //   // body: jsonEncode(datas),
-                          //   // headers: _setHeaders(),
-                          // );
-                          //
-                          // if(c.statusCode == 200){
-                          //   var json = c.body;
-                          //   print(json);
-                          // }
-
-                          //Passing the data and the endpoint
-                          // var r = await CallApi().postData(datas, 'try');
-                          // var bo = json.decode(r.body);
-                          // print(r);
+                          print(datas.toString() + " is datas");
+                          // Passing the data and the endpoint
+                          var r = await CallApi().postData(datas, 'predict');
+                          print("printing r below: ..");
+                          print(r.body);
+                          print("Done printing r.body");
+                          // print(r.body.toString() + " is r.body");
+                          // var bo = json.decode(json.encode(r.body));
+                          // print(bo + " is bo");
 
                           createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
 
@@ -618,20 +610,26 @@ class _InputState extends State<Input> {
 class CallApi {
 
   postData(datas, apiurl) async {
-    String _url = "http://127.0.0.1:5000/";
+    String _url = "http://10.0.2.2:5000/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
+    // print(fullUrl + " is full url");
+    print(datas.toString() + "  is datas");
     var respo = await http.post(
         // Uri.parse(fullUrl),
-        Uri.parse("http://127.0.0.1:5000/print"),
+        Uri.parse(fullUrl),
         body: jsonEncode(datas),
         headers: _setHeaders(),
     );
+    print("done with respo");
 
     if(respo.statusCode == 200){
       var json = respo.body;
-      // print(json );
+      print("this is json: " + json + " is json");
     }
+    print("done with post data");
+
+    return respo;
 
   }
 

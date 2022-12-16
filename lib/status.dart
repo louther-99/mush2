@@ -112,7 +112,7 @@ class _StatusState extends State<Status> {
                 OutlinedButton.icon(
                   icon: Icon(Icons.login, color: textColor, size: 24,),
                   onPressed: () async {
-                    onPressed: () => FirebaseAuth.instance.signOut();
+                    FirebaseAuth.instance.signOut();
                   },
 
                   label: Text(

@@ -75,21 +75,14 @@ class _ProfileState extends State<Profile> {
         .where("id", isEqualTo: userID) //id should match the id field in the database
         .snapshots()
         .map((snapshot) =>
-    // snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
-    snapshot.docs.map((doc) => print(doc.data())));
+    snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+    // snapshot.docs.map((doc) => print(doc.data())));
 
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-
-
-    // final user = FirebaseAuth.instance.currentUser!;
-    // final user = UserPreferences.myUser;
-    // final user = UserPreferences.myUser; //Pointing to the default user
-    // final user = UserPreferences.getUser(); //To change myUser to get the user instead of the default value
     return Scaffold(
       // body: StreamBuilder<UserData>(
       //   body: StreamBuilder<List<UserData>>(
@@ -292,7 +285,7 @@ class _ProfileState extends State<Profile> {
   }
 
 
-
+  //
   // Stream<List<UserData>>readUsers() {
   //   FirebaseFirestore.instance.collection('user')
   //       .where("id", isEqualTo: userID) //id should match the id field in the database

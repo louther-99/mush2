@@ -48,15 +48,18 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   lottie: ^2.0.0
 
+
 # Machine Learning
   ml_algo: ^16.17.4 #import 'package:ml_algo/ml_algo.dart';
   ml_dataframe: ^1.6.0 #import 'package:ml_dataframe/ml_dataframe.dart';
   ml_preprocessing: ^7.0.2  #import 'package:ml_preprocessing/ml_preprocessing.dart';
-  tflite_flutter: ^0.9.0 #import 'package:tflite_flutter/tflite_flutter.dart';
+#  tflite_flutter: ^0.9.0 #import 'package:tflite_flutter/tflite_flutter.dart';
 #  sklite: ^0.0.1
   tflite: ^1.1.2 #import 'package:tflite/tflite.dart';
 #  chaquopy: ^0.0.19
   csv: ^5.0.1 #import 'package:csv/csv.dart';
+  file_picker: ^5.2.4
+#  open_file: ^3.2.1
 
 #sklite:
 #  import 'package:sklite/SVM/SVM.dart';

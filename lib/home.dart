@@ -64,9 +64,10 @@ class _HomePageState extends State<HomePage> {
                 Tab(icon: Icon(Icons.insert_drive_file)),
                 Tab(icon: Icon(Icons.table_view)),
                 // Tab(icon: Icon(Icons.home)),
-                Tab(icon: Icon(Icons.person)),
+
                 // Tab(icon: Icon(Icons.notifications)),
-                Tab(icon: Icon(Icons.menu)),
+                Tab(icon: Icon(Icons.file_present)),
+                Tab(icon: Icon(Icons.person)),
               ],
             ),
             title: Text("MushMush",
@@ -87,9 +88,6 @@ class _HomePageState extends State<HomePage> {
             // Center(
             //   // child: Timeline(),
             // ),
-            Center(
-              child: Profile(),
-            ),
 
             // Center(
             //   child: Notif(),
@@ -97,6 +95,10 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: Status(),
               //child: Text("STATUS"),
+            ),
+
+            Center(
+              child: Profile(),
             ),
           ],
         ),

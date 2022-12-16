@@ -36,7 +36,7 @@ android {
         noCompress 'lite'
     }
 
-    compileSdkVersion 32 //flutter.compileSdkVersion
+    compileSdkVersion 33 //flutter.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
