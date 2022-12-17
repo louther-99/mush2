@@ -58,8 +58,8 @@ dependencies:
   tflite: ^1.1.2 #import 'package:tflite/tflite.dart';
 #  chaquopy: ^0.0.19
   csv: ^5.0.1 #import 'package:csv/csv.dart';
-  file_picker: ^5.2.4
-#  open_file: ^3.2.1
+  file_picker: ^4.6.1 #import 'package:file_picker/file_picker.dart';
+  open_file: ^3.2.1
 
 #sklite:
 #  import 'package:sklite/SVM/SVM.dart';

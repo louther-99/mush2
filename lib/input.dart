@@ -65,6 +65,7 @@ import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:http/http.dart';
 import 'package:file_picker/file_picker.dart';
 // import 'package:open_file/open_file.dart';
+import 'package:file_picker/file_picker.dart';
 
 //Before:
 // final  rawCsvContent = await rootBundle.loadString('assets/diabetes.csv');
@@ -93,6 +94,10 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  var shuta = '';
+  List<List<dynamic>> _data = [];
+  // List<List<dynamic>>? _data;
+  String? filePath;
   String url = "";
   String urls = "";
   var data;
@@ -159,7 +164,7 @@ class _InputState extends State<Input> {
       },
       child: Container(
         color: bgCard,
-        // height: ,
+        height: getHeight(),
         child: SingleChildScrollView(
           // clipBehavior: Clip.none,
           // reverse: true,
@@ -173,7 +178,7 @@ class _InputState extends State<Input> {
                 SizedBox(height: 30),
                 Center(
                   child: Text(
-                    'Input Data',
+                    'Upload your CSV File',
                     textAlign: TextAlign.center,
                   style: TextStyle(
                           color: textColor,
@@ -183,34 +188,71 @@ class _InputState extends State<Input> {
                   ),
 
                 ),
-                SizedBox(height: 20),
-                Center(
-                  child: TextField(
-                    onChanged: (value) {
-                      // url = 'http://127.0.0.1:5000/api?query=' + value.toString();
-                      url = 'http://10.0.2.2:5000/api?query=' + value.toString();
-                    },
+                OutlinedButton.icon(
+                  icon: Icon(Icons.upload, color: textColor),
+                  onPressed: () async {
+
+                    _upload();
+                    // final snackBar = SnackBar(content: Text("Data has been added."));
+                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                  },
+
+                  label: Text(
+                    'Upload',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    minimumSize: Size.fromHeight (40),
+                    backgroundColor: bgCard,
                   ),
 
                 ),
                 SizedBox(height: 20),
-                Center(
-                  child: TextButton(
-                    onPressed: () async {
-                      data = await fetchData(url);
-                      var decoded = jsonDecode(data);
-                      setState(() {
-                        output = decoded['output'];
-                      });
-                    },
-                    child: Text("Fetch Api Value"),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    output,
-                  ),
-                ),
+
+              Container(
+                // height: 300,
+                // child: DataTable(
+                //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
+                //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
+                // ),
+
+
+
+                // child: ListView.builder(
+                //   itemCount: _data.length, //docs mean row
+                //   // scrollDirection: Axis.vertical,
+                //   shrinkWrap: true,
+                //   itemBuilder: (context, index) {
+                //     return Card(
+                //       margin: const EdgeInsets.all(3),
+                //       color: index == 0 ? Colors.blueGrey : Colors.white,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(15.0),
+                //       ),
+                //       // color: pinkColor,
+                //       // elevation: 10,
+                //       child: ListTile(
+                //         leading: Text(_data[index][0].toString(), textAlign: TextAlign.center,
+                //           style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black),),
+                //         title: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                //           style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                //       ),
+                //         trailing: Text(_data[index][4].toString(), textAlign: TextAlign.center,
+                //             style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
+
+
+              ),
                 SizedBox(height: 20),
                 Form(
                   key: formKey,
@@ -219,52 +261,6 @@ class _InputState extends State<Input> {
                     children: <Widget>[
 
                       SizedBox(height: 50),
-                      Text(
-                        'Greetings: ' + greetings,
-                        style: TextStyle(
-                          color: Color(0xffdbc791),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                      Container(
-                        child: (
-                        //start
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                  minimumSize: Size.fromHeight(50)),
-                              icon: Icon(Icons.add),
-                              label: Text(
-                                'Press',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.black
-                                ),
-                              ),
-                              onPressed: () async {
-
-                                try{
-                                  final String urlp = "http://10.0.2.2:5000/print";
-                                  final responses = await http.get(Uri.parse(urlp));
-                                  print(responses.body + " is body bitch!");
-                                  // final url = 'http://127.0.0.1:5000/print';
-                                  // final response = await http.get(Uri.parse(url));
-
-                                  final decoded = json.decode(json.encode(responses.body));// as Map<String, dynamic>;
-                                  print(decoded + " is decoded");
-
-                                  setState(() {
-                                    greetings = decoded;
-                                    // decoded;
-                                  });
-                                }catch(err){
-                                  print(err);
-                                }
-                              },
-                            )
-                        //end
-                        ),
-                      ),
 
                       TextFormField(
                         // focusNode: _focusNode,
@@ -402,7 +398,26 @@ class _InputState extends State<Input> {
                         },
                       ),
                       SizedBox(height: 30),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Icon(Icons.info, size: 24, color: textColor,),
+                            ),
+                            TextSpan(
+                              text: " Outcome: " + shuta,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
 
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 20,),
                       OutlinedButton.icon(
                         icon: Icon(Icons.query_stats, color: textColor),
                         onPressed: () async {
@@ -433,9 +448,29 @@ class _InputState extends State<Input> {
                           print(datas.toString() + " is datas");
                           // Passing the data and the endpoint
                           var r = await CallApi().postData(datas, 'predict');
-                          print("printing r below: ..");
+
+                          print("printing r.body below: ..");
                           print(r.body);
                           print("Done printing r.body");
+                          final json = jsonDecode(r.body);
+                          print("printing json below: ..");
+                          print(json);
+                          print("Done printing json");
+                          // var decoded = jsonDecode(r);
+                          // print("printing decoded below: ..");
+                          // print(decoded);
+                          print("printing json['Prediction'] ");
+                          print(json['Prediction'][0]);
+
+
+                          setState(() {
+                            shuta = (json['Prediction'][0]);
+                          });
+
+                          // output = decoded['Prediction'];
+                          // print(output);
+
+
                           // print(r.body.toString() + " is r.body");
                           // var bo = json.decode(json.encode(r.body));
                           // print(bo + " is bo");
@@ -455,7 +490,6 @@ class _InputState extends State<Input> {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                         },
-
                         label: Text(
                           'Predict',
                           style: TextStyle(
@@ -469,68 +503,10 @@ class _InputState extends State<Input> {
                           minimumSize: Size.fromHeight (40),
                           backgroundColor: bgCard,
                         ),
-
                       ),
-
-
 
                       SizedBox(height: 20),
 
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        WidgetSpan(
-                                          child: Icon(Icons.percent, size: 24, color: textColor),
-                                        ),
-                                        TextSpan(
-                                          text: " Accuracy:",
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 20,),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        WidgetSpan(
-                                          child: Icon(Icons.info, size: 24, color: textColor,),
-                                        ),
-                                        TextSpan(
-                                          text: " Outcome:",
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            color: textColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -600,6 +576,32 @@ class _InputState extends State<Input> {
 
   }
 
+  void _upload() async {
+    final file_result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if(file_result == null) return;
+    print(file_result.files.first.name + " is file_result.files.first.name");
+    filePath = file_result.files.first.path!;
+    print(filePath.toString() + " is filePath");
+
+    final inputs = File(filePath!).openRead();
+    final fields = await inputs.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
+    print(fields.toString() + " is fields");
+    print(fields[0].toString() + " is fields[0]");
+    print(fields[0][1].toString() + " is fields[0][1]");
+    print(fields[1].toString() + " is fields[1] ");
+
+    setState(() {
+      _data = fields;
+    });
+
+  }
+
+  double getHeight() {
+    double siz = MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight);
+    print(siz.toString() + " size without the appbar");
+    return siz;
+  }
+
   // void _requestFocus() {
   //   setState(() {
   //     FocusScope.of(context).requestFocus(_focusNode);
@@ -625,6 +627,7 @@ class CallApi {
 
     if(respo.statusCode == 200){
       var json = respo.body;
+      print("This will print json because of 200 stat code");
       print("this is json: " + json + " is json");
     }
     print("done with post data");

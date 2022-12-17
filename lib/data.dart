@@ -427,6 +427,7 @@ class _DataState extends State<Data> {
         }
       },
       child: Container(
+        height: MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight),
         color: bgCard,
         child: SingleChildScrollView(
           child: Column(
