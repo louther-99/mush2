@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta_meta.dart';
 import 'package:mush2/model/mushroomData.dart';
 import 'package:mush2/model/userData.dart';
 import 'package:provider/provider.dart';
@@ -94,6 +95,7 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  List rows = [];
   var shuta = '';
   List<List<dynamic>> _data = [];
   // List<List<dynamic>>? _data;
@@ -193,6 +195,8 @@ class _InputState extends State<Input> {
                   onPressed: () async {
 
                     _upload();
+
+
                     // final snackBar = SnackBar(content: Text("Data has been added."));
                     // ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
@@ -216,7 +220,7 @@ class _InputState extends State<Input> {
                 SizedBox(height: 20),
 
               Container(
-                // height: 300,
+                height: 300,
                 // child: DataTable(
                 //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
                 //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
@@ -224,32 +228,32 @@ class _InputState extends State<Input> {
 
 
 
-                // child: ListView.builder(
-                //   itemCount: _data.length, //docs mean row
-                //   // scrollDirection: Axis.vertical,
-                //   shrinkWrap: true,
-                //   itemBuilder: (context, index) {
-                //     return Card(
-                //       margin: const EdgeInsets.all(3),
-                //       color: index == 0 ? Colors.blueGrey : Colors.white,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(15.0),
-                //       ),
-                //       // color: pinkColor,
-                //       // elevation: 10,
-                //       child: ListTile(
-                //         leading: Text(_data[index][0].toString(), textAlign: TextAlign.center,
-                //           style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black),),
-                //         title: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                //           style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
-                //       ),
-                //         trailing: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                //             style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // ),
+                child: ListView.builder(
+                  itemCount: _data.length, //docs mean row
+                  // scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: const EdgeInsets.all(3),
+                      color: index == 0 ? Colors.blueGrey : Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      // color: pinkColor,
+                      // elevation: 10,
+                      child: ListTile(
+                        leading: Text(_data[index][0].toString(), textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black),),
+                        title: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                      ),
+                        trailing: Text(_data[index][4].toString(), textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                        ),
+                      ),
+                    );
+                  },
+                ),
 
 
               ),
@@ -448,7 +452,6 @@ class _InputState extends State<Input> {
                           print(datas.toString() + " is datas");
                           // Passing the data and the endpoint
                           var r = await CallApi().postData(datas, 'predict');
-
                           print("printing r.body below: ..");
                           print(r.body);
                           print("Done printing r.body");
@@ -461,7 +464,6 @@ class _InputState extends State<Input> {
                           // print(decoded);
                           print("printing json['Prediction'] ");
                           print(json['Prediction'][0]);
-
 
                           setState(() {
                             shuta = (json['Prediction'][0]);
@@ -587,8 +589,35 @@ class _InputState extends State<Input> {
     final fields = await inputs.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
     print(fields.toString() + " is fields");
     print(fields[0].toString() + " is fields[0]");
+    final title = fields[0].toString();
+    for(int i = 1; i <fields.length; i++ ){
+      print(fields[i]);
+      // rows = rows.add(fields[i]);
+      // rows = rows.insertAll(fields[i]);
+      // rows = rows + fields[i];
+    }
+    print("Printing rows");
+    print(rows);
     print(fields[0][1].toString() + " is fields[0][1]");
     print(fields[1].toString() + " is fields[1] ");
+
+    var rspn = await CallApi().postDataAgain(fields, 'convert');
+    print("printing rspn.body below: ..");
+    print(rspn.body);
+    print("Done printing rspn.body");
+    final jsons = jsonDecode(rspn.body);
+    print("printing jsons below: ..");
+    print(jsons);
+    print("Done printing jsons");
+    // var decoded = jsonDecode(r);
+    // print("printing decoded below: ..");
+    // print(decoded);
+    print("printing json['Prediction'] ");
+    // print(json['Prediction'][0]);
+
+    // fields = kl
+
+    // fields
 
     setState(() {
       _data = fields;
@@ -640,6 +669,27 @@ class CallApi {
     'Content-type':'application/json',
     'Accept': 'application/json',
   };
+
+  postDataAgain(fields, urls) async {
+    String _urls = "http://10.0.2.2:5000/";
+    String fullUrls = _urls + urls;
+    var resInPeace = await http.post(
+      Uri.parse(fullUrls),
+      // Uri.parse(urls),
+      body: jsonEncode(fields),
+      headers: _setHeaders(),
+    );
+    print("done with resInPeace");
+
+    if(resInPeace.statusCode == 200){
+      var jsone = resInPeace.body;
+      print("This will print jsone because of 200 stat code");
+      print("this is json: " + jsone + " is jsone");
+    }
+    print("done with post dataAgain");
+
+    return resInPeace;
+  }
 
 
 }

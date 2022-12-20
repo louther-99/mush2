@@ -32,11 +32,11 @@ class _SignUpState extends State<SignUp> {
   final passwordController = TextEditingController();
   String name = "";
 
+
   @override
   void dispose(){
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
@@ -195,14 +195,30 @@ class _SignUpState extends State<SignUp> {
 
     try{ //Creating user with email and password accepting the email and password
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
-      userID = await FirebaseAuth.instance.currentUser!.uid;
-
+      String a = await getID() as String;
       final docUser = await FirebaseFirestore.instance.collection('user').doc();
+      print(a);
+      print(docUser);
+      //  AvatarURL
+      // "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60"
+      // IDUser
+      // "Pm6dF0mb3qPIX87uTsqswNHvzlz1"
+      // about
+      // "Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf"
+      // email
+      // "diazlouther@gmail.com"
+      // imagePath
+      // "https://flxt.tmsimg.com/assets/4950_v9_bb.jpg"
+      // lastMessageTime
+      // "2022-11-16 11:27:04.768087"
+      // name
+      // "Louther Olayres"
+
       final user = UserData(
-      IDUser: userID,
+      IDUser: a,
       profilePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
       name: 'Louther Olayres',
-      email: 'diazlouther@gmail.com',
+      email: emailController.text.trim(),
       about: 'Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf',
       coverPath: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60',
       lastMessageTime: DateTime.now().toString(),
@@ -219,6 +235,11 @@ class _SignUpState extends State<SignUp> {
     //Navigator.of(context) not working!
     Navigator.of(context).pop();
     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  Future<String> getID() async {
+    return userID = await FirebaseAuth.instance.currentUser!.uid;
+
   }
 
 }

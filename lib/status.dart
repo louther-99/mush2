@@ -5,6 +5,13 @@ import 'package:mush2/profile.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:lottie/lottie.dart';
 import 'package:lottie/lottie.dart';
+// import 'package:pdfx/pdfx.dart';
+import 'package:pdf/pdf.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+import 'package:printing/printing.dart';
+
+import 'api/pdf_api.dart';
 
 
 class Status extends StatefulWidget {
@@ -137,18 +144,17 @@ class _StatusState extends State<Status> {
                 OutlinedButton.icon(
                   icon: Icon(Icons.picture_as_pdf, color: textColor, size: 24,),
                   onPressed: () async {
-                    // // FirebaseAuth.instance.signOut();
-                    // final invoice = Invoice(
+                    FirebaseAuth.instance.signOut();
+                    // final report = Invoice(
                     //   userID
                     // );
-                    // final pdfFile = await PdfInvoiceApi.generate(invoice);
-                    // PdfApi.openFile(pdfFile);
-
+                    final pdfFile = await PdfApi.generateText("report");
+                    PdfApi.openFile(pdfFile!);
 
                   },
 
                   label: Text(
-                    'Invoice PDF',
+                    'Report PDF',
                     style: TextStyle(
                       fontSize: 24,
                       color: textColor,

@@ -10,6 +10,8 @@ final bgCard = Color(0xffF7EDE2);
 final cardTile = Colors.grey[150];
 final blueGrey = Colors.blueGrey;
 
+//https://assets8.lottiefiles.com/packages/lf20_gatzs89r.json
+
 //For Mush
 // final bgColor = Color(0xffF6BD60);
 // // final bgColor = Color(0xff946713);//Mush

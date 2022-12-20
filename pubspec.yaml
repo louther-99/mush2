@@ -40,7 +40,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
-  path_provider: ^2.0.11
+  path_provider: ^2.0.2 #import 'package:path_provider/path_provider.dart';
   grouped_list: ^5.1.2
   intl: ^0.17.0
 #  google_sign_in: ^5.4.2
@@ -57,10 +57,18 @@ dependencies:
 #  sklite: ^0.0.1
   tflite: ^1.1.2 #import 'package:tflite/tflite.dart';
 #  chaquopy: ^0.0.19
+#  csv: ^5.0.1 #import 'package:csv/csv.dart';
+#  file_picker: ^4.6.1 #import 'package:file_picker/file_picker.dart';
+#  open_file: ^3.1.0 #import 'package:open_file/open_file.dart';
+##  pdfx: ^2.3.0 #import 'package:pdfx/pdfx.dart';
+#  pdf: ^3.1.0 #import 'package:pdf/pdf.dart';
+#  printing: ^5.9.3 #import 'package:printing/printing.dart';
   csv: ^5.0.1 #import 'package:csv/csv.dart';
-  file_picker: ^4.6.1 #import 'package:file_picker/file_picker.dart';
-  open_file: ^3.2.1
-
+  file_picker: ^4.2.4 #import 'package:file_picker/file_picker.dart';
+  open_file: ^3.2.1 #import 'package:open_file/open_file.dart';
+  pdfx: ^2.3.0 #import 'package:pdfx/pdfx.dart';
+  pdf: ^3.8.4 #import 'package:pdf/pdf.dart';
+  printing: ^5.9.3 #import 'package:printing/printing.dart';
 #sklite:
 #  import 'package:sklite/SVM/SVM.dart';
 #  import 'package:sklite/base.dart';

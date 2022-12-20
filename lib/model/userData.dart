@@ -31,14 +31,15 @@ class UserData{
   // }
 
   factory UserData.fromDocument(DocumentSnapshot doc){
+    var docs = doc.data() as Map<String, dynamic>;
     return UserData(
-        IDUser: doc['IDUser'],
-        profilePath: doc['profilePath'],
-        name: doc['name'],
-        email: doc['email'],
-        about: doc['about'],
-        coverPath: doc['coverPath'],
-        lastMessageTime: doc['lastMessageTime']
+        IDUser: docs['IDUser'],
+        profilePath: docs['profilePath'],
+        name: docs['name'],
+        email: docs['email'],
+        about: docs['about'],
+        coverPath: docs['coverPath'],
+        lastMessageTime: docs['lastMessageTime']
     );
   }
 

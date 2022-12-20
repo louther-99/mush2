@@ -26,8 +26,7 @@ import 'package:lottie/lottie.dart';
 
 
 final CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
-
-final String userID = FirebaseAuth.instance.currentUser!.uid;
+String userID = "";
 bool hide = false;
 
 class Profile extends StatefulWidget {
@@ -70,13 +69,30 @@ class _ProfileState extends State<Profile> {
 
   }
 
-  Stream<List<UserData>> ? readUsers() {
+  Stream<List<UserData>>? readUsers() {
+    userID = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance.collection('user')
-        .where("id", isEqualTo: userID) //id should match the id field in the database
+        .where("IDUser", isEqualTo: userID) //id should match the id field in the database
         .snapshots()
-        .map((snapshot) =>
-    snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+        .map((querySnapshot) =>
+        querySnapshot.docs.map((doc) => UserData.fromDocument(doc)).toList());
     // snapshot.docs.map((doc) => print(doc.data())));
+    print(userID);
+
+  //  AvatarURL
+    // "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60"
+    // IDUser
+    // "Pm6dF0mb3qPIX87uTsqswNHvzlz1"
+    // about
+    // "Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf"
+    // email
+    // "diazlouther@gmail.com"
+    // imagePath
+    // "https://flxt.tmsimg.com/assets/4950_v9_bb.jpg"
+    // lastMessageTime
+    // "2022-11-16 11:27:04.768087"
+    // name
+    // "Louther Olayres"
 
   }
 
@@ -97,8 +113,14 @@ class _ProfileState extends State<Profile> {
         //   builder: (context, snapshot) {
             // if (streamSnapshot.hasData) {
         body: StreamBuilder<List<UserData>>(
-        stream: readUsers(),
-        builder: (context,snapshot){
+        // stream: readUsers(),
+        stream:
+            FirebaseFirestore.instance.collection('user')
+            .where("IDUser", isEqualTo: userID) //id should match the id field in the database
+            .snapshots()
+            .map((querySnapshot) =>
+            querySnapshot.docs.map((doc) => UserData.fromDocument(doc)).toList()),
+            builder: (context,snapshot){
           // final DocumentSnapshot documentSnapshot = snapshot.data;
           // final List<UserData>? documentSnapshot = snapshot.data;
           // final user = documentSnapshot;
@@ -108,25 +130,26 @@ class _ProfileState extends State<Profile> {
         // stream: _usersStream,
         // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
           if (snapshot.hasData) {
+            print('Has data');
             // final DocumentSnapshot documentSnapshot = streamSnapshot.data!;
             // UserData user = documentSnapshot.toObject(UserData.class);
             // UserData user = documentSnapshot.toObject;
             final user = snapshot.data!;
-          print("this is user: " + user.toString()); //The user: AsyncSnapshot<List<UserData>>(ConnectionState.none, null, null, null)print("this is user: " + user.toString());
-          print("this is user: " + user[1].toString());
-
+            print(user);
+          // print("this is user: " + user.toString()); //The user: AsyncSnapshot<List<UserData>>(ConnectionState.none, null, null, null)print("this is user: " + user.toString());
+          // print("this is user: " + user[1].toString());
 
             return ListView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  buildTop(), //Error
+                  buildTop(user), //Error
                   const SizedBox(height: 24),
-                  buildName(), //Error
+                  buildName(user), //Error
                   const SizedBox(height: 24),
                   NumbersWidget(),
                   const SizedBox(height: 48),
-                  buildAbout(), //Error
+                  buildAbout(user), //Error
                   const SizedBox(height: 24),
                   Center(child: buildUpgradeButton()),
                   const SizedBox(height: 24),
@@ -146,10 +169,10 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildName() {
+  Widget buildName(List<UserData> user) {
     return Column(
       children: [
-        Text("user.name",
+        Text(user.toString(),
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
         ),
         Text(
@@ -187,7 +210,7 @@ class _ProfileState extends State<Profile> {
     // );
   }
 
-  buildAbout() {
+  buildAbout(List<UserData> user) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 48),
       child: Container(
@@ -265,7 +288,7 @@ class _ProfileState extends State<Profile> {
   //   ),
   }
 
-  Widget buildTop( ) {
+  Widget buildTop(List<UserData> user ) {
     final  top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
     return Stack(
