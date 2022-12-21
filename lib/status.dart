@@ -51,7 +51,7 @@ class _StatusState extends State<Status> {
                   },
 
                   label: Text(
-                    'Report PDF',
+                    'Donwload PDF',
                     style: TextStyle(
                       fontSize: 24,
                       color: textColor,

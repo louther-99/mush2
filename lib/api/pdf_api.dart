@@ -1,4 +1,5 @@
 
+
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/widgets.dart';
@@ -8,24 +9,25 @@ import 'package:printing/printing.dart';
 import 'dart:io' as io;
 
 
-
 class PdfApi {
   static Future<io.File?> generateText(String text) async {
     final pdfs = pw.Document();
 
     //final image = await imaegeFromAssestBundle('assets/image/png');
 
-    pdfs.addPage(pw.Page(
-      build: (pw.Context context) => pw.Center(
-            child: pw.Text(text, style: pw.TextStyle(fontSize: 48)),
+    pdfs.addPage(
+        pw.Page(
+          build: (pw.Context context) =>
+              pw.Center(
+                child: pw.Text(text, style: pw.TextStyle(fontSize: 48)),
           ),
     ));
 
     //print the document
-    // await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdfs.save());
+    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdfs.save());
 
     //share the document to other apps
-    // await Printing.sharePdf(bytes: await pdfs.save(), filename: 'nmydocument.pdf');
+    await Printing.sharePdf(bytes: await pdfs.save(), filename: 'nmydocument.pdf');
 
     //save PDF with path_provider
     // final output = await getTemporaryDirectory();
@@ -53,6 +55,8 @@ class PdfApi {
     // // final path = dir.path;
     // final file = File('${dir.path}/$name');
     // await file.writeAsBytes(bytes);
+
+    print("Printing file: " + file.toString());
 
     return file;
 

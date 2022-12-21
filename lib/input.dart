@@ -39,6 +39,7 @@ import 'package:ml_dataframe/ml_dataframe.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // For google maps
 import 'package:intl/intl.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'package:ml_algo/ml_algo.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
@@ -95,6 +96,7 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  var file_result;
   List rows = [];
   var shuta = '';
   var acu = "";
@@ -179,18 +181,18 @@ class _InputState extends State<Input> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: 30),
-                Center(
-                  child: Text(
-                    'Upload your CSV File',
-                    textAlign: TextAlign.center,
-                  style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                  ),
-
-                ),
+                // Center(
+                //   child: Text(
+                //     'Upload Your CSV File',
+                //     textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //           color: textColor,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 30,
+                //         ),
+                //   ),
+                //
+                // ),
                 OutlinedButton.icon(
                   icon: Icon(Icons.upload, color: textColor),
                   onPressed: () async {
@@ -204,7 +206,7 @@ class _InputState extends State<Input> {
                   },
 
                   label: Text(
-                    'Upload',
+                    'Upload CSV',
                     style: TextStyle(
                       fontSize: 24,
                       color: textColor,
@@ -221,35 +223,75 @@ class _InputState extends State<Input> {
                 SizedBox(height: 20),
 
               Container(
-                height: 300,
+                height: 350,
+                // color: Colors.blueGrey,
                 // child: DataTable(
                 //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
                 //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
                 // ),
 
+                child: file_result == null ? Container(
 
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText('Upload', textAlign: TextAlign.center,
+                              textStyle: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                              ),),
+                            TypewriterAnimatedText('your', textAlign: TextAlign.center,
+                              textStyle: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                              ),),
+                            TypewriterAnimatedText('CSV', textAlign: TextAlign.center,
+                              textStyle: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                              ),),
+                            TypewriterAnimatedText('File', textAlign: TextAlign.center,
+                              textStyle: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                              ),),
 
-                child: ListView.builder(
+                          ],
+                          // 'Upload your CSV File',
+
+                        ),
+                        Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
+
+                      ],
+                    ),
+                  )
+                ) : ListView.builder(
                   itemCount: _data.length, //docs mean row
                   // scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Card(
                       margin: const EdgeInsets.all(3),
-                      color: index == 0 ? Colors.blueGrey : Colors.white,
+                      color: index == 0 ? pinkColor : Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       // color: pinkColor,
                       // elevation: 10,
                       child: ListTile(
-                        leading: Text(_data[index][0].toString(), textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black),),
-                        title: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                        leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
+                        title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
                       ),
-                        trailing: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? Colors.red : Colors.black)
+                        trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
                         ),
                       ),
                     );
@@ -257,7 +299,165 @@ class _InputState extends State<Input> {
                 ),
 
 
+
               ),
+                SizedBox(height: 20,),
+
+                Center(
+                  child: Card(
+                    margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                    // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    color: pinkColor,
+                    elevation: 10,
+                    child: Column(
+                      children: [
+                        Container(
+                          // height: 40,
+                          padding: EdgeInsets.all(2),
+                          margin:  EdgeInsets.all(20),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(Icons.info, size: 24, color: textColor,),
+                                ),
+                                TextSpan(
+                                  text: " Outcome: " + shuta,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          // height: 40,
+                          padding: EdgeInsets.all(2),
+                          margin:  EdgeInsets.all(20),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                ),
+                                TextSpan(
+                                  text: " Accuracy: " + acu.toString() + "%",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // OutlinedButton.icon(
+                //   icon: Icon(Icons.query_stats, color: textColor),
+                //   onPressed: () async {
+                //
+                //     // final preprocess = Get_Dataset();
+                //
+                //     final int batchNumber = int.parse(
+                //         batchController.text);
+                //     final double lightLevel = double.parse(
+                //         lightLevelController.text);
+                //     final double roomTemp = double.parse(
+                //         roomTemperatureController.text);
+                //     final double humidity = double.parse(
+                //         roomHumidityController.text);
+                //     final String outcome = (productionController.text);
+                //     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
+                //
+                //     var datas = {
+                //       // 'id' : userID,
+                //       // 'batchNumber': batchController.text,
+                //       'lightLevel': lightLevelController.text,
+                //       'roomTemp': roomTemperatureController.text,
+                //       'humidity': roomHumidityController.text,
+                //       // 'outcome': 'ewan',
+                //       // 'datetime': datetime,
+                //     };
+                //
+                //     print(datas.toString() + " is datas");
+                //     // Passing the data and the endpoint
+                //     var r = await CallApi().postData(datas, 'predict');
+                //     print("printing r.body below: ..");
+                //     print(r.body);
+                //     print("Done printing r.body");
+                //     final json = jsonDecode(r.body);
+                //     print("printing json below: ..");
+                //     print(json);
+                //     print("Done printing json");
+                //     // var decoded = jsonDecode(r);
+                //     // print("printing decoded below: ..");
+                //     // print(decoded);
+                //     print("printing json['Prediction'] ");
+                //     print(json['Prediction'][0]);
+                //
+                //     print("Printing accuracy: below");
+                //     print(json['Accuracy']);
+                //     double a = json['Accuracy'] * 100;
+                //     print(a);
+                //
+                //     setState(() {
+                //       shuta = (json['Prediction'][0]);
+                //       acu = (a.toString());
+                //     });
+                //
+                //     // output = decoded['Prediction'];
+                //     // print(output);
+                //
+                //
+                //     // print(r.body.toString() + " is r.body");
+                //     // var bo = json.decode(json.encode(r.body));
+                //     // print(bo + " is bo");
+                //
+                //     createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
+                //
+                //     batchController.text = '';
+                //     lightLevelController.text = '';
+                //     roomTemperatureController.text = '';
+                //     roomHumidityController.text = '';
+                //     productionController.text = '';
+                //
+                //
+                //
+                //     final snackBar = SnackBar(content: Text("Data has been added."));
+                //
+                //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                //
+                //   },
+                //   label: Text(
+                //     'Predict',
+                //     style: TextStyle(
+                //       fontSize: 24,
+                //       color: textColor,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                //   style: OutlinedButton.styleFrom(
+                //     shape: StadiumBorder(),
+                //     minimumSize: Size.fromHeight (40),
+                //     backgroundColor: bgCard,
+                //   ),
+                // ),
+
+
+
                 SizedBox(height: 20),
                 Form(
                   key: formKey,
@@ -531,29 +731,29 @@ class _InputState extends State<Input> {
                                   ),
                                 ),
                               ),
-                              // Container(
-                              //   // height: 40,
-                              //   padding: EdgeInsets.all(2),
-                              //   margin:  EdgeInsets.all(20),
-                              //   child: RichText(
-                              //     text: TextSpan(
-                              //       children: [
-                              //         WidgetSpan(
-                              //           child: Icon(Icons.percent, size: 24, color: textColor,),
-                              //         ),
-                              //         TextSpan(
-                              //           text: " Accuracy: " + acu.toString() + "%",
-                              //           style: TextStyle(
-                              //             fontSize: 24,
-                              //             color: textColor,
-                              //             fontWeight: FontWeight.bold,
-                              //           ),
-                              //         ),
-                              //
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
+                              Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.percent, size: 24, color: textColor,),
+                                      ),
+                                      TextSpan(
+                                        text: " Accuracy: " + acu.toString() + "%",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -631,7 +831,7 @@ class _InputState extends State<Input> {
   }
 
   void _upload() async {
-    final file_result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    file_result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if(file_result == null) return;
     print(file_result.files.first.name + " is file_result.files.first.name");
     filePath = file_result.files.first.path!;
