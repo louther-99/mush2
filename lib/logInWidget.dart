@@ -299,6 +299,10 @@ class _LogInWidgetState extends State<LogInWidget> {
 
           } on FirebaseAuthException catch(e){
             print(e);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  e.toString()
+                )));
             //m.showSnackBar(e.message);
           }
 

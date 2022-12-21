@@ -28,6 +28,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String userID = "";
   final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String name = "";
@@ -35,6 +36,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   void dispose(){
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -79,7 +81,34 @@ class _SignUpState extends State<SignUp> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-
+                            TextFormField(
+                              controller: nameController,
+                              cursorColor: textColor,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                labelText: "Enter your name",
+                                fillColor: textColor,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                prefixIcon: Icon(Icons.people),
+                                // focusedBorder:OutlineInputBorder(
+                                // borderSide: const BorderSide(color: Colors.black45, width: 2.0),
+                                // borderRadius: BorderRadius.circular(25.0),
+                                // ),
+                              ),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r"[a-zA-Z]+|\s"),
+                                )
+                              ],
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                              value != null && value == int
+                                  ? "Name must not be numbers"
+                                  : null,
+                            ),
+                            SizedBox(height: 20),
                             TextFormField(
                               controller: emailController,
                               cursorColor: textColor,
@@ -229,6 +258,10 @@ class _SignUpState extends State<SignUp> {
 
     } on FirebaseAuthException catch(e){
       print(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              e.toString()
+          )));
       //Utils.showSnackBar(e.message);
 
     }

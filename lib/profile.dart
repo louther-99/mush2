@@ -38,6 +38,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool doesnothavecover = false;
+  bool doesnothaveprofile = false;
 
   final userID = FirebaseAuth.instance.currentUser!.uid;
   final double coverHeight = 200;
@@ -137,7 +139,7 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 48),
           buildAbout(usrs), //Error
           const SizedBox(height: 24),
-          Center(child: buildUpgradeButton()),
+          buildSignOutButton(),
           const SizedBox(height: 24),
         ]
     );
@@ -190,6 +192,9 @@ class _ProfileState extends State<Profile> {
     );
   }
   Widget buildCoverPhoto(UserData user) {
+
+    user.coverPath == "" ? doesnothavecover = true : doesnothavecover = false;
+    print(doesnothavecover);
     return Container(
       color: Colors.grey,
       child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
@@ -280,34 +285,36 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-  Widget buildUpgradeButton() {
+  Widget buildSignOutButton() {
     return
+    Container(
+      padding: EdgeInsets.symmetric(horizontal: 48),
+      child: OutlinedButton.icon(
+        icon: Icon(Icons.run_circle, color: textColor, size: 24,),
+        onPressed: () async {
+          FirebaseAuth.instance.signOut();
+          // final report = Invoice(
+          //   userID
+          // );
 
-    OutlinedButton.icon(
-      icon: Icon(Icons.run_circle, color: textColor, size: 24,),
-      onPressed: () async {
-        FirebaseAuth.instance.signOut();
-        // final report = Invoice(
-        //   userID
-        // );
+        },
 
-      },
-
-      label: Text(
-        'Sign Out',
-        style: TextStyle(
-          fontSize: 24,
-          color: textColor,
-          fontWeight: FontWeight.bold,
+        label: Text(
+          'Sign Out',
+          style: TextStyle(
+            fontSize: 24,
+            color: textColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      style: OutlinedButton.styleFrom(
-        shape: StadiumBorder(),
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        minimumSize: Size.fromHeight (15),
-        backgroundColor: bgCard,
-      ),
+        style: OutlinedButton.styleFrom(
+          shape: StadiumBorder(),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          minimumSize: Size.fromHeight (15),
+          backgroundColor: bgCard,
+        ),
 
+      ),
     );
 
     //   ButtonWidget(
