@@ -104,8 +104,8 @@ class _SignUpState extends State<SignUp> {
                               ],
                               autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) =>
-                              value != null && value == int
-                                  ? "Name must not be numbers"
+                              value != null && value.length < 1
+                                  ? "Name must be valid"
                                   : null,
                             ),
                             SizedBox(height: 20),
