@@ -25,6 +25,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lottie/lottie.dart';
 
 
+
 final CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
 String userID = "";
 bool hide = false;
@@ -38,7 +39,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
-
+  final userID = FirebaseAuth.instance.currentUser!.uid;
   final double coverHeight = 200;
   final double profileHeight = 150;
 
@@ -69,92 +70,40 @@ class _ProfileState extends State<Profile> {
 
   }
 
-  Stream<List<UserData>>? readUsers() {
-    userID = FirebaseAuth.instance.currentUser!.uid;
+  Stream<List<UserData>> ? readUsers() {
+
     FirebaseFirestore.instance.collection('user')
         .where("IDUser", isEqualTo: userID) //id should match the id field in the database
         .snapshots()
-        .map((querySnapshot) =>
-        querySnapshot.docs.map((doc) => UserData.fromDocument(doc)).toList());
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
     // snapshot.docs.map((doc) => print(doc.data())));
     print(userID);
-
-  //  AvatarURL
-    // "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60"
-    // IDUser
-    // "Pm6dF0mb3qPIX87uTsqswNHvzlz1"
-    // about
-    // "Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf"
-    // email
-    // "diazlouther@gmail.com"
-    // imagePath
-    // "https://flxt.tmsimg.com/assets/4950_v9_bb.jpg"
-    // lastMessageTime
-    // "2022-11-16 11:27:04.768087"
-    // name
-    // "Louther Olayres"
-
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: StreamBuilder<UserData>(
-      //   body: StreamBuilder<List<UserData>>(
-          // stream: readUsers(),
-          // stream: FirebaseFirestore.instance.collection('user')
-          //     .where("id", isEqualTo: userID) //id should match the id field in the database
-          //     .snapshots()
-          //     .map((snapshot) =>
-          //     snapshot.docs.map((doc) => UserData.fromJson(doc.data()))),
-
-        // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-        //   builder: (context, snapshot) {
-            // if (streamSnapshot.hasData) {
         body: StreamBuilder<List<UserData>>(
         // stream: readUsers(),
-        stream:
-            FirebaseFirestore.instance.collection('user')
+        stream: FirebaseFirestore.instance.collection('user')
             .where("IDUser", isEqualTo: userID) //id should match the id field in the database
             .snapshots()
-            .map((querySnapshot) =>
-            querySnapshot.docs.map((doc) => UserData.fromDocument(doc)).toList()),
-            builder: (context,snapshot){
-          // final DocumentSnapshot documentSnapshot = snapshot.data;
-          // final List<UserData>? documentSnapshot = snapshot.data;
-          // final user = documentSnapshot;
-          // final user = snapshot.data;
-          print("The user: $snapshot");
-        // body: StreamBuilder (
-        // stream: _usersStream,
-        // builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
-          if (snapshot.hasData) {
-            print('Has data');
-            // final DocumentSnapshot documentSnapshot = streamSnapshot.data!;
-            // UserData user = documentSnapshot.toObject(UserData.class);
-            // UserData user = documentSnapshot.toObject;
-            final user = snapshot.data!;
-            print(user);
-          // print("this is user: " + user.toString()); //The user: AsyncSnapshot<List<UserData>>(ConnectionState.none, null, null, null)print("this is user: " + user.toString());
-          // print("this is user: " + user[1].toString());
+            .map((snapshot) =>
+            snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList()),
 
+            builder: (context,  streamSnapshot){
+          print("The user: $streamSnapshot");
+
+          if (streamSnapshot.hasData) {
+            final usr = streamSnapshot.data! as List<UserData>;
+            print('Has data');
             return ListView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  buildTop(user), //Error
-                  const SizedBox(height: 24),
-                  buildName(user), //Error
-                  const SizedBox(height: 24),
-                  NumbersWidget(),
-                  const SizedBox(height: 48),
-                  buildAbout(user), //Error
-                  const SizedBox(height: 24),
-                  Center(child: buildUpgradeButton()),
-                  const SizedBox(height: 24),
-                ]
+              children: usr.map(buildEverything).toList()
             );
+
+
           }
           return Center(
             // child: Text("No Data was fetch"),
@@ -169,77 +118,78 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildName(List<UserData> user) {
-    return Column(
-      children: [
-        Text(user.toString(),
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
-        ),
-        Text(
-         "user.email",
-          style: TextStyle(color: textColor),
-        ),
 
+  Widget buildEverything(UserData usrs) {
+    Text(usrs.email);
+    print(usrs.name);
+    print(usrs.email);
+    return ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          buildTop(usrs), //Error
+          const SizedBox(height: 24),
+          buildName(usrs), //Error
+          const SizedBox(height: 24),
+          NumbersWidget(),
+          const SizedBox(height: 48),
+          buildAbout(usrs), //Error
+          const SizedBox(height: 24),
+          Center(child: buildUpgradeButton()),
+          const SizedBox(height: 24),
+        ]
+    );
+
+    print("BuildTOp");
+    print(usrs.name);
+    print(usrs.email);
+    print(usrs.about!);
+    print("Done about");
+    buildName(usrs);
+    buildProfileWidget(usrs);
+    final  top = coverHeight - profileHeight / 2;
+    final bottom = profileHeight / 2;
+    print(top);
+    print(bottom);
+    // return Text(user.about!);
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: bottom),
+          child: buildCoverPhoto(usrs),
+        ),
+        Positioned(
+          top: top,
+          child: buildProfileWidget(usrs),
+        ),
       ],
     );
 
   }
 
-  Widget buildUpgradeButton() {
-    return OutlinedButton(
-      onPressed: (){},
-      child: Text(
-        'Book Now',
-          style: TextStyle(
-          fontSize: 24,
-          color: textColor,
+  Widget buildTop( UserData usrs ) {
+    final  top = coverHeight - profileHeight / 2;
+    final bottom = profileHeight / 2;
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: bottom),
+          child: buildCoverPhoto(usrs),
         ),
-      ),
-      style: OutlinedButton.styleFrom(
-        shape: StadiumBorder(),
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        //minimumSize: Size.fromHeight (40),
-        backgroundColor: pinkColor,
-      ),
-
-    );
-
-    //   ButtonWidget(
-    //   text: 'Book Now',
-    //   onClicked: () {},
-    // );
-  }
-
-  buildAbout(List<UserData> user) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 48),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: textColor),
-          borderRadius: BorderRadius.circular(50),
-          color: bgCard,
+        Positioned(
+          top: top,
+          child: buildProfileWidget(usrs),
         ),
-
-        padding: EdgeInsets.symmetric(horizontal: 48, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text(
-            'About',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'user.about!',
-            style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
-          ),
-          ],
-        ),
-      ),
+      ],
     );
   }
-
-  Widget buildCoverPhoto() {
+  Widget buildCoverPhoto(UserData user) {
     return Container(
       color: Colors.grey,
       child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
@@ -248,17 +198,17 @@ class _ProfileState extends State<Profile> {
         fit: BoxFit.cover,),
 
     );
-    
+
   }
 
-  Widget buildProfileWidget() {
+  Widget buildProfileWidget( UserData user) {
     return ProfileWidget(
       // imagePath: user.profilePath!,
       imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
       onClicked: () async{
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => EditProfile()),
-        );
+        // await Navigator.of(context).push(
+        //   MaterialPageRoute(builder: (context) => EditProfile(user)),
+        // );
         setState(() {}); //Update UI
       },
     );
@@ -277,35 +227,96 @@ class _ProfileState extends State<Profile> {
     // );
 
 
-  //   buildProfileWidget(
-  //     imagePath: user.imagePath,
-  //     onClicked: () async{
-  //       await Navigator.of(context).push(
-  //         MaterialPageRoute(builder: (context) => EditProfile()),
-  //       );
-  //       setState(() {}); //Update UI
-  //     },
-  //   ),
+    //   buildProfileWidget(
+    //     imagePath: user.imagePath,
+    //     onClicked: () async{
+    //       await Navigator.of(context).push(
+    //         MaterialPageRoute(builder: (context) => EditProfile()),
+    //       );
+    //       setState(() {}); //Update UI
+    //     },
+    //   ),
   }
-
-  Widget buildTop(List<UserData> user ) {
-    final  top = coverHeight - profileHeight / 2;
-    final bottom = profileHeight / 2;
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
+  Widget buildName(UserData user) {
+    return Column(
       children: [
-        Container(
-          margin: EdgeInsets.only(bottom: bottom),
-            child: buildCoverPhoto(),
+        Text(user.name,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
         ),
-        Positioned(
-            top: top,
-            child: buildProfileWidget(),
+        Text(
+          user.email,
+          style: TextStyle(color: textColor),
         ),
+
       ],
     );
+
   }
+  buildAbout(UserData user) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 48),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: textColor),
+          borderRadius: BorderRadius.circular(50),
+          color: bgCard,
+        ),
+
+        padding: EdgeInsets.symmetric(horizontal: 48, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'About',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              user.about!,
+              style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildUpgradeButton() {
+    return
+
+    OutlinedButton.icon(
+      icon: Icon(Icons.run_circle, color: textColor, size: 24,),
+      onPressed: () async {
+        FirebaseAuth.instance.signOut();
+        // final report = Invoice(
+        //   userID
+        // );
+
+      },
+
+      label: Text(
+        'Sign Out',
+        style: TextStyle(
+          fontSize: 24,
+          color: textColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        shape: StadiumBorder(),
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        minimumSize: Size.fromHeight (15),
+        backgroundColor: bgCard,
+      ),
+
+    );
+
+    //   ButtonWidget(
+    //   text: 'Book Now',
+    //   onClicked: () {},
+    // );
+  }
+
+
 
 
   //
