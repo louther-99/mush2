@@ -97,6 +97,7 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   List rows = [];
   var shuta = '';
+  var acu = "";
   List<List<dynamic>> _data = [];
   // List<List<dynamic>>? _data;
   String? filePath;
@@ -402,24 +403,7 @@ class _InputState extends State<Input> {
                         },
                       ),
                       SizedBox(height: 30),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.info, size: 24, color: textColor,),
-                            ),
-                            TextSpan(
-                              text: " Outcome: " + shuta,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
 
-                          ],
-                        ),
-                      ),
 
                       SizedBox(height: 20,),
                       OutlinedButton.icon(
@@ -465,8 +449,14 @@ class _InputState extends State<Input> {
                           print("printing json['Prediction'] ");
                           print(json['Prediction'][0]);
 
+                          print("Printing accuracy: below");
+                          print(json['Accuracy']);
+                          double a = json['Accuracy'] * 100;
+                          print(a);
+
                           setState(() {
                             shuta = (json['Prediction'][0]);
+                            acu = (a.toString());
                           });
 
                           // output = decoded['Prediction'];
@@ -477,7 +467,7 @@ class _InputState extends State<Input> {
                           // var bo = json.decode(json.encode(r.body));
                           // print(bo + " is bo");
 
-                          createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: outcome, datetime: datetime);
+                          createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
 
                           batchController.text = '';
                           lightLevelController.text = '';
@@ -504,6 +494,68 @@ class _InputState extends State<Input> {
                           shape: StadiumBorder(),
                           minimumSize: Size.fromHeight (40),
                           backgroundColor: bgCard,
+                        ),
+                      ),
+
+                      Center(
+                        child: Card(
+                          margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                          // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: pinkColor,
+                          elevation: 10,
+                          child: Column(
+                            children: [
+                              Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.info, size: 24, color: textColor,),
+                                      ),
+                                      TextSpan(
+                                        text: " Outcome: " + shuta,
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              // Container(
+                              //   // height: 40,
+                              //   padding: EdgeInsets.all(2),
+                              //   margin:  EdgeInsets.all(20),
+                              //   child: RichText(
+                              //     text: TextSpan(
+                              //       children: [
+                              //         WidgetSpan(
+                              //           child: Icon(Icons.percent, size: 24, color: textColor,),
+                              //         ),
+                              //         TextSpan(
+                              //           text: " Accuracy: " + acu.toString() + "%",
+                              //           style: TextStyle(
+                              //             fontSize: 24,
+                              //             color: textColor,
+                              //             fontWeight: FontWeight.bold,
+                              //           ),
+                              //         ),
+                              //
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
                       ),
 

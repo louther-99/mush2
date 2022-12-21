@@ -246,7 +246,7 @@ class _SignUpState extends State<SignUp> {
       final user = UserData(
       IDUser: a,
       profilePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
-      name: 'Louther Olayres',
+      name: nameController.text.trim(),
       email: emailController.text.trim(),
       about: 'Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf',
       coverPath: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60',
