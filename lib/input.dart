@@ -197,7 +197,7 @@ class _InputState extends State<Input> {
         }
       },
       child: Container(
-        color: bgCard,
+        color: Colors.blueGrey,
         height: getHeight(),
         child: SingleChildScrollView(
           // clipBehavior: Clip.none,
@@ -233,7 +233,7 @@ class _InputState extends State<Input> {
 
                     SizedBox(height: 5),
                     OutlinedButton.icon(
-                      icon: Icon(Icons.upload, color: brown),
+                      icon: Icon(Icons.upload, color: Colors.blueGrey),
                       onPressed: () async {
 
                         _upload();
@@ -248,14 +248,14 @@ class _InputState extends State<Input> {
                         'Upload CSV',
                         style: TextStyle(
                           fontSize: 24,
-                          color: brown,
+                          color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
                         shape: StadiumBorder(),
                         minimumSize: Size.fromHeight (40),
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: brown,
                         side: BorderSide(color: outline),
                       ),
 
@@ -513,22 +513,22 @@ class _InputState extends State<Input> {
                             controller: batchController,
                             cursorColor: textColor,
                             style: TextStyle(
-                              color: textColor,
+                              color: brown,
                             ),
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               // focusColor: textColor,
                               border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderSide: BorderSide(color: brown, width: 32.0),
                                     borderRadius: BorderRadius.circular(15.0)),
                                 prefixIcon: Icon(
                                     Icons.numbers,
-                                  color: textColor,
+                                  color: brown,
                                 ),
                                 labelText: "Batch Number",
                                 labelStyle: TextStyle(
-                                    color: textColor,
+                                    color: brown,
                                 )
                             ),
                             validator: (value) {
@@ -545,9 +545,9 @@ class _InputState extends State<Input> {
                             // focusNode: _focusNode,
                             // onTap: _requestFocus,
                             controller: lightLevelController,
-                            cursorColor: textColor,
+                            cursorColor: brown,
                             style: TextStyle(
-                              color: textColor,
+                              color: brown,
                             ),
                             keyboardType: TextInputType.numberWithOptions(
                                 decimal: true),
@@ -558,11 +558,11 @@ class _InputState extends State<Input> {
                                     borderRadius: BorderRadius.circular(15.0)),
                                 prefixIcon: Icon(
                                   Icons.lightbulb,
-                                  color: textColor,
+                                  color: brown,
                                 ),
                                 labelText: "Light Level(Lumens)",
                                 labelStyle: TextStyle(
-                              color: textColor,
+                              color: brown,
                             )
                             ),
                             validator: (value) {
@@ -579,9 +579,9 @@ class _InputState extends State<Input> {
                             // focusNode: _focusNode,
                             // onTap: _requestFocus,
                             controller: roomTemperatureController,
-                            cursorColor: textColor,
+                            cursorColor: brown,
                             style: TextStyle(
-                              color: textColor,
+                              color: brown,
                             ),
                             keyboardType: TextInputType.numberWithOptions(
                                 decimal: true),
@@ -592,11 +592,11 @@ class _InputState extends State<Input> {
                                     borderRadius: BorderRadius.circular(15.0)),
                                 prefixIcon: Icon(
                                   Icons.thermostat,
-                                  color: textColor,
+                                  color: brown,
                                 ),
                                 labelText: "Room Temperature",
                                 labelStyle: TextStyle(
-                                  color: textColor,
+                                  color: brown,
                                 )
                             ),
                             validator: (value) {
@@ -613,9 +613,9 @@ class _InputState extends State<Input> {
                             // focusNode: _focusNode,
                             // onTap: _requestFocus,
                             controller: roomHumidityController,
-                            cursorColor: textColor,
+                            cursorColor: brown,
                             style: TextStyle(
-                              color: textColor,
+                              color: brown,
                             ),
                             keyboardType: TextInputType.numberWithOptions(
                                 decimal: true),
@@ -626,11 +626,11 @@ class _InputState extends State<Input> {
                                     borderRadius: BorderRadius.circular(15.0)),
                                 prefixIcon: Icon(
                                     Icons.water_drop,
-                                    color: textColor,
+                                    color: brown,
                                 ),
                                 labelText: "Humidity(Milibar)",
                                 labelStyle: TextStyle(
-                                  color: textColor,
+                                  color: brown,
                                 )
                             ),
                             validator: (value) {
@@ -647,7 +647,7 @@ class _InputState extends State<Input> {
 
                           SizedBox(height: 20,),
                           OutlinedButton.icon(
-                            icon: Icon(Icons.query_stats, color: textColor),
+                            icon: Icon(Icons.query_stats, color: Colors.blueGrey),
                             onPressed: () async {
 
                               // final preprocess = Get_Dataset();
@@ -753,14 +753,15 @@ class _InputState extends State<Input> {
                               'Predict',
                               style: TextStyle(
                                 fontSize: 24,
-                                color: textColor,
+                                color: Colors.blueGrey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             style: OutlinedButton.styleFrom(
                               shape: StadiumBorder(),
                               minimumSize: Size.fromHeight (40),
-                              backgroundColor: bgCard,
+                              backgroundColor: brown,
+                              side: BorderSide(color: outline),
                             ),
                           ),
 
