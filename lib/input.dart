@@ -203,624 +203,637 @@ class _InputState extends State<Input> {
           // clipBehavior: Clip.none,
           // reverse: true,
           child: Container(
-            // color: Colors.blueGrey,
+            color: Colors.blueGrey,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 235),
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
-                // Center(
-                //   child: Text(
-                //     'Upload Your CSV File',
-                //     textAlign: TextAlign.center,
-                //   style: TextStyle(
-                //           color: textColor,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 30,
-                //         ),
-                //   ),
-                //
-                // ),
-                OutlinedButton.icon(
-                  icon: Icon(Icons.upload, color: textColor),
-                  onPressed: () async {
-
-                    _upload();
-
-
-                    // final snackBar = SnackBar(content: Text("Data has been added."));
-                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                  },
-
-                  label: Text(
-                    'Upload CSV',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: textColor,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  // color: green,
+                  padding: EdgeInsets.all(20),
+                  // padding: EdgeInsets.fromLTRB(40,20,40,40),
+                  child: Center(
+                    child: Text(
+                      'BATCH UPLOAD',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: brown,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
                     ),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    shape: StadiumBorder(),
-                    minimumSize: Size.fromHeight (40),
-                    backgroundColor: bgCard,
-                  ),
 
+                  ),
                 ),
-                SizedBox(height: 20),
 
-              Container(
-                height: 350,
-                // color: Colors.blueGrey,
-                // child: DataTable(
-                //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
-                //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
-                // ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // SizedBox(height: 30),
 
-                child: file_result == null ? Container(
+                    SizedBox(height: 5),
+                    OutlinedButton.icon(
+                      icon: Icon(Icons.upload, color: brown),
+                      onPressed: () async {
 
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        AnimatedTextKit(
-                          animatedTexts: [
-                            TypewriterAnimatedText('Upload', textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),),
-                            TypewriterAnimatedText('your', textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),),
-                            TypewriterAnimatedText('CSV', textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),),
-                            TypewriterAnimatedText('File', textAlign: TextAlign.center,
-                              textStyle: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),),
+                        _upload();
+
+
+                        // final snackBar = SnackBar(content: Text("Data has been added."));
+                        // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                      },
+
+                      label: Text(
+                        'Upload CSV',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: brown,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        minimumSize: Size.fromHeight (40),
+                        backgroundColor: Colors.blueGrey,
+                        side: BorderSide(color: outline),
+                      ),
+
+                    ),
+                    SizedBox(height: 20),
+
+                  Container(
+                    height: 350,
+                    // color: Colors.blueGrey,
+                    // child: DataTable(
+                    //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
+                    //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
+                    // ),
+
+                    child: file_result == null ? Container(
+
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText('Upload', textAlign: TextAlign.center,
+                                  textStyle: TextStyle(
+                                    color: brown,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),),
+                                TypewriterAnimatedText('your', textAlign: TextAlign.center,
+                                  textStyle: TextStyle(
+                                    color: brown,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),),
+                                TypewriterAnimatedText('CSV', textAlign: TextAlign.center,
+                                  textStyle: TextStyle(
+                                    color: brown,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),),
+                                TypewriterAnimatedText('File', textAlign: TextAlign.center,
+                                  textStyle: TextStyle(
+                                    color: brown,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),),
+
+                              ],
+                              // 'Upload your CSV File',
+
+                            ),
+                            Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
 
                           ],
-                          // 'Upload your CSV File',
-
                         ),
-                        Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
-
-                      ],
-                    ),
-                  )
-                ) : ListView.builder(
-                  itemCount: _data.length, //docs mean row
-                  // scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: const EdgeInsets.all(3),
-                      color: index == 0 ? pinkColor : Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      // color: pinkColor,
-                      // elevation: 10,
-                      child: ListTile(
-                        leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
-                        title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
-                      ),
-                        trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-
-
-              ),
-                SizedBox(height: 20,),
-
-                Center(
-                  child: Card(
-                    margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                    // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: pinkColor,
-                    elevation: 10,
-                    child: Column(
-                      children: [
-                        Container(
-                          // height: 40,
-                          padding: EdgeInsets.all(2),
-                          margin:  EdgeInsets.all(20),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(Icons.info, size: 24, color: textColor,),
-                                ),
-                                TextSpan(
-                                  text: " Outcome: " + shuta,
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: textColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          // height: 40,
-                          padding: EdgeInsets.all(2),
-                          margin:  EdgeInsets.all(20),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(Icons.percent, size: 24, color: textColor,),
-                                ),
-                                TextSpan(
-                                  text: " Accuracy: " + acu.toString() + "%",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: textColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // OutlinedButton.icon(
-                //   icon: Icon(Icons.query_stats, color: textColor),
-                //   onPressed: () async {
-                //
-                //     // final preprocess = Get_Dataset();
-                //
-                //     final int batchNumber = int.parse(
-                //         batchController.text);
-                //     final double lightLevel = double.parse(
-                //         lightLevelController.text);
-                //     final double roomTemp = double.parse(
-                //         roomTemperatureController.text);
-                //     final double humidity = double.parse(
-                //         roomHumidityController.text);
-                //     final String outcome = (productionController.text);
-                //     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
-                //
-                //     var datas = {
-                //       // 'id' : userID,
-                //       // 'batchNumber': batchController.text,
-                //       'lightLevel': lightLevelController.text,
-                //       'roomTemp': roomTemperatureController.text,
-                //       'humidity': roomHumidityController.text,
-                //       // 'outcome': 'ewan',
-                //       // 'datetime': datetime,
-                //     };
-                //
-                //     print(datas.toString() + " is datas");
-                //     // Passing the data and the endpoint
-                //     var r = await CallApi().postData(datas, 'predict');
-                //     print("printing r.body below: ..");
-                //     print(r.body);
-                //     print("Done printing r.body");
-                //     final json = jsonDecode(r.body);
-                //     print("printing json below: ..");
-                //     print(json);
-                //     print("Done printing json");
-                //     // var decoded = jsonDecode(r);
-                //     // print("printing decoded below: ..");
-                //     // print(decoded);
-                //     print("printing json['Prediction'] ");
-                //     print(json['Prediction'][0]);
-                //
-                //     print("Printing accuracy: below");
-                //     print(json['Accuracy']);
-                //     double a = json['Accuracy'] * 100;
-                //     print(a);
-                //
-                //     setState(() {
-                //       shuta = (json['Prediction'][0]);
-                //       acu = (a.toString());
-                //     });
-                //
-                //     // output = decoded['Prediction'];
-                //     // print(output);
-                //
-                //
-                //     // print(r.body.toString() + " is r.body");
-                //     // var bo = json.decode(json.encode(r.body));
-                //     // print(bo + " is bo");
-                //
-                //     createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
-                //
-                //     batchController.text = '';
-                //     lightLevelController.text = '';
-                //     roomTemperatureController.text = '';
-                //     roomHumidityController.text = '';
-                //     productionController.text = '';
-                //
-                //
-                //
-                //     final snackBar = SnackBar(content: Text("Data has been added."));
-                //
-                //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                //
-                //   },
-                //   label: Text(
-                //     'Predict',
-                //     style: TextStyle(
-                //       fontSize: 24,
-                //       color: textColor,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                //   style: OutlinedButton.styleFrom(
-                //     shape: StadiumBorder(),
-                //     minimumSize: Size.fromHeight (40),
-                //     backgroundColor: bgCard,
-                //   ),
-                // ),
-
-
-
-                SizedBox(height: 20),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-
-                      SizedBox(height: 50),
-
-                      TextFormField(
-                        // focusNode: _focusNode,
-                        // onTap: _requestFocus,
-                        controller: batchController,
-                        cursorColor: textColor,
-                        style: TextStyle(
-                          color: textColor,
-                        ),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          // focusColor: textColor,
-                          border: OutlineInputBorder(
-                                borderSide: BorderSide(color: textColor, width: 32.0),
-                                borderRadius: BorderRadius.circular(15.0)),
-                            prefixIcon: Icon(
-                                Icons.numbers,
-                              color: textColor,
-                            ),
-                            labelText: "Batch Number",
-                            labelStyle: TextStyle(
-                                color: textColor,
-                            )
-                        ),
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return "Username cannot be empty!";
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        // focusNode: _focusNode,
-                        // onTap: _requestFocus,
-                        controller: lightLevelController,
-                        cursorColor: textColor,
-                        style: TextStyle(
-                          color: textColor,
-                        ),
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true),
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: textColor, width: 32.0),
-                                borderRadius: BorderRadius.circular(15.0)),
-                            prefixIcon: Icon(
-                              Icons.lightbulb,
-                              color: textColor,
-                            ),
-                            labelText: "Light Level(Lumens)",
-                            labelStyle: TextStyle(
-                          color: textColor,
-                        )
-                        ),
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return "Password cannot be empty!";
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        // focusNode: _focusNode,
-                        // onTap: _requestFocus,
-                        controller: roomTemperatureController,
-                        cursorColor: textColor,
-                        style: TextStyle(
-                          color: textColor,
-                        ),
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true),
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: textColor, width: 32.0),
-                                borderRadius: BorderRadius.circular(15.0)),
-                            prefixIcon: Icon(
-                              Icons.thermostat,
-                              color: textColor,
-                            ),
-                            labelText: "Room Temperature",
-                            labelStyle: TextStyle(
-                              color: textColor,
-                            )
-                        ),
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return "Username cannot be empty!";
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        // focusNode: _focusNode,
-                        // onTap: _requestFocus,
-                        controller: roomHumidityController,
-                        cursorColor: textColor,
-                        style: TextStyle(
-                          color: textColor,
-                        ),
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true),
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: textColor, width: 32.0),
-                                borderRadius: BorderRadius.circular(15.0)),
-                            prefixIcon: Icon(
-                                Icons.water_drop,
-                                color: textColor,
-                            ),
-                            labelText: "Humidity(Milibar)",
-                            labelStyle: TextStyle(
-                              color: textColor,
-                            )
-                        ),
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return "Username cannot be empty!";
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 30),
-
-
-                      SizedBox(height: 20,),
-                      OutlinedButton.icon(
-                        icon: Icon(Icons.query_stats, color: textColor),
-                        onPressed: () async {
-
-                          // final preprocess = Get_Dataset();
-
-                          final int batchNumber = int.parse(
-                              batchController.text);
-                          final double lightLevel = double.parse(
-                              lightLevelController.text);
-                          final double roomTemp = double.parse(
-                              roomTemperatureController.text);
-                          final double humidity = double.parse(
-                              roomHumidityController.text);
-                          final String outcome = (productionController.text);
-                          final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
-
-                          var datas = {
-                            // 'id' : userID,
-                            // 'batchNumber': batchController.text,
-                            'lightLevel': lightLevelController.text,
-                            'roomTemp': roomTemperatureController.text,
-                            'humidity': roomHumidityController.text,
-                            // 'outcome': 'ewan',
-                            // 'datetime': datetime,
-                          };
-
-                          print(datas.toString() + " is datas");
-                          // Passing the data and the endpoint
-                          var r = await CallApi().postData(datas, 'predict');
-                          print("printing r.body below: ..");
-                          print(r.body);
-                          print("Done printing r.body");
-                          final json = jsonDecode(r.body);
-                          print("printing json below: ..");
-                          print(json);
-                          print("Done printing json");
-                          // var decoded = jsonDecode(r);
-                          // print("printing decoded below: ..");
-                          // print(decoded);
-                          print("printing json['Prediction'] ");
-                          print(json['Prediction'][0]);
-                          final prediction = json['Prediction'][0];
-                          print("Printing accuracy: below");
-                          final accuracy = json['Accuracy'];
-                          print(json['Accuracy']);
-                          print("json['Description']");
-                          print(json['Description']);
-                          // described = json['Description'];
-                          double a = json['Accuracy'] * 100;
-                          print(a);
-
-
-
-
-
-                          setState(() {
-                            shuta = (json['Prediction'][0]);
-                            acu = (a.toString());
-                            // described = json['Description'];
-                          });
-
-                          final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-
-                          final pdf = new Pdf(
-                            prediction: prediction,
-                            accuracy: accuracy,
-                            // described: described,
-                          );
-
-
-                          final pdfFile = await PdfApi.generateText(pdf);
-                          // PdfApi.openFile(pdfFile!);
-                          // final fi = await PdfApi.pickFile();
-                          //
-                          // if (fi == null) return;
-                          // openPDF(context,fi);
-
-                          // output = decoded['Prediction'];
-                          // print(output);
-
-
-                          // print(r.body.toString() + " is r.body");
-                          // var bo = json.decode(json.encode(r.body));
-                          // print(bo + " is bo");
-
-                          createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
-
-                          batchController.text = '';
-                          lightLevelController.text = '';
-                          roomTemperatureController.text = '';
-                          roomHumidityController.text = '';
-                          productionController.text = '';
-
-
-
-                          final snackBar = SnackBar(content: Text("Data has been added."));
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                        },
-                        label: Text(
-                          'Predict',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          shape: StadiumBorder(),
-                          minimumSize: Size.fromHeight (40),
-                          backgroundColor: bgCard,
-                        ),
-                      ),
-
-                      Center(
-                        child: Card(
-                          margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                          // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                      )
+                    ) : ListView.builder(
+                      itemCount: _data.length, //docs mean row
+                      // scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          margin: const EdgeInsets.all(3),
+                          color: index == 0 ? pinkColor : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          color: pinkColor,
-                          elevation: 10,
-                          child: Column(
-                            children: [
-                              Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.info, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: " Outcome: " + shuta,
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.percent, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: " Accuracy: " + acu.toString() + "%",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                          // color: pinkColor,
+                          // elevation: 10,
+                          child: ListTile(
+                            leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
+                            title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
                           ),
+                            trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+
+
+                  ),
+                    SizedBox(height: 20,),
+
+                    Center(
+                      child: Card(
+                        margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                        // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color: pinkColor,
+                        elevation: 10,
+                        child: Column(
+                          children: [
+                            Container(
+                              // height: 40,
+                              padding: EdgeInsets.all(2),
+                              margin:  EdgeInsets.all(20),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Icon(Icons.info, size: 24, color: textColor,),
+                                    ),
+                                    TextSpan(
+                                      text: " Outcome: " + shuta,
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              // height: 40,
+                              padding: EdgeInsets.all(2),
+                              margin:  EdgeInsets.all(20),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Icon(Icons.percent, size: 24, color: textColor,),
+                                    ),
+                                    TextSpan(
+                                      text: " Accuracy: " + acu.toString() + "%",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                    ),
 
-                      SizedBox(height: 20),
+                    // OutlinedButton.icon(
+                    //   icon: Icon(Icons.query_stats, color: textColor),
+                    //   onPressed: () async {
+                    //
+                    //     // final preprocess = Get_Dataset();
+                    //
+                    //     final int batchNumber = int.parse(
+                    //         batchController.text);
+                    //     final double lightLevel = double.parse(
+                    //         lightLevelController.text);
+                    //     final double roomTemp = double.parse(
+                    //         roomTemperatureController.text);
+                    //     final double humidity = double.parse(
+                    //         roomHumidityController.text);
+                    //     final String outcome = (productionController.text);
+                    //     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
+                    //
+                    //     var datas = {
+                    //       // 'id' : userID,
+                    //       // 'batchNumber': batchController.text,
+                    //       'lightLevel': lightLevelController.text,
+                    //       'roomTemp': roomTemperatureController.text,
+                    //       'humidity': roomHumidityController.text,
+                    //       // 'outcome': 'ewan',
+                    //       // 'datetime': datetime,
+                    //     };
+                    //
+                    //     print(datas.toString() + " is datas");
+                    //     // Passing the data and the endpoint
+                    //     var r = await CallApi().postData(datas, 'predict');
+                    //     print("printing r.body below: ..");
+                    //     print(r.body);
+                    //     print("Done printing r.body");
+                    //     final json = jsonDecode(r.body);
+                    //     print("printing json below: ..");
+                    //     print(json);
+                    //     print("Done printing json");
+                    //     // var decoded = jsonDecode(r);
+                    //     // print("printing decoded below: ..");
+                    //     // print(decoded);
+                    //     print("printing json['Prediction'] ");
+                    //     print(json['Prediction'][0]);
+                    //
+                    //     print("Printing accuracy: below");
+                    //     print(json['Accuracy']);
+                    //     double a = json['Accuracy'] * 100;
+                    //     print(a);
+                    //
+                    //     setState(() {
+                    //       shuta = (json['Prediction'][0]);
+                    //       acu = (a.toString());
+                    //     });
+                    //
+                    //     // output = decoded['Prediction'];
+                    //     // print(output);
+                    //
+                    //
+                    //     // print(r.body.toString() + " is r.body");
+                    //     // var bo = json.decode(json.encode(r.body));
+                    //     // print(bo + " is bo");
+                    //
+                    //     createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
+                    //
+                    //     batchController.text = '';
+                    //     lightLevelController.text = '';
+                    //     roomTemperatureController.text = '';
+                    //     roomHumidityController.text = '';
+                    //     productionController.text = '';
+                    //
+                    //
+                    //
+                    //     final snackBar = SnackBar(content: Text("Data has been added."));
+                    //
+                    //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    //
+                    //   },
+                    //   label: Text(
+                    //     'Predict',
+                    //     style: TextStyle(
+                    //       fontSize: 24,
+                    //       color: textColor,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    //   style: OutlinedButton.styleFrom(
+                    //     shape: StadiumBorder(),
+                    //     minimumSize: Size.fromHeight (40),
+                    //     backgroundColor: bgCard,
+                    //   ),
+                    // ),
 
-                    ],
-                  ),
+
+
+                    SizedBox(height: 20),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+
+                          SizedBox(height: 50),
+
+                          TextFormField(
+                            // focusNode: _focusNode,
+                            // onTap: _requestFocus,
+                            controller: batchController,
+                            cursorColor: textColor,
+                            style: TextStyle(
+                              color: textColor,
+                            ),
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                              // focusColor: textColor,
+                              border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                prefixIcon: Icon(
+                                    Icons.numbers,
+                                  color: textColor,
+                                ),
+                                labelText: "Batch Number",
+                                labelStyle: TextStyle(
+                                    color: textColor,
+                                )
+                            ),
+                            validator: (value) {
+                              if (value != null && value.isEmpty) {
+                                return "Username cannot be empty!";
+                              }
+                              else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          TextFormField(
+                            // focusNode: _focusNode,
+                            // onTap: _requestFocus,
+                            controller: lightLevelController,
+                            cursorColor: textColor,
+                            style: TextStyle(
+                              color: textColor,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true),
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                prefixIcon: Icon(
+                                  Icons.lightbulb,
+                                  color: textColor,
+                                ),
+                                labelText: "Light Level(Lumens)",
+                                labelStyle: TextStyle(
+                              color: textColor,
+                            )
+                            ),
+                            validator: (value) {
+                              if (value != null && value.isEmpty) {
+                                return "Password cannot be empty!";
+                              }
+                              else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          TextFormField(
+                            // focusNode: _focusNode,
+                            // onTap: _requestFocus,
+                            controller: roomTemperatureController,
+                            cursorColor: textColor,
+                            style: TextStyle(
+                              color: textColor,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true),
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                prefixIcon: Icon(
+                                  Icons.thermostat,
+                                  color: textColor,
+                                ),
+                                labelText: "Room Temperature",
+                                labelStyle: TextStyle(
+                                  color: textColor,
+                                )
+                            ),
+                            validator: (value) {
+                              if (value != null && value.isEmpty) {
+                                return "Username cannot be empty!";
+                              }
+                              else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          TextFormField(
+                            // focusNode: _focusNode,
+                            // onTap: _requestFocus,
+                            controller: roomHumidityController,
+                            cursorColor: textColor,
+                            style: TextStyle(
+                              color: textColor,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true),
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: textColor, width: 32.0),
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                prefixIcon: Icon(
+                                    Icons.water_drop,
+                                    color: textColor,
+                                ),
+                                labelText: "Humidity(Milibar)",
+                                labelStyle: TextStyle(
+                                  color: textColor,
+                                )
+                            ),
+                            validator: (value) {
+                              if (value != null && value.isEmpty) {
+                                return "Username cannot be empty!";
+                              }
+                              else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 30),
+
+
+                          SizedBox(height: 20,),
+                          OutlinedButton.icon(
+                            icon: Icon(Icons.query_stats, color: textColor),
+                            onPressed: () async {
+
+                              // final preprocess = Get_Dataset();
+
+                              final int batchNumber = int.parse(
+                                  batchController.text);
+                              final double lightLevel = double.parse(
+                                  lightLevelController.text);
+                              final double roomTemp = double.parse(
+                                  roomTemperatureController.text);
+                              final double humidity = double.parse(
+                                  roomHumidityController.text);
+                              final String outcome = (productionController.text);
+                              final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
+
+                              var datas = {
+                                // 'id' : userID,
+                                // 'batchNumber': batchController.text,
+                                'lightLevel': lightLevelController.text,
+                                'roomTemp': roomTemperatureController.text,
+                                'humidity': roomHumidityController.text,
+                                // 'outcome': 'ewan',
+                                // 'datetime': datetime,
+                              };
+
+                              print(datas.toString() + " is datas");
+                              // Passing the data and the endpoint
+                              var r = await CallApi().postData(datas, 'predict');
+                              print("printing r.body below: ..");
+                              print(r.body);
+                              print("Done printing r.body");
+                              final json = jsonDecode(r.body);
+                              print("printing json below: ..");
+                              print(json);
+                              print("Done printing json");
+                              // var decoded = jsonDecode(r);
+                              // print("printing decoded below: ..");
+                              // print(decoded);
+                              print("printing json['Prediction'] ");
+                              print(json['Prediction'][0]);
+                              final prediction = json['Prediction'][0];
+                              print("Printing accuracy: below");
+                              final accuracy = json['Accuracy'];
+                              print(json['Accuracy']);
+                              print("json['Description']");
+                              print(json['Description']);
+                              // described = json['Description'];
+                              double a = json['Accuracy'] * 100;
+                              print(a);
+
+
+
+
+
+                              setState(() {
+                                shuta = (json['Prediction'][0]);
+                                acu = (a.toString());
+                                // described = json['Description'];
+                              });
+
+                              final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
+
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+
+                              final pdf = new Pdf(
+                                prediction: prediction,
+                                accuracy: accuracy,
+                                // described: described,
+                              );
+
+
+                              final pdfFile = await PdfApi.generateText(pdf);
+                              // PdfApi.openFile(pdfFile!);
+                              // final fi = await PdfApi.pickFile();
+                              //
+                              // if (fi == null) return;
+                              // openPDF(context,fi);
+
+                              // output = decoded['Prediction'];
+                              // print(output);
+
+
+                              // print(r.body.toString() + " is r.body");
+                              // var bo = json.decode(json.encode(r.body));
+                              // print(bo + " is bo");
+
+                              createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
+
+                              batchController.text = '';
+                              lightLevelController.text = '';
+                              roomTemperatureController.text = '';
+                              roomHumidityController.text = '';
+                              productionController.text = '';
+
+
+
+                              final snackBar = SnackBar(content: Text("Data has been added."));
+
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                            },
+                            label: Text(
+                              'Predict',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              shape: StadiumBorder(),
+                              minimumSize: Size.fromHeight (40),
+                              backgroundColor: bgCard,
+                            ),
+                          ),
+
+                          Center(
+                            child: Card(
+                              margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                              // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: pinkColor,
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.info, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: " Outcome: " + shuta,
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.percent, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: " Accuracy: " + acu.toString() + "%",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 20),
+
+                        ],
+                      ),
+                    ),
+
+                  ],
                 ),
-
               ],
             ),
 
@@ -1004,8 +1017,12 @@ class _InputState extends State<Input> {
         roomTemp: dat[i][4].toString(),
         humidity: dat[i][5].toString(),
         outcome: dat[i][6].toString(),
+
       )
       );
+
+
+
       for (int j = 0; j<dat[i].length; j++){
         // print(dat[i][j].toString() + " is dat["+i.toString()+"]["+j.toString()+ "] " + i.toString() + " is " + i.toString() + " j is " + j.toString());
         // print(dat[i][j].toString() + " is dat[i][j] " + i.toString() + " j is " + j.toString());
@@ -1015,6 +1032,9 @@ class _InputState extends State<Input> {
         // print("Done with loop");
 
       }
+
+      createData(batchNumber: int.parse(mush[i].batchNumber), lightLevel: double.parse(mush[i].lightLevel), roomTemp: double.parse(mush[i].roomTemp), humidity: double.parse(mush[i].humidity), outcome: shuta, datetime: mush[i].datetime);
+
     }
     print(mush.length.toString() + " is mush.length");
     for(int i = 0; i<mush.length; i++){
@@ -1113,6 +1133,9 @@ class _InputState extends State<Input> {
     print(jsons[24][1]);
     print(jsons[24]['outcome']);
     print("Done printing jsons");
+    for(int q = 0; q<jsons.length;q++){
+      print(jsons[q]);
+    }
     // var decoded = jsonDecode(r);
     // print("printing decoded below: ..");
     // print(decoded);

@@ -63,7 +63,6 @@ class _DataState extends State<Data> {
   String s = "";
 
 
-
 //final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
 
   //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
@@ -428,17 +427,35 @@ class _DataState extends State<Data> {
       },
       child: Container(
         height: MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight),
-        color: bgCard,
+        // color: bgCard,
+        color: Colors.blueGrey,
         child: SingleChildScrollView(
           child: Column(
             children: [
+              // SizedBox(height: 30),
+              Container(
+                // color: green,
+                padding: EdgeInsets.all(20),
+                child: Center(
+                  child: Text(
+                    'SEARCH RECORDS',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: brown,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+
+                ),
+              ),
           Container(
-            color: bgCard,
+            color: Colors.blueGrey,
             margin: EdgeInsets.all(10),
             child: TextFormField(
                       focusNode: _focus,
                       controller: _searchController,
-                      cursorColor: textColor,
+                      cursorColor: brown,
                       onChanged: (query) {
                          setState(()  {
                            _searchController.text.isEmpty ? hasData = false : hasData = true;
@@ -458,7 +475,7 @@ class _DataState extends State<Data> {
                       // focusNode: _focusNode,
                       // onTap: _requestFocus,
                       style: TextStyle(
-                        color: textColor,
+                        color: brown,
                       ),
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
@@ -470,11 +487,11 @@ class _DataState extends State<Data> {
                               borderRadius: BorderRadius.circular(15.0)),
                           prefixIcon: Icon(
                             Icons.search,
-                            color: textColor,
+                            color: brown,
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.send),
-                            color: textColor,
+                            color: brown,
                             onPressed: (){
                               var queryToSend = _searchController.text;
                               // final queryToSend = query;
@@ -486,7 +503,7 @@ class _DataState extends State<Data> {
                           ),
                           labelText: "Search Batch Number",
                           labelStyle: TextStyle(
-                            color: textColor,
+                            color: brown,
                           )
                       ),
                       // validator: (value) {
