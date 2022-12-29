@@ -202,30 +202,30 @@ class _LogInWidgetState extends State<LogInWidget> {
                             ),
                             SizedBox(height: 24),
 
-                            OutlinedButton.icon(
-                              icon: FaIcon(FontAwesomeIcons.google),
-                              onPressed: (){
-                                // final provider =
-                                // Provider.of<GoogleSignIn>(context, listen: false);
-                                // provider.googleLogIn();
-                                // GoogleSignIn.signInWithGoogle();
-
-                              },
-                              label: Text(
-                                'Sign up with Google',
-                                style: TextStyle(
-                                  fontSize: 24,
-
-                                  color: textColor,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                shape: StadiumBorder(),
-                                minimumSize: Size.fromHeight (40),
-                                backgroundColor: bgCard,
-                              ),
-
-                            ),
+                            // OutlinedButton.icon(
+                            //   icon: FaIcon(FontAwesomeIcons.google),
+                            //   onPressed: (){
+                            //     // final provider =
+                            //     // Provider.of<GoogleSignIn>(context, listen: false);
+                            //     // provider.googleLogIn();
+                            //     // GoogleSignIn.signInWithGoogle();
+                            //
+                            //   },
+                            //   label: Text(
+                            //     'Sign up with Google',
+                            //     style: TextStyle(
+                            //       fontSize: 24,
+                            //
+                            //       color: textColor,
+                            //     ),
+                            //   ),
+                            //   style: OutlinedButton.styleFrom(
+                            //     shape: StadiumBorder(),
+                            //     minimumSize: Size.fromHeight (40),
+                            //     backgroundColor: bgCard,
+                            //   ),
+                            //
+                            // ),
 
                             OutlinedButton(
                               onPressed: widget.onClickedSignUp,

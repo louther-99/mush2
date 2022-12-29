@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:mush2/home.dart';
+import 'package:mush2/pdf_viewer.dart';
 import 'package:mush2/profile.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:lottie/lottie.dart';
@@ -10,8 +12,11 @@ import 'package:pdf/pdf.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:printing/printing.dart';
-
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'api/pdf_api.dart';
+import 'dart:io' as io;
+
+import 'model/pdf.dart';
 
 
 class Status extends StatefulWidget {
@@ -45,8 +50,13 @@ class _StatusState extends State<Status> {
                 OutlinedButton.icon(
                   icon: Icon(Icons.picture_as_pdf, color: textColor, size: 24,),
                   onPressed: () async {
-                    final pdfFile = await PdfApi.generateText("report");
-                    PdfApi.openFile(pdfFile!);
+                    // // final pdfContent = Pdf.getPrediction;
+                    // final pdfFile = await PdfApi.generateText(pdf);
+                    // PdfApi.openFile(pdfFile!);
+                    // final fi = await PdfApi.pickFile();
+                    //
+                    // if (fi == null) return;
+                    // openPDF(context,fi);
 
                   },
 
@@ -80,4 +90,9 @@ class _StatusState extends State<Status> {
     print(siz.toString() + " size without the appbar");
     return siz;
   }
+
+  void openPDF(BuildContext context, io.File fi) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: fi))
+      );
 }

@@ -47,7 +47,7 @@ dependencies:
   google_sign_in: ^5.4.2
   font_awesome_flutter: ^10.2.1
   lottie: ^2.0.0
-
+  syncfusion_flutter_pdf: ^20.4.38 #import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 # Machine Learning
   ml_algo: ^16.17.4 #import 'package:ml_algo/ml_algo.dart';
@@ -70,6 +70,7 @@ dependencies:
   pdf: ^3.8.4 #import 'package:pdf/pdf.dart';
   printing: ^5.9.3 #import 'package:printing/printing.dart';
   animated_text_kit: ^4.2.2 #import 'package:animated_text_kit/animated_text_kit.dart';
+  flutter_pdfview: ^1.2.1 #import 'package:flutter_pdfview/flutter_pdfview.dart';
 #sklite:
 #  import 'package:sklite/SVM/SVM.dart';
 #  import 'package:sklite/base.dart';

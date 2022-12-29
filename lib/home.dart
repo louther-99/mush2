@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
 
             // Center(
             //   child: Notif(),
-            // ),
+            // // ),
             Center(
               child: Status(),
               //child: Text("STATUS"),

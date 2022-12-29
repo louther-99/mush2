@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta_meta.dart';
 import 'package:mush2/model/mushroomData.dart';
 import 'package:mush2/model/userData.dart';
+import 'package:mush2/pdf_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -69,6 +71,10 @@ import 'package:file_picker/file_picker.dart';
 // import 'package:open_file/open_file.dart';
 import 'package:file_picker/file_picker.dart';
 
+import 'api/pdf_api.dart';
+import 'model/ap.dart';
+import 'model/pdf.dart';
+
 //Before:
 // final  rawCsvContent = await rootBundle.loadString('assets/diabetes.csv');
 
@@ -77,6 +83,17 @@ import 'package:file_picker/file_picker.dart';
 // final samples = DataFrame.fromRawCsv(raw);
 
 //The Async function always returns Future Values.
+import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'dart:io' as io;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 
 void main() async {
   Future<String> stringFuture = _getMockData();
@@ -96,8 +113,20 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+
+  String shutaa = "";
+  List <String> jsonObject = [];
+  String hayop = "";
+  int bota = 0;
+  List <Mushi> mush = [];
+  List id = [];
+  List toJsn = [];
+  List baliwan = [];
+  List iyakan = [];
+  List dat = [];
   var file_result;
   List rows = [];
+  var described = '';
   var shuta = '';
   var acu = "";
   List<List<dynamic>> _data = [];
@@ -648,16 +677,43 @@ class _InputState extends State<Input> {
                           // print(decoded);
                           print("printing json['Prediction'] ");
                           print(json['Prediction'][0]);
-
+                          final prediction = json['Prediction'][0];
                           print("Printing accuracy: below");
+                          final accuracy = json['Accuracy'];
                           print(json['Accuracy']);
+                          print("json['Description']");
+                          print(json['Description']);
+                          // described = json['Description'];
                           double a = json['Accuracy'] * 100;
                           print(a);
+
+
+
+
 
                           setState(() {
                             shuta = (json['Prediction'][0]);
                             acu = (a.toString());
+                            // described = json['Description'];
                           });
+
+                          final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+
+                          final pdf = new Pdf(
+                            prediction: prediction,
+                            accuracy: accuracy,
+                            // described: described,
+                          );
+
+
+                          final pdfFile = await PdfApi.generateText(pdf);
+                          // PdfApi.openFile(pdfFile!);
+                          // final fi = await PdfApi.pickFile();
+                          //
+                          // if (fi == null) return;
+                          // openPDF(context,fi);
 
                           // output = decoded['Prediction'];
                           // print(output);
@@ -832,34 +888,230 @@ class _InputState extends State<Input> {
 
   void _upload() async {
     file_result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if(file_result == null) return;
-    print(file_result.files.first.name + " is file_result.files.first.name");
-    filePath = file_result.files.first.path!;
-    print(filePath.toString() + " is filePath");
 
+    //If null do return nothing
+    if(file_result == null) return;
+
+    //Printing the filename
+    print(file_result.files.first.name + " is file_result.files.first.name");
+
+    //Printing the file path
+    filePath = file_result.files.first.path!;
+    print(filePath.toString() + " is filePath\n");
+
+
+    //Opening the file
     final inputs = File(filePath!).openRead();
+
+    //Converting csv to arrays
     final fields = await inputs.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
-    print(fields.toString() + " is fields");
-    print(fields[0].toString() + " is fields[0]");
-    final title = fields[0].toString();
-    for(int i = 1; i <fields.length; i++ ){
-      print(fields[i]);
+
+
+
+    // mush =
+
+    //Print fields
+    print(fields);
+    print("Fields: \n" + fields.toString());
+
+    //Starting the loop for row 1
+    for(int row = 1; row<fields.length; row++ ){
+
+      //Adding row 1 to dat list of variable
+      dat.add(fields[row]);
+      // print(dat.length.toString() + " is dat.length");
+
+      //This outputs : [1, 2, 2021-11-01, 40, 19, 50, No]
+      // print(fields[row]);
+
+      // print(fields.length.toString() + "is fields.length");
+      // print("Counter is " +row.toString());
+
+      //For the column
+      for(int col = 0; col <fields[row].length; col++ ){
+        // print([col].length.toString() + "is fields.length");
+        // print("Counter is " + x.toString());
+
+        //Prints 1
+        // print(fields[row][col]);
+        // if(col == 0){
+        //   print(col);
+        // }
+        // print(fields[row][col]);
+        // print("Done with fields[row][col]");
+        // toJsn = ['id =' + [row][col].toString(), 'batchNumber =' + [row][col].toString(), 'datetime =' + [row][col].toString(), 'lightLevel =' + [row][col].toString(), 'roomTemp =' + [row][col].toString(), 'humidity =' + [row][col].toString(), 'outcome =' + [row][col].toString()];
+
+        // print("Done with fields[row][col]");
+        iyakan.add(fields[row][col]);
+
+      }
+
+      for(int row = 0; row<iyakan.length; row++ ){
+
+      }
+      // print("Printing toJsn");
+      // print(toJsn);
+
+      // dat.add(fields[i]);
+      // for(int x = 1; x <=fields.length; x++){
+      //   print(fields[i][i]);
+      // }
+
+      // dat.add("index " + i.toString() +  fields[i].toString());
+      //  dat = {
+      //   "id" :  fields[i][i],
+      //   "batchNumber" : fields[i][i],
+      //   "datetime" : fields[i][i],
+      //   "lightLevel" : fields[i][i],
+      //   "roomTemp" : fields[i][i],
+      //   "humidity" : fields[i][i],
+      //    "outcome" : fields[i][i],
+      //
+      // };
       // rows = rows.add(fields[i]);
       // rows = rows.insertAll(fields[i]);
       // rows = rows + fields[i];
     }
-    print("Printing rows");
-    print(rows);
-    print(fields[0][1].toString() + " is fields[0][1]");
-    print(fields[1].toString() + " is fields[1] ");
+    // print("\nAfter the loop, baliwan is:");
+    // print(baliwan);
+    // print("\nAfter the loop, iyakan is:");
+    // print(iyakan);
 
-    var rspn = await CallApi().postDataAgain(fields, 'convert');
-    print("printing rspn.body below: ..");
-    print(rspn.body);
+    for (int i = 0; i<iyakan.length; i++){
+      // print(iyakan[i]);
+      if (i == 6){
+
+      }
+    }
+    // print("After the loop, dat is:");
+    // print(dat);
+    // print("Length of dat is " + dat.length.toString() );
+
+
+    // print(fields.toString() + " is fields\n");
+
+    var arr = {
+      "title" : fields[0],
+      "data" : dat,
+    };
+    print(dat.length.toString() + " is dat.length");
+    for (int i = 0; i <dat.length; i++){
+      mush.add (new Mushi(
+        id: dat[i][0].toString(),
+        batchNumber: dat[i][1].toString(),
+        datetime: dat[i][2].toString(),
+        lightLevel: dat[i][3].toString(),
+        roomTemp: dat[i][4].toString(),
+        humidity: dat[i][5].toString(),
+        outcome: dat[i][6].toString(),
+      )
+      );
+      for (int j = 0; j<dat[i].length; j++){
+        // print(dat[i][j].toString() + " is dat["+i.toString()+"]["+j.toString()+ "] " + i.toString() + " is " + i.toString() + " j is " + j.toString());
+        // print(dat[i][j].toString() + " is dat[i][j] " + i.toString() + " j is " + j.toString());
+    //     hayop = dat[i][j+1].toString();
+
+        // print(mush);
+        // print("Done with loop");
+
+      }
+    }
+    print(mush.length.toString() + " is mush.length");
+    for(int i = 0; i<mush.length; i++){
+      print(mush[i].id);
+      print(mush[i].batchNumber);
+      print(mush[i].datetime);
+      print(mush[i].lightLevel);
+      print(mush[i].roomTemp);
+      print(mush[i].humidity);
+      print(mush[i].outcome);
+    }
+    print(mush.length.toString() + " is mush.length");
+    print(mush[24].outcome.toString() + " is mush[24].outcome"); //No is mush[24].outcome
+    print((mush[24]).toJson()) ; //{id: 25, batchNumber: 3, lightLevel: 76, roomTemp: 77, humidity: 13, outcome: No, datetime: 2021-11-25}
+    print(jsonEncode(mush[24])) ; //{"id":"25","batchNumber":"3","lightLevel":"76","roomTemp":"77","humidity":"13","outcome":"No","datetime":"2021-11-25"}
+    print(mush[24].toString()) ; //Instance of 'Mushi'
+    print(mush.length);
+    for (int i = 0; i<mush.length; i++){
+          jsonObject.add((jsonEncode(mush[i])));
+          shutaa+=mush[i].toString();
+          print(mush[i].id); //1
+          print(mush[i].toJson()); //{id: 1, batchNumber: 2, lightLevel: 40, roomTemp: 19, humidity: 50, outcome: No, datetime: 2021-11-01}
+          print(mush[i].toString()); //Instance of 'Mushi'
+          print(jsonEncode(mush[i]));  //{"id":"1","batchNumber":"2","lightLevel":"40","roomTemp":"19","humidity":"50","outcome":"No","datetime":"2021-11-01"}
+          print(jsonObject[i]); //{id: 1, batchNumber: 2, lightLevel: 40, roomTemp: 19, humidity: 50, outcome: No, datetime: 2021-11-01}
+    }
+    print("Shuta is:");
+    print(shutaa.toString() + " is shutaa");
+
+    print(jsonObject.length.toString() + " is jsonObject.length.toString()");
+    for(int q = 0; q<jsonObject.length; q++)
+      {
+        print(jsonObject[q]);
+      }
+    print(jsonObject[24].toString() +  " is jsonObject.toString()"); //{id: 25, batchNumber: 3, lightLevel: 76, roomTemp: 77, humidity: 13, outcome: No, datetime: 2021-11-25} is jsonObject.toString()
+    var y = jsonEncode(mush);
+    print(y[24].toString() + " y[24].toString()");
+    print(mush[1].toString() + " is mush[1].toString()");
+    print(jsonObject[24] + " is jsonObject[24] "); //{id: 25, batchNumber: 3, lightLevel: 76, roomTemp: 77, humidity: 13, outcome: No, datetime: 2021-11-25} is jsonObject[24] 
+    // print(jsonObject[1]);
+    // var decoded = jsonDecode(jsonObject);
+
+    print("Printing decoded");
+    // print(decoded.toString() + " is decoded");
+    print("Done with decoded");
+    // print("\jsonObject is " + jsonObject);
+    // print("\nDone with jsonObject");
+    // print(decoded[0]);  //{id: 1, batchNumber: 2, lightLevel: 40, roomTemp: 19, humidity: 50, outcome: No, datetime: 2021-11-01}
+    // print(decoded[24]); //{id: 25, batchNumber: 3, lightLevel: 76, roomTemp: 77, humidity: 13, outcome: No, datetime: 2021-11-25}
+    // print(decoded[24]['id']);  //25
+    // print("arr['title']");
+    // print(arr['title']);
+    // print("arr['data']");
+    // print(arr['data']);
+    // print("arr is");
+    // print(arr);
+    //
+    // print(arr);
+    // print(fields[0].toString() + " is fields[0]");
+    // final title = fields[0].toString();
+    // final title = fields[0];
+    // print("Title: ");
+    // print(title);
+    // print("fields[1][1]");
+    // print(fields[1][1]);
+
+      // print(fields[1][1+1]);
+      // "batchNumber" : fields[i][i+2],
+      // "datetime" : fields[i][i+3],
+      // "datetime" : fields[i][i+4],
+      // "datetime" : fields[i][i+5],
+      // "datetime" : fields[i][i+6],
+      // "datetime" : fields[i][i+7],
+
+    // print("Printing dat");
+    // print(dat);
+    // print("Printing rows");
+    // print(rows);
+    // print(fields[0][1].toString() + " is fields[0][1]");
+    // print(fields[1].toString() + " is fields[1] ");
+    //
+    //
+    //
+    // print("dat is below");
+    // print(dat);
+
+    var res = await CallApi().postDataAgain(jsonObject, 'convert');
+    print("printing res.body below: ..");
+    print(res.body);
     print("Done printing rspn.body");
-    final jsons = jsonDecode(rspn.body);
+    final jsons = jsonDecode(res.body);
     print("printing jsons below: ..");
     print(jsons);
+    print("test shuta");
+    print(jsons[24]);
+    print(jsons[24][1]);
+    print(jsons[24]['outcome']);
     print("Done printing jsons");
     // var decoded = jsonDecode(r);
     // print("printing decoded below: ..");
@@ -882,6 +1134,11 @@ class _InputState extends State<Input> {
     print(siz.toString() + " size without the appbar");
     return siz;
   }
+
+  void openPDF(BuildContext context, io.File fi) =>
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => PDFViewerPage(file: fi))
+      );
 
   // void _requestFocus() {
   //   setState(() {
@@ -922,23 +1179,43 @@ class CallApi {
     'Accept': 'application/json',
   };
 
-  postDataAgain(fields, urls) async {
+  postDataAgain(jsonObject, urls) async {
+    print("Start of postDataAgian");
+    List <String>ewan = [];
+    print("Making sure that it has the last record");
+    print(jsonObject[24]);
+
+    print("Before printing shits");
+    print(jsonObject.length.toString() + " is fields length");
+    for(int i = 0; i<jsonObject.length; i++){
+      ewan.insert(i,jsonObject[i]);
+      // print(jsonObject[i]);
+      print(ewan[i]);
+    }
+    print(ewan[24].toString() + " is ewan[24]");
+    print("This is ewan: " + ewan.toString());
+    print(ewan);
+    print("Done printing shits");
     String _urls = "http://10.0.2.2:5000/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
       // Uri.parse(urls),
-      body: jsonEncode(fields),
+      body: jsonObject.toString(),
+      // body: ewan,
+
       headers: _setHeaders(),
     );
+    print("Printing jsonEncode(fields)");
+    print(jsonObject);
     print("done with resInPeace");
-
     if(resInPeace.statusCode == 200){
       var jsone = resInPeace.body;
       print("This will print jsone because of 200 stat code");
       print("this is json: " + jsone + " is jsone");
+      print("End of statuscode 200");
     }
-    print("done with post dataAgain");
+    print("End of postDataAgian");
 
     return resInPeace;
   }
