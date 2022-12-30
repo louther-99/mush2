@@ -273,9 +273,15 @@ class _DataState extends State<Data> {
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
-                        if (newDate == null) return;
-                        final dat = DateFormat('MM-dd-yyyy KK:mm:ss a').format(newDate);
+
+                        final dat = DateFormat('MM-dd-yyyy KK:mm:ss a').format(newDate!);
                         s = dat;
+                        if (s == null)
+                          {
+                            s = _dateController.text;
+                          }
+
+
                         setState((){
                           _dateController.text = dat;
                         });
@@ -348,9 +354,36 @@ class _DataState extends State<Data> {
                             _roomHumidityController.text);
                         final String? outcome = (_productionController.text);
 
-                        final String? myNewDate = s;
 
+                        String? myNewDate = s;
+                        if(myNewDate == null){
+                          print("myNewDate == null");
+                          myNewDate = _dateController.text;
+                        }
+                        if(myNewDate == ""){
+                          print("myNewDate == empty string");
+                          myNewDate = _dateController.text;
+                        }
+
+
+                        //
+                        // if (s == null)
+                        //   {
+                        //     print("S is null and s is: " + s );
+                        //     if(batchNumber != null){
+                        //       await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": _dateController.text});
+                        //       _batchController.text = '';
+                        //       _lightLevelController.text = '';
+                        //       _roomTemperatureController.text = '';
+                        //       _roomHumidityController.text = '';
+                        //       _productionController.text = '';
+                        //       _dateController.text  = " ";
+                        //
+                        //
+                        //     }
+                        //   }
                         if(batchNumber != null){
+                          print("S is not null and s is " + s);
                           await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": myNewDate});
                           _batchController.text = '';
                           _lightLevelController.text = '';
@@ -528,6 +561,8 @@ class _DataState extends State<Data> {
               stream: FirebaseFirestore.instance.collection('mushroom')
                   .where("id", isEqualTo: currentUser.currentUser!.uid)
                   .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+                  // .orderBy('id')
+                  // .orderBy('batchNumber')
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){
@@ -753,6 +788,8 @@ class _DataState extends State<Data> {
               stream: FirebaseFirestore.instance.collection('mushroom')
                   .where("id", isEqualTo: currentUser.currentUser!.uid)
                   // .where("batchNumber", isEqualTo: this.bitch)//id should match the id field in the database
+                  // .orderBy('id')
+                  // .orderBy('batchNumber')
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){
