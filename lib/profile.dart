@@ -211,9 +211,9 @@ class _ProfileState extends State<Profile> {
       // imagePath: user.profilePath!,
       imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
       onClicked: () async{
-        // await Navigator.of(context).push(
-        //   MaterialPageRoute(builder: (context) => EditProfile(user)),
-        // );
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => EditProfile(user: user)),
+        );
         setState(() {}); //Update UI
       },
     );

@@ -15,7 +15,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  final UserData user;
+  const EditProfile({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -51,27 +56,27 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'Full Name',
-            text: user.name,
+            text: widget.user.name,
             // onChanged: (name) {},
-            onChanged: (name) => user = user.copyWith(name: name), //Create copy of the user object in the UserData class
+            onChanged: (name) => user = widget.user.copyWith(name: name), //Create copy of the user object in the UserData class
             // onChanged: (name) => userData = userData.copyWith(name: name),
 
           ),
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'Email',
-            text: user.email,
+            text: widget.user.email,
             // onChanged: (email) {},
-            onChanged: (email) => user = user.copyWith(email: email), //Create copy of the user object in the UserData class
+            onChanged: (email) => user = widget.user.copyWith(email: email), //Create copy of the user object in the UserData class
 
           ),
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'About',
-            text: user.about!,
+            text: widget.user.about.toString(),
             maxLines: 5,
             // onChanged: (about) {},
-            onChanged: (about) => user = user.copyWith(about: about),
+            onChanged: (about) => user = widget.user.copyWith(about: about),
 
 
           ),
@@ -80,7 +85,7 @@ class _EditProfileState extends State<EditProfile> {
         onPressed: (){
           // UserPreferences.setUser(user); //Calling setUSer method passing the user object
           Navigator.of(context).pop(); //Pop the editing page to show up the profile page
-          createUser(IDUser: userID, profilePath: user.profilePath, name: user.name, email: user.email, about: user.about, coverPath: user.coverPath, lastMessageTime: user.lastMessageTime);
+          createUser(IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime);
 
           final snackBar = SnackBar(content: Text("Data has been updated."));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -137,7 +142,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget buildProfileWidget() {
     return ProfileWidget(
-      imagePath: user.profilePath!,
+      imagePath: widget.user.profilePath.toString(),
       isEdit: true,
       onClicked: () async {
         final image = await ImagePicker()
@@ -148,7 +153,7 @@ class _EditProfileState extends State<EditProfile> {
         final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
         final newImage = await File(image.path).copy(imageFile.path);
 
-        setState(() => user = user.copyWith(profilePath: newImage.path));
+        setState(() => user = widget.user.copyWith(profilePath: newImage.path));
         // setState(() => userData = userData.copyWith(imagePath: newImage.path));
 
       },
