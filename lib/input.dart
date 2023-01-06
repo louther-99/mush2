@@ -114,6 +114,7 @@ class Input extends StatefulWidget {
 
 class _InputState extends State<Input> {
 
+  List crazy = [];
   String shutaa = "";
   List <String> jsonObject = [];
   String hayop = "";
@@ -129,6 +130,8 @@ class _InputState extends State<Input> {
   var described = '';
   var shuta = '';
   var acu = "";
+  var acurat;
+  var shutarat;
   List<List<dynamic>> _data = [];
   // List<List<dynamic>>? _data;
   String? filePath;
@@ -365,7 +368,7 @@ class _InputState extends State<Input> {
                                       child: Icon(Icons.info, size: 24, color: textColor,),
                                     ),
                                     TextSpan(
-                                      text: " Outcome: " + shuta,
+                                      text: " Outcome: " + shutarat.toString(),
                                       style: TextStyle(
                                         fontSize: 24,
                                         color: textColor,
@@ -388,7 +391,7 @@ class _InputState extends State<Input> {
                                       child: Icon(Icons.percent, size: 24, color: textColor,),
                                     ),
                                     TextSpan(
-                                      text: " Accuracy: " + acu.toString() + "%",
+                                      text: " Accuracy: " + acurat.toString() + "%",
                                       style: TextStyle(
                                         fontSize: 24,
                                         color: textColor,
@@ -699,9 +702,6 @@ class _InputState extends State<Input> {
                               print(a);
 
 
-
-
-
                               setState(() {
                                 shuta = (json['Prediction'][0]);
                                 acu = (a.toString());
@@ -1010,6 +1010,14 @@ class _InputState extends State<Input> {
     };
     print(dat.length.toString() + " is dat.length");
     for (int i = 0; i <dat.length; i++){
+
+      // crazy.add(dat[i][3].toString() + dat[i][4].toString() + dat[i][5].toString());
+
+      crazy.add("{" + dat[i][3].toString());
+      crazy.add(dat[i][4].toString());
+      crazy.add(dat[i][5].toString() + "}");
+
+
       mush.add (new Mushi(
         id: dat[i][0].toString(),
         batchNumber: dat[i][1].toString(),
@@ -1034,9 +1042,10 @@ class _InputState extends State<Input> {
 
       }
 
-      createData(batchNumber: int.parse(mush[i].batchNumber), lightLevel: double.parse(mush[i].lightLevel), roomTemp: double.parse(mush[i].roomTemp), humidity: double.parse(mush[i].humidity), outcome: shuta, datetime: mush[i].datetime);
+      // createData(batchNumber: int.parse(mush[i].batchNumber), lightLevel: double.parse(mush[i].lightLevel), roomTemp: double.parse(mush[i].roomTemp), humidity: double.parse(mush[i].humidity), outcome: mush[i].outcome, datetime: mush[i].datetime);
 
     }
+    print("This is crazy: " + crazy.toString());
     print(mush.length.toString() + " is mush.length");
     for(int i = 0; i<mush.length; i++){
       print(mush[i].id);
@@ -1046,6 +1055,8 @@ class _InputState extends State<Input> {
       print(mush[i].roomTemp);
       print(mush[i].humidity);
       print(mush[i].outcome);
+
+
     }
     print(mush.length.toString() + " is mush.length");
     print(mush[24].outcome.toString() + " is mush[24].outcome"); //No is mush[24].outcome
@@ -1131,12 +1142,39 @@ class _InputState extends State<Input> {
     print(jsons);
     print("test shuta");
     print(jsons[24]);
-    print(jsons[24][1]);
-    print(jsons[24]['outcome']);
+    print(jsons['Prediction'][24]);
+    print(jsons['Prediction'][24]['outcome']);
+    print("Here's the accuracy for batch:");
+    print(jsons['Accuracy']);
+    print("Here's the outcome for batch:");
+    print(jsons['Outcome']);
+    setState(() {
+      if(jsons['Outcome'] < 80 )
+      {
+        shutarat = "No";
+      }
+      else{
+        shutarat = 'Yes';
+      }
+    });
+
+
+    print(jsons);
     print("Done printing jsons");
-    for(int q = 0; q<jsons.length;q++){
-      print(jsons[q]);
+    print(jsons['Prediction'].length);
+    print(jsons['Prediction'][0]['batchNumber']);
+   print( jsons['Prediction'][0]['lightLevel']);
+    for(int q = 0; q<jsons['Prediction'].length;q++){
+      print(jsons['Prediction'][q]);
+      createData(batchNumber: int.parse(jsons['Prediction'][q]['batchNumber']), lightLevel: double.parse(jsons['Prediction'][q]['lightLevel']), roomTemp: double.parse(jsons['Prediction'][q]['roomTemp']), humidity: double.parse(jsons['Prediction'][q]['humidity']), outcome: jsons['Prediction'][q]['outcome'], datetime: jsons['Prediction'][q]['datetime']);
     }
+    double acc = jsons['Accuracy'] * 100;
+    setState(() {
+
+      // shuta = (json['Prediction'][0]);
+      acurat = (acc.toString());
+      // described = json['Description'];
+    });
     // var decoded = jsonDecode(r);
     // print("printing decoded below: ..");
     // print(decoded);

@@ -101,3 +101,24 @@ class MushroomData {
 // // }
 //
 // }
+
+
+//batchNumber
+// 2
+// datetime
+// "2021-11-03"
+// (string)
+//
+// edit
+//
+// delete
+// humidity
+// 42
+// id
+// "mTwB5Fo7clUfGNuUgnsCgWkyjOA3"
+// lightLevel
+// 100
+// outcome
+// ""
+// roomTemp
+// 39

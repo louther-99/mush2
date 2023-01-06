@@ -28,7 +28,7 @@ class _DataState extends State<Data> {
   FocusNode _focus = FocusNode();
   bool hasFocus = false;
   bool hasData = false;
-
+  var count = 0;
   int bitch = 0;
   late int passMe = 0;
 
@@ -446,6 +446,7 @@ class _DataState extends State<Data> {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance;
@@ -490,7 +491,8 @@ class _DataState extends State<Data> {
                       controller: _searchController,
                       cursorColor: brown,
                       onChanged: (query) {
-                         setState(()  {
+                         setState(()   {
+                           // count = productsCount;
                            _searchController.text.isEmpty ? hasData = false : hasData = true;
                            this.bitch = int.parse(
                                _searchController.text);
@@ -549,8 +551,20 @@ class _DataState extends State<Data> {
                       // },
                     ),
           ),
+          // Container(child:
+          // Text(
+          //   "Count: " +
+          //     count.toString(),
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 30,
+          //     color: textColor,
+          //
+          //   ),
+          // )
+          // ),
           Container(
-            height: 580,
+            height: 500, //Shows the last record
             // color: Colors.white,
             // margin: EdgeInsets.fromLTRB(0,0,0,100),
       //         if(_focus.hasFocus.toString()){
@@ -564,12 +578,15 @@ class _DataState extends State<Data> {
                   // .orderBy('id')
                   // .orderBy('batchNumber')
                   .snapshots(),
+
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){
+                  print(streamSnapshot.data!.docs.length.toString());
                   return ListView.builder(
                     itemCount: streamSnapshot.data!.docs.length, //docs mean row
                     // itemCount: searchResult.length,
                     itemBuilder: (context, index) {
+
                       final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
                       // date = documentSnapshot['date'].toString() as DateTime;
                       //DateTime myDateTime = DateTime.parse(date.toDate().toString());
@@ -793,7 +810,6 @@ class _DataState extends State<Data> {
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){ //streamSnapshot: all data available on the database
                 if(streamSnapshot.hasData){
-
                   return ListView.builder(
                     itemCount: streamSnapshot.data!.docs.length, //docs mean row
                     // itemCount: searchResult.length,
@@ -1004,8 +1020,11 @@ class _DataState extends State<Data> {
 
 
                 }//widget build
-                return Center(
-                  child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+                return Container(
+                  // height: 500,
+                  child: Center(
+                    child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+                  ),
                 );
               },
             ),

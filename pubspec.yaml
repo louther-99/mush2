@@ -71,6 +71,7 @@ dependencies:
   printing: ^5.9.3 #import 'package:printing/printing.dart';
   animated_text_kit: ^4.2.2 #import 'package:animated_text_kit/animated_text_kit.dart';
   flutter_pdfview: ^1.2.1 #import 'package:flutter_pdfview/flutter_pdfview.dart';
+  firebase_messaging: ^14.2.1 #import 'package:firebase_messaging/firebase_messaging.dart';
 #sklite:
 #  import 'package:sklite/SVM/SVM.dart';
 #  import 'package:sklite/base.dart';

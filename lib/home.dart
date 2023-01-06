@@ -11,6 +11,7 @@ import 'package:mush2/utils/colors.dart';
 import 'package:mush2/notification.dart';
 import 'package:mush2/utils/userPreferences.dart';
 import 'package:mush2/timeline.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -62,11 +63,12 @@ class _HomePageState extends State<HomePage> {
                 // Tab(icon: Icon(Icons.notifications), text: 'NOTIFICATION'),
                 // Tab(icon: Icon(Icons.menu), text: 'MENU'),
                 Tab(icon: Icon(Icons.insert_drive_file)),
+                Tab(icon: Icon(Icons.file_present)),
                 Tab(icon: Icon(Icons.table_view)),
                 // Tab(icon: Icon(Icons.home)),
 
                 // Tab(icon: Icon(Icons.notifications)),
-                Tab(icon: Icon(Icons.file_present)),
+
                 Tab(icon: Icon(Icons.person)),
               ],
             ),
@@ -83,7 +85,8 @@ class _HomePageState extends State<HomePage> {
               child: Input(),
             ),
             Center(
-              child: Data(),
+              child: Status(),
+
             ),
             // Center(
             //   // child: Timeline(),
@@ -93,10 +96,9 @@ class _HomePageState extends State<HomePage> {
             //   child: Notif(),
             // // ),
             Center(
-              child: Status(),
+              child: Data(),
               //child: Text("STATUS"),
             ),
-
             Center(
               child: Profile(),
             ),
