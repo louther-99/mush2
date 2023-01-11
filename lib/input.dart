@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:json_annotation/json_annotation.dart';
 // import 'package:sklite/SVM/SVM.dart';
 // import 'package:sklite/base.dart';
 // import 'package:sklite/ensemble/forest.dart';
@@ -42,12 +44,11 @@ import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // For google maps
 import 'package:intl/intl.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
 import 'package:ml_algo/ml_algo.dart';
 import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:ml_preprocessing/ml_preprocessing.dart';
 // import 'package:tflite_flutter/tflite_flutter.dart';
-//
+
 // import 'package:sklite/SVM/SVM.dart';
 // import 'package:sklite/base.dart';
 // import 'package:sklite/ensemble/forest.dart';
@@ -61,7 +62,7 @@ import 'package:ml_preprocessing/ml_preprocessing.dart';
 // import 'package:sklite/utils/mathutils.dart';
 
 // import 'package:tflite/tflite.dart';
-import 'package:tflite/tflite.dart';
+// import 'package:tflite/tflite.dart';
 // import 'package:tflite_flutter/tflite_flutter.dart';
 // import 'package:chaquopy/chaquopy.dart';
 import 'package:csv/csv.dart';
@@ -93,6 +94,7 @@ import 'package:printing/printing.dart';
 import 'dart:io' as io;
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 
 
 void main() async {
@@ -368,7 +370,7 @@ class _InputState extends State<Input> {
                                       child: Icon(Icons.info, size: 24, color: textColor,),
                                     ),
                                     TextSpan(
-                                      text: " Outcome: " + shutarat.toString(),
+                                      text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
                                       style: TextStyle(
                                         fontSize: 24,
                                         color: textColor,
@@ -391,7 +393,7 @@ class _InputState extends State<Input> {
                                       child: Icon(Icons.percent, size: 24, color: textColor,),
                                     ),
                                     TextSpan(
-                                      text: " Accuracy: " + acurat.toString() + "%",
+                                      text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
                                       style: TextStyle(
                                         fontSize: 24,
                                         color: textColor,
@@ -695,11 +697,97 @@ class _InputState extends State<Input> {
                               print("Printing accuracy: below");
                               final accuracy = json['Accuracy'];
                               print(json['Accuracy']);
-                              print("json['Description']");
-                              print(json['Description']);
+                              // print("json['Description']");
+                              // print(json['Description']);
                               // described = json['Description'];
-                              double a = json['Accuracy'] * 100;
+                              int a = (json['Accuracy'] * 100).toInt();
+                              a.round();
                               print(a);
+
+                              var values = {
+                                'prediction' : prediction,
+                                'accuracy' : a
+
+                              };
+
+                              var r2 = await CallApi().postData2('description2');
+                              // json.decode(json.encode(response.databody);
+                              print("Done printing rspns.body from description2");
+                              final jsonss = jsonDecode(r2.body);
+                              print(jsonss);
+                              print("Done");
+                              final jsonss2 = jsonDecode(r2.body);
+                              // final concat = jsonss2.concat(values);
+                              print('concat');
+                              // print(concat);
+                              print(jsonss2);
+                              print(jsonss2['id']['count']);
+                              // Id idClass = Id.fromJson(jsonDecode(r2.body));
+                              // BatchNumber BatchNumberClass = BatchNumber.fromJson(jsonDecode(r2.body));
+                              // LightLevel LightLevelClass = LightLevel.fromJson(jsonDecode(r2.body));
+                              // RoomTemp RoomTempClass = RoomTemp.fromJson(jsonDecode(r2.body));
+                              // Humidity HumidityClass = Humidity.fromJson(jsonDecode(r2.body));
+
+                              print("This is idClass.count");
+                              // print(idClass.mean);
+                              // print(BatchNumberClass.mean);
+                              // print(LightLevelClass.mean);
+                              // print(RoomTempClass.mean);
+                              // print(HumidityClass.mean);
+                              print("printing jsons below: ..");
+                              print(jsonss2);
+                              print(jsonss2['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+                              print(jsonss2['id']['count']); // 25.0
+                              print(jsonss2['id']['mean']);
+                              print(jsonss2['id']['std']);
+                              print(jsonss2['id']['min']);
+                              print(jsonss2['id']['25%']);
+                              print(jsonss2['id']['50%']);
+                              print(jsonss2['id']['75%']);
+                              print(jsonss2['id']['max']);
+
+                              print(jsonss2['batchNumber']);
+                              print(jsonss2['batchNumber']['count']);
+                              print(jsonss2['batchNumber']['mean']);
+                              print(jsonss2['batchNumber']['std']);
+                              print(jsonss2['batchNumber']['min']);
+                              print(jsonss2['batchNumber']['25%']);
+                              print(jsonss2['batchNumber']['50%']);
+                              print(jsonss2['batchNumber']['75%']);
+                              print(jsonss2['batchNumber']['max']);
+
+                              print(jsonss2['lightLevel']);
+                              print(jsonss2['lightLevel']['count']);
+                              print(jsonss2['lightLevel']['mean']);
+                              print(jsonss2['lightLevel']['std']);
+                              print(jsonss2['lightLevel']['min']);
+                              print(jsonss2['lightLevel']['25%']);
+                              print(jsonss2['lightLevel']['50%']);
+                              print(jsonss2['lightLevel']['75%']);
+                              print(jsonss2['lightLevel']['max']);
+
+                              print(jsonss2['roomTemp']);
+                              print(jsonss2['roomTemp']['count']);
+                              print(jsonss2['roomTemp']['mean']);
+                              print(jsonss2['roomTemp']['std']);
+                              print(jsonss2['roomTemp']['min']);
+                              print(jsonss2['roomTemp']['25%']);
+                              print(jsonss2['roomTemp']['50%']);
+                              print(jsonss2['roomTemp']['75%']);
+                              print(jsonss2['roomTemp']['max']);
+
+                              print(jsonss2['humidity']);
+                              print(jsonss2['humidity']['count']);
+                              print(jsonss2['humidity']['mean']);
+                              print(jsonss2['humidity']['std']);
+                              print(jsonss2['humidity']['min']);
+                              print(jsonss2['humidity']['25%']);
+                              print(jsonss2['humidity']['50%']);
+                              print(jsonss2['humidity']['75%']);
+                              print(jsonss2['humidity']['max']);
+
+
+
 
 
                               setState(() {
@@ -711,16 +799,26 @@ class _InputState extends State<Input> {
                               final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
 
                               ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-
-                              final pdf = new Pdf(
-                                prediction: prediction,
-                                accuracy: accuracy,
-                                // described: described,
-                              );
+                              print("Before Making pdf");
+                              final pdf = new Pdf.fromJson(jsonss2);
+                              print("Hi");
+                              print(pdf.batchNumber);
+                            
+                              // final pdf = new Pdf(
+                              //   prediction: prediction,
+                              //   accuracy: accuracy,
+                              //   id: null,
+                              //   batchNumber: null,
+                              //   lightLevel: null,
+                              //   roomTemp: null,
+                              //   humidity: null,
+                              //   // described: described,
+                              // );
 
 
                               final pdfFile = await PdfApi.generateText(pdf);
                               // PdfApi.openFile(pdfFile!);
+                              // final fi = await PdfApi.pickFile();
                               // final fi = await PdfApi.pickFile();
                               //
                               // if (fi == null) return;
@@ -810,7 +908,7 @@ class _InputState extends State<Input> {
                                             child: Icon(Icons.percent, size: 24, color: textColor,),
                                           ),
                                           TextSpan(
-                                            text: " Accuracy: " + acu.toString() + "%",
+                                            text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
                                             style: TextStyle(
                                               fontSize: 24,
                                               color: textColor,
@@ -1057,6 +1155,8 @@ class _InputState extends State<Input> {
       print(mush[i].outcome);
 
 
+
+
     }
     print(mush.length.toString() + " is mush.length");
     print(mush[24].outcome.toString() + " is mush[24].outcome"); //No is mush[24].outcome
@@ -1141,6 +1241,12 @@ class _InputState extends State<Input> {
     print("printing jsons below: ..");
     print(jsons);
     print("test shuta");
+    // print(jsons['id']);
+    // print(jsons['Description'][3]);
+    // print(jsons['id']); //{count: 25, unique: 25, top: 1, freq: 1}
+    // print(jsons['batchNumber']); //{count: 25, unique: 2, top: 2, freq: 18}
+    // print(jsons['batchNumber']['freq']); //18
+    // print("Done");
     print(jsons[24]);
     print(jsons['Prediction'][24]);
     print(jsons['Prediction'][24]['outcome']);
@@ -1158,7 +1264,6 @@ class _InputState extends State<Input> {
       }
     });
 
-
     print(jsons);
     print("Done printing jsons");
     print(jsons['Prediction'].length);
@@ -1168,7 +1273,9 @@ class _InputState extends State<Input> {
       print(jsons['Prediction'][q]);
       createData(batchNumber: int.parse(jsons['Prediction'][q]['batchNumber']), lightLevel: double.parse(jsons['Prediction'][q]['lightLevel']), roomTemp: double.parse(jsons['Prediction'][q]['roomTemp']), humidity: double.parse(jsons['Prediction'][q]['humidity']), outcome: jsons['Prediction'][q]['outcome'], datetime: jsons['Prediction'][q]['datetime']);
     }
-    double acc = jsons['Accuracy'] * 100;
+    int acc = (jsons['Accuracy'] * 100).toInt();
+    acc.round();
+    print(acc);
     setState(() {
 
       // shuta = (json['Prediction'][0]);
@@ -1184,6 +1291,67 @@ class _InputState extends State<Input> {
     // fields = kl
 
     // fields
+
+
+    print("wakaru");
+    var ress = await CallApi().postDataAgains('description');
+    // json.decode(json.encode(response.databody);
+    print("Done printing rspns.body from description");
+    // final jsonss = jsonDecode(jsonEncode(ress.body));
+    final jsonss = jsonDecode(ress.body);
+    print("printing jsons below: ..");
+    print(jsonss);
+    print(jsonss['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+    print(jsonss['id']['count']); // 25.0
+    print(jsonss['id']['mean']);
+    print(jsonss['id']['std']);
+    print(jsonss['id']['min']);
+    print(jsonss['id']['25%']);
+    print(jsonss['id']['50%']);
+    print(jsonss['id']['75%']);
+    print(jsonss['id']['max']);
+
+    print(jsonss['batchNumber']);
+    print(jsonss['batchNumber']['count']);
+    print(jsonss['batchNumber']['mean']);
+    print(jsonss['batchNumber']['std']);
+    print(jsonss['batchNumber']['min']);
+    print(jsonss['batchNumber']['25%']);
+    print(jsonss['batchNumber']['50%']);
+    print(jsonss['batchNumber']['75%']);
+    print(jsonss['batchNumber']['max']);
+
+    print(jsonss['lightLevel']);
+    print(jsonss['lightLevel']['count']);
+    print(jsonss['lightLevel']['mean']);
+    print(jsonss['lightLevel']['std']);
+    print(jsonss['lightLevel']['min']);
+    print(jsonss['lightLevel']['25%']);
+    print(jsonss['lightLevel']['50%']);
+    print(jsonss['lightLevel']['75%']);
+    print(jsonss['lightLevel']['max']);
+
+    print(jsonss['roomTemp']);
+    print(jsonss['roomTemp']['count']);
+    print(jsonss['roomTemp']['mean']);
+    print(jsonss['roomTemp']['std']);
+    print(jsonss['roomTemp']['min']);
+    print(jsonss['roomTemp']['25%']);
+    print(jsonss['roomTemp']['50%']);
+    print(jsonss['roomTemp']['75%']);
+    print(jsonss['roomTemp']['max']);
+
+    print(jsonss['humidity']);
+    print(jsonss['humidity']['count']);
+    print(jsonss['humidity']['mean']);
+    print(jsonss['humidity']['std']);
+    print(jsonss['humidity']['min']);
+    print(jsonss['humidity']['25%']);
+    print(jsonss['humidity']['50%']);
+    print(jsonss['humidity']['75%']);
+    print(jsonss['humidity']['max']);
+
+
 
     setState(() {
       _data = fields;
@@ -1280,6 +1448,32 @@ class CallApi {
     print("End of postDataAgian");
 
     return resInPeace;
+  }
+
+  postDataAgains(urlss) async {
+    String _urls = "http://10.0.2.2:5000/";
+    String fullUrls = _urls + urlss;
+    var resInPeaces = await http.get(
+      Uri.parse(fullUrls),
+      // Uri.parse(urls),
+      // body: jsonObject.toString(),
+      // body: ewan,
+      headers: _setHeaders(),
+    );
+    return resInPeaces;
+  }
+
+  postData2(urlss2) async {
+    String _urls = "http://10.0.2.2:5000/";
+    String fullUrls = _urls + urlss2;
+    var resInPeaces2 = await http.post(
+      Uri.parse(fullUrls),
+      // Uri.parse(urls),
+      // body: values.toString(),
+      // body: ewan,
+      headers: _setHeaders(),
+    );
+    return resInPeaces2;
   }
 
 

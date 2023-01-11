@@ -1,3 +1,5 @@
+
+import 'package:json_annotation/json_annotation.dart';
 class MushroomData {
   final String id;
   final int batchNumber;

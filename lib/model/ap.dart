@@ -1,3 +1,5 @@
+
+import 'package:json_annotation/json_annotation.dart';
 class Mushi {
   final String id;
   final String batchNumber;
