@@ -7,14 +7,14 @@ part of 'lightLevel.dart';
 // **************************************************************************
 
 LightLevel _$LightLevelFromJson(Map<String, dynamic> json) => LightLevel(
-      count: (json['count'] as num).toDouble(),
-      mean: (json['mean'] as num).toDouble(),
-      std: (json['std'] as num).toDouble(),
-      min: (json['min'] as num).toDouble(),
-      twentyFive: (json['25%'] as num).toDouble(),
-      fifty: (json['50%'] as num).toDouble(),
-      seventyFive: (json['75%'] as num).toDouble(),
-      max: (json['max'] as num).toDouble(),
+      count: (json['count']).toDouble(),
+      mean: (json['mean']).toDouble(),
+      std: (json['std']).toDouble().roundToDouble(),
+      min: (json['min']).toDouble(),
+      twentyFive: (json['25%']).toDouble(),
+      fifty: (json['50%']).toDouble(),
+      seventyFive: (json['75%']).toDouble(),
+      max: (json['max']).toDouble(),
     );
 
 Map<String, dynamic> _$LightLevelToJson(LightLevel instance) =>

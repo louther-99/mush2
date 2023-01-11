@@ -1,4 +1,4 @@
-
+import 'dart:math';
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
@@ -30,92 +30,183 @@ class PdfApi {
     // pdfs.document.
     // margin: const pw.EdgeInsets.only(top: 100),
     pdfs.addPage(
-        pw.Page(
+        pw.MultiPage(
           margin: pw.EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 0),
           build: (pw.Context context) =>
-              pw.Container(
-                margin: pw.EdgeInsets.zero,
-                padding: pw.EdgeInsets.all(15),
-                color:  PdfColors.grey,
+            <pw.Widget>[
+              pw.Header(
+                padding: pw.EdgeInsets.all(10),
+                margin: pw.EdgeInsets.all(0),
+                decoration: pw.BoxDecoration(color: PdfColors.orange100),
                 child: pw.Column(
+                  children: [
+                    pw.Container(
+                      // color: Color(Colors._redAccentValue),
+                      child: pw.Center(child: pw.Text("Mushroom Prediction", style: pw.TextStyle(fontSize: 30, fontWeight: pw.FontWeight.bold))),
+                    ),
+                    pw.Text("Date generated: " + datetime.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                  ],
+                )
+              ),
+              // buildTable(pdfi),
+              pw.Column(
+                children: [
+                  pw.Container(
+                    margin: pw.EdgeInsets.zero,
+                    padding: pw.EdgeInsets.all(5),
+                    color:  PdfColors.orange300,
+                    child: pw.Column(
+                        children: [
+                          // pw.SizedBox(height: 20),
+                          pw.Container(
+                            color: PdfColors.orange100,
+                            child: pw.Column(
+                              // mainAxisAlignment: pw.MainAxisAlignment.start,
+                              // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: [
+                                pw.SizedBox(height: 10),
+                                pw.Text("Outcome: " + pdfi.prediction, style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                                pw.Text("Accuracy: " + pdfi.accuracy.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                                pw.Row(
+                                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                  children: [
+                                  ],
+                                ),
+                                pw.SizedBox(height: 10),
+
+
+
+                                pw.Table(
+                                  border: pw.TableBorder.all(color: PdfColors.orange400, width: 1.5),
+                                  columnWidths: const {
+                                    0: pw.FlexColumnWidth(1.5),
+                                    1: pw.FlexColumnWidth(2),
+                                    2: pw.FlexColumnWidth(2),
+                                    3: pw.FlexColumnWidth(2),
+                                    4: pw.FlexColumnWidth(2),
+                                    5: pw.FlexColumnWidth(2),
+                                  },
+                                  children: [
+                                    pw.TableRow( children: [
+                                      pw.Text("", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black,),),
+                                      pw.Text("ID", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black,),),
+                                      pw.Text("Batch Number", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black),),
+                                      pw.Text("Light Level", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black),),
+                                      pw.Text("Room Temp", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black),),
+                                      pw.Text("Humidity", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black),),
+                                    ]),
+                                    pw.TableRow(children: [
+
+
+                                      pw.Text("Count", textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text( pdfi.id.count.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text( pdfi.batchNumber.count.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text( pdfi.lightLevel.count.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text( pdfi.roomTemp.count.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text( pdfi.humidity.count.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("Mean", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("STD", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.std.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.std.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.std.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.std.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.std.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("Min", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.min.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.min.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.min.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.min.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.min.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("Max", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.max.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.max.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.max.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.max.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.max.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("25%", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.twentyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.twentyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.twentyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.twentyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.twentyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("50%", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.fifty.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.fifty.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.fifty.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.fifty.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.fifty.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("75%", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.seventyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.seventyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.lightLevel.seventyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.roomTemp.seventyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.humidity.seventyFive.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+
+
+                                  ],
+                                ),
+
+                                 ],
+                            ),
+                          ),
+                        ]
+                    ),
+                  ),
+                ],
+              ),
+              pw.Footer(
+                  padding: pw.EdgeInsets.all(10),
+                  margin: pw.EdgeInsets.all(0),
+                  decoration: pw.BoxDecoration(color: PdfColors.orange200),
+                  title: pw.Column(
                     children: [
-                      pw.SizedBox(height: 20),
                       pw.Container(
                         // color: Color(Colors._redAccentValue),
-                        child: pw.Center(child: pw.Text("Mushroom Prediction", style: pw.TextStyle(fontSize: 30, fontWeight: pw.FontWeight.bold))),
+                        child: pw.Center(child: pw.Text("Mushroom", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold))),
                       ),
-                      pw.Text("Date generated: " + datetime.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                      pw.Container(
-                        color: PdfColors.grey,
-                        child: pw.Column(
-                          // mainAxisAlignment: pw.MainAxisAlignment.start,
-                          // crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.SizedBox(height: 30),
-                            pw.Text("Outcome: " + pdfi.prediction, style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Accuracy: " + pdfi.accuracy.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                             ],
-                            ),
-                            pw.SizedBox(height: 40),
-                            pw.Text("Id Count: " + pdfi.id.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id Mean: " + pdfi.id.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id STD: " + pdfi.id.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id Min: " + pdfi.id.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id 25%: " + pdfi.id.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id 50%: " + pdfi.id.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id 75%: " + pdfi.id.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Id Max: " + pdfi.id.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            pw.Text("BatchNumber Count: " + pdfi.batchNumber.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber Mean: " + pdfi.batchNumber.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber STD: " + pdfi.batchNumber.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber Min: " + pdfi.batchNumber.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber 25%: " + pdfi.batchNumber.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber 50%: " + pdfi.batchNumber.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber 75%: " + pdfi.batchNumber.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("BatchNumber Max: " + pdfi.batchNumber.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            pw.Text("LightLevel Count: " + pdfi.lightLevel.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel Mean: " + pdfi.lightLevel.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel STD: " + pdfi.lightLevel.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel Min: " + pdfi.lightLevel.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel 25%: " + pdfi.lightLevel.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel 50%: " + pdfi.lightLevel.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel 75%: " + pdfi.lightLevel.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("LightLevel Max: " + pdfi.lightLevel.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            pw.Text("RoomTemp Count: " + pdfi.roomTemp.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp Mean: " + pdfi.roomTemp.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp STD: " + pdfi.roomTemp.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp Min: " + pdfi.roomTemp.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp 25%: " + pdfi.roomTemp.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp 50%: " + pdfi.roomTemp.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp 75%: " + pdfi.roomTemp.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("RoomTemp Max: " + pdfi.roomTemp.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            pw.Text("Humidity Count: " + pdfi.humidity.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity Mean: " + pdfi.humidity.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity STD: " + pdfi.humidity.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity Min: " + pdfi.humidity.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity 25%: " + pdfi.humidity.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity 50%: " + pdfi.humidity.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity 75%: " + pdfi.humidity.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Humidity Max: " + pdfi.humidity.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-
-                            // pw.Text("Model's DataFrame " + pdfi.described, style: pw.TextStyle(fontSize: 15)),
-                          ],
-                        ),
-                      ),
-                    ]
-                ),
+                      pw.Text("Date generated: " + datetime.toString(), style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      // pw.Text(context.pageNumber.toString()),
+                    ],
+                  )
               ),
+            ],
 
-    ));
+
+
+    ),
+
+
+    );
 
     //print the document
     await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdfs.save());
@@ -196,13 +287,50 @@ class PdfApi {
 
     // return filee;
   }
+  //
+  // static Future openFile(io.File file) async {
+  //   final String url = file.toString();
+  //   print("Trying to print url");
+  //   print(url);
+  //   await OpenFile.open(url);
+  // }
+  //
+  // static pw.Widget buildTable(Pdf pdfi) {
+  //
+  //   return pw.Table(
+  //     border: pw.TableBorder.all(),
+  //     children: [
+  //     buildRow(['ID', 'Batch Number', 'Light Level', 'Room Temp', 'Humidity'])
+  //     ],
+  //   );
 
-  static Future openFile(io.File file) async {
-    final String url = file.toString();
-    print("Trying to print url");
-    print(url);
-    await OpenFile.open(url);
-  }
+    // final headers = [
+    //   'ID',
+    //   'Batch Number',
+    //   'Date',
+    //   'Light Level',
+    //   'Room Temp',
+    //   'Humidity'
+    // ];
+    // final data = pdfi.prediction.map((item) => item).toList();
+    // return pw.Table.fromTextArray(
+    //     headers: headers,
+    //     data: data,
+    //     border: null,
+    //     headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+    //     headerDecoration: pw.BoxDecoration(color: PdfColors.teal),
+    // );
+  // }
+
+  // static pw.TableRow buildRow(List<String> cells) {
+  //   return pw.TableRow(children: cells.map((e) {
+  //     pw.Padding(
+  //         padding: const EdgeInsets.all(12),
+  //         child: Center (
+  //           child: Text(e),
+  //         ))
+  //   }));
+  // }
 }
 
 //
