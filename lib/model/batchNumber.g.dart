@@ -11,9 +11,9 @@ BatchNumber _$BatchNumberFromJson(Map<String, dynamic> json) => BatchNumber(
       mean: (json['mean'] as num).toDouble(),
       std: (json['std'] as num).toDouble(),
       min: (json['min'] as num).toDouble(),
-      twentyFive: (json['twentyFive'] as num).toDouble(),
-      fifty: (json['fifty'] as num).toDouble(),
-      seventyFive: (json['seventyFive'] as num).toDouble(),
+      twentyFive: (json['25%'] as num).toDouble(),
+      fifty: (json['50%'] as num).toDouble(),
+      seventyFive: (json['75%'] as num).toDouble(),
       max: (json['max'] as num).toDouble(),
     );
 

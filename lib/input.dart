@@ -710,10 +710,33 @@ class _InputState extends State<Input> {
 
                               };
 
-                              var r2 = await CallApi().postData2('description2');
+                              var r2 = await CallApi().postData2(values,'description2');
                               // json.decode(json.encode(response.databody);
                               print("Done printing rspns.body from description2");
                               final jsonss = jsonDecode(r2.body);
+                              print(jsonss.runtimeType);
+                              print(jsonss);
+                              // jsonss['Responde'].forEach((key, value) {
+                              //   print(key);
+                              //   print(value);
+                              //
+                              // });
+                              print("Responde: ");
+                              print(jsonss['Responde']);
+                              print("Done Responde");
+                              print(jsonss['Responde']['id']);
+                              print(jsonss['Responde']['batchNumber']);
+                              print(jsonss['Responde']['humidity']);
+                              print(jsonss['Responde']['lightLevel']);
+                              print(jsonss['Responde']['roomTemp']);
+                              print(jsonss['Response']['accuracy']);
+                              print(jsonss['Response']['prediction']);
+
+                              // var newTae =  jsonEncode(values) + jsonss;
+                              // print(newTae);
+                              // final con = json.add(jsonss);
+                              // print(con);
+                              print("Done with con");
                               print(jsonss);
                               print("Done");
                               final jsonss2 = jsonDecode(r2.body);
@@ -721,7 +744,7 @@ class _InputState extends State<Input> {
                               print('concat');
                               // print(concat);
                               print(jsonss2);
-                              print(jsonss2['id']['count']);
+                              // print(jsonss2['id']['count']);
                               // Id idClass = Id.fromJson(jsonDecode(r2.body));
                               // BatchNumber BatchNumberClass = BatchNumber.fromJson(jsonDecode(r2.body));
                               // LightLevel LightLevelClass = LightLevel.fromJson(jsonDecode(r2.body));
@@ -736,55 +759,55 @@ class _InputState extends State<Input> {
                               // print(HumidityClass.mean);
                               print("printing jsons below: ..");
                               print(jsonss2);
-                              print(jsonss2['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
-                              print(jsonss2['id']['count']); // 25.0
-                              print(jsonss2['id']['mean']);
-                              print(jsonss2['id']['std']);
-                              print(jsonss2['id']['min']);
-                              print(jsonss2['id']['25%']);
-                              print(jsonss2['id']['50%']);
-                              print(jsonss2['id']['75%']);
-                              print(jsonss2['id']['max']);
+                              print(jsonss2['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+                              print(jsonss2['Responde']['id']['count']); // 25.0
+                              print(jsonss2['Responde']['id']['mean']);
+                              print(jsonss2['Responde']['id']['std']);
+                              print(jsonss2['Responde']['id']['min']);
+                              print(jsonss2['Responde']['id']['25%']);
+                              print(jsonss2['Responde']['id']['50%']);
+                              print(jsonss2['Responde']['id']['75%']);
+                              print(jsonss2['Responde']['id']['max']);
 
-                              print(jsonss2['batchNumber']);
-                              print(jsonss2['batchNumber']['count']);
-                              print(jsonss2['batchNumber']['mean']);
-                              print(jsonss2['batchNumber']['std']);
-                              print(jsonss2['batchNumber']['min']);
-                              print(jsonss2['batchNumber']['25%']);
-                              print(jsonss2['batchNumber']['50%']);
-                              print(jsonss2['batchNumber']['75%']);
-                              print(jsonss2['batchNumber']['max']);
+                              print(jsonss2['Responde']['batchNumber']);
+                              print(jsonss2['Responde']['batchNumber']['count']);
+                              print(jsonss2['Responde']['batchNumber']['mean']);
+                              print(jsonss2['Responde']['batchNumber']['std']);
+                              print(jsonss2['Responde']['batchNumber']['min']);
+                              print(jsonss2['Responde']['batchNumber']['25%']);
+                              print(jsonss2['Responde']['batchNumber']['50%']);
+                              print(jsonss2['Responde']['batchNumber']['75%']);
+                              print(jsonss2['Responde']['batchNumber']['max']);
 
-                              print(jsonss2['lightLevel']);
-                              print(jsonss2['lightLevel']['count']);
-                              print(jsonss2['lightLevel']['mean']);
-                              print(jsonss2['lightLevel']['std']);
-                              print(jsonss2['lightLevel']['min']);
-                              print(jsonss2['lightLevel']['25%']);
-                              print(jsonss2['lightLevel']['50%']);
-                              print(jsonss2['lightLevel']['75%']);
-                              print(jsonss2['lightLevel']['max']);
+                              print(jsonss2['Responde']['lightLevel']);
+                              print(jsonss2['Responde']['lightLevel']['count']);
+                              print(jsonss2['Responde']['lightLevel']['mean']);
+                              print(jsonss2['Responde']['lightLevel']['std']);
+                              print(jsonss2['Responde']['lightLevel']['min']);
+                              print(jsonss2['Responde']['lightLevel']['25%']);
+                              print(jsonss2['Responde']['lightLevel']['50%']);
+                              print(jsonss2['Responde']['lightLevel']['75%']);
+                              print(jsonss2['Responde']['lightLevel']['max']);
 
-                              print(jsonss2['roomTemp']);
-                              print(jsonss2['roomTemp']['count']);
-                              print(jsonss2['roomTemp']['mean']);
-                              print(jsonss2['roomTemp']['std']);
-                              print(jsonss2['roomTemp']['min']);
-                              print(jsonss2['roomTemp']['25%']);
-                              print(jsonss2['roomTemp']['50%']);
-                              print(jsonss2['roomTemp']['75%']);
-                              print(jsonss2['roomTemp']['max']);
+                              print(jsonss2['Responde']['roomTemp']);
+                              print(jsonss2['Responde']['roomTemp']['count']);
+                              print(jsonss2['Responde']['roomTemp']['mean']);
+                              print(jsonss2['Responde']['roomTemp']['std']);
+                              print(jsonss2['Responde']['roomTemp']['min']);
+                              print(jsonss2['Responde']['roomTemp']['25%']);
+                              print(jsonss2['Responde']['roomTemp']['50%']);
+                              print(jsonss2['Responde']['roomTemp']['75%']);
+                              print(jsonss2['Responde']['roomTemp']['max']);
 
-                              print(jsonss2['humidity']);
-                              print(jsonss2['humidity']['count']);
-                              print(jsonss2['humidity']['mean']);
-                              print(jsonss2['humidity']['std']);
-                              print(jsonss2['humidity']['min']);
-                              print(jsonss2['humidity']['25%']);
-                              print(jsonss2['humidity']['50%']);
-                              print(jsonss2['humidity']['75%']);
-                              print(jsonss2['humidity']['max']);
+                              print(jsonss2['Responde']['humidity']);
+                              print(jsonss2['Responde']['humidity']['count']);
+                              print(jsonss2['Responde']['humidity']['mean']);
+                              print(jsonss2['Responde']['humidity']['std']);
+                              print(jsonss2['Responde']['humidity']['min']);
+                              print(jsonss2['Responde']['humidity']['25%']);
+                              print(jsonss2['Responde']['humidity']['50%']);
+                              print(jsonss2['Responde']['humidity']['75%']);
+                              print(jsonss2['Responde']['humidity']['max']);
 
 
 
@@ -801,8 +824,8 @@ class _InputState extends State<Input> {
                               ScaffoldMessenger.of(context).showSnackBar(snackBar2);
                               print("Before Making pdf");
                               final pdf = new Pdf.fromJson(jsonss2);
-                              print("Hi");
-                              print(pdf.batchNumber);
+                              // print("Hi");
+                              // print(pdf.batchNumber);
                             
                               // final pdf = new Pdf(
                               //   prediction: prediction,
@@ -1463,13 +1486,13 @@ class CallApi {
     return resInPeaces;
   }
 
-  postData2(urlss2) async {
+  postData2(values, urlss2) async {
     String _urls = "http://10.0.2.2:5000/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),
       // Uri.parse(urls),
-      // body: values.toString(),
+      body: jsonEncode(values),
       // body: ewan,
       headers: _setHeaders(),
     );

@@ -16,6 +16,8 @@ import 'dart:io' as io;
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:mush2/utils/colors.dart';
+import '../model/id.dart';
+import '../model/id.dart';
 import '../model/pdf.dart';
 
 class PdfApi {
@@ -60,6 +62,51 @@ class PdfApi {
                              ],
                             ),
                             pw.SizedBox(height: 40),
+                            pw.Text("Id Count: " + pdfi.id.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id Mean: " + pdfi.id.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id STD: " + pdfi.id.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id Min: " + pdfi.id.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id 25%: " + pdfi.id.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id 50%: " + pdfi.id.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id 75%: " + pdfi.id.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Id Max: " + pdfi.id.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                            pw.Text("BatchNumber Count: " + pdfi.batchNumber.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber Mean: " + pdfi.batchNumber.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber STD: " + pdfi.batchNumber.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber Min: " + pdfi.batchNumber.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber 25%: " + pdfi.batchNumber.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber 50%: " + pdfi.batchNumber.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber 75%: " + pdfi.batchNumber.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("BatchNumber Max: " + pdfi.batchNumber.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                            pw.Text("LightLevel Count: " + pdfi.lightLevel.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel Mean: " + pdfi.lightLevel.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel STD: " + pdfi.lightLevel.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel Min: " + pdfi.lightLevel.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel 25%: " + pdfi.lightLevel.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel 50%: " + pdfi.lightLevel.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel 75%: " + pdfi.lightLevel.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("LightLevel Max: " + pdfi.lightLevel.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                            pw.Text("RoomTemp Count: " + pdfi.roomTemp.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp Mean: " + pdfi.roomTemp.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp STD: " + pdfi.roomTemp.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp Min: " + pdfi.roomTemp.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp 25%: " + pdfi.roomTemp.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp 50%: " + pdfi.roomTemp.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp 75%: " + pdfi.roomTemp.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("RoomTemp Max: " + pdfi.roomTemp.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
+                            pw.Text("Humidity Count: " + pdfi.humidity.count.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity Mean: " + pdfi.humidity.mean.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity STD: " + pdfi.humidity.std.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity Min: " + pdfi.humidity.min.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity 25%: " + pdfi.humidity.twentyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity 50%: " + pdfi.humidity.fifty.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity 75%: " + pdfi.humidity.seventyFive.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                            pw.Text("Humidity Max: " + pdfi.humidity.max.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+
                             // pw.Text("Model's DataFrame " + pdfi.described, style: pw.TextStyle(fontSize: 15)),
                           ],
                         ),

@@ -7,15 +7,15 @@ part of 'pdf.dart';
 // **************************************************************************
 
 Pdf _$PdfFromJson(Map<String, dynamic> json) => Pdf(
-      prediction: json['prediction'] as String,
-      accuracy: (json['accuracy'] as num).toDouble(),
-      id: Id.fromJson(json['id'] as Map<String, dynamic>),
+      prediction: json['Response']['prediction'] as String,
+      accuracy: (json['Response']['accuracy'] as num).toDouble(),
+      id: Id.fromJson(json['Responde']['id'] as Map<String, dynamic>),
       batchNumber:
-          BatchNumber.fromJson(json['batchNumber'] as Map<String, dynamic>),
+          BatchNumber.fromJson(json['Responde']['batchNumber'] as Map<String, dynamic>),
       lightLevel:
-          LightLevel.fromJson(json['lightLevel'] as Map<String, dynamic>),
-      roomTemp: RoomTemp.fromJson(json['roomTemp'] as Map<String, dynamic>),
-      humidity: Humidity.fromJson(json['humidity'] as Map<String, dynamic>),
+          LightLevel.fromJson(json['Responde']['lightLevel'] as Map<String, dynamic>),
+      roomTemp: RoomTemp.fromJson(json['Responde']['roomTemp'] as Map<String, dynamic>),
+      humidity: Humidity.fromJson(json['Responde']['humidity'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PdfToJson(Pdf instance) => <String, dynamic>{
