@@ -22,6 +22,8 @@ import '../model/pdf.dart';
 
 //if (acurat == null  && shutarat == null )
 //acu == "" ?
+//https://assets7.lottiefiles.com/packages/lf20_rqo8mcum.json
+//https://assets6.lottiefiles.com/packages/lf20_dvleacuf.json
 class PdfApi {
   static Future<io.File?> generateText(Pdf pdfi) async {
     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());

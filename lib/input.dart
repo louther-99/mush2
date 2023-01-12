@@ -268,8 +268,8 @@ class _InputState extends State<Input> {
                     SizedBox(height: 20),
 
                   Container(
-                    height: 350,
-                    // color: Colors.blueGrey,
+                    height: 500,
+                    // color: Colors.red,
                     // child: DataTable(
                     //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
                     //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
@@ -311,36 +311,174 @@ class _InputState extends State<Input> {
                               // 'Upload your CSV File',
 
                             ),
-                            Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
+                            // Container(
+                            //     height: 250,
+                            //     child: Center(child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'))),
+                            SizedBox(height: 10),
+                            Container(
+                              // height: 00,
+                              // color: Colors.red,
+                              child: Column(
+                                children: [
+                                  Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
+                                  Lottie.network('https://assets7.lottiefiles.com/packages/lf20_rqo8mcum.json'),
+                                ],
+                              )),
 
                           ],
+
                         ),
                       )
-                    ) : ListView.builder(
-                      itemCount: _data.length, //docs mean row
-                      // scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          margin: const EdgeInsets.all(3),
-                          color: index == 0 ? pinkColor : Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                    ) : Column(
+                      children: [
+                        Container(
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: _data.length, //docs mean row
+                            // scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                margin: const EdgeInsets.all(3),
+                                color: index == 0 ? pinkColor : Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                // color: pinkColor,
+                                // elevation: 10,
+                                child: ListTile(
+                                  leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
+                                  title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                                ),
+                                  trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          // color: pinkColor,
-                          // elevation: 10,
-                          child: ListTile(
-                            leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
-                            title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
-                          ),
-                            trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                        ),
+                        Center(
+                          child: Card(
+                            margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                            // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: pinkColor,
+                            elevation: 10,
+                            child:  shutarat == null ? Visibility(
+                              visible: false,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.info, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.percent, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                                :
+                            Visibility(
+                              visible: true,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.info, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    // height: 40,
+                                    padding: EdgeInsets.all(2),
+                                    margin:  EdgeInsets.all(20),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(Icons.percent, size: 24, color: textColor,),
+                                          ),
+                                          TextSpan(
+                                            text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
 
 
@@ -348,632 +486,539 @@ class _InputState extends State<Input> {
                   ),
                     SizedBox(height: 20,),
 
-                    Center(
-                      child: Card(
-                        margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                        // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        color: pinkColor,
-                        elevation: 10,
-                        child:  shutarat == null ? Visibility(
-                          visible: false,
-                          child: Column(
-                            children: [
-                              Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.info, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                               Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.percent, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                            :
-                        Visibility(
-                          visible: true,
-                          child: Column(
-                            children: [
-                              Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.info, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                // height: 40,
-                                padding: EdgeInsets.all(2),
-                                margin:  EdgeInsets.all(20),
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(Icons.percent, size: 24, color: textColor,),
-                                      ),
-                                      TextSpan(
-                                        text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
 
 
 
-                    SizedBox(height: 20),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
 
-                          SizedBox(height: 50),
-
-                          TextFormField(
-                            // focusNode: _focusNode,
-                            // onTap: _requestFocus,
-                            controller: batchController,
-                            cursorColor: textColor,
-                            style: TextStyle(
-                              color: brown,
-                            ),
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              // focusColor: textColor,
-                              border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: brown, width: 32.0),
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                prefixIcon: Icon(
-                                    Icons.numbers,
-                                  color: brown,
-                                ),
-                                labelText: "Batch Number",
-                                labelStyle: TextStyle(
+                    SizedBox(height: 100),
+                    Container(
+                      // color: Colors.red,
+                      // margin: EdgeInsets.fromLTRB(50, 0, 0, 0),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              // color: green,
+                              padding: EdgeInsets.all(20),
+                              // padding: EdgeInsets.fromLTRB(40,20,40,40),
+                              child: Center(
+                                child: Text(
+                                  'INDIVIDUAL UPLOAD',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
                                     color: brown,
-                                )
-                            ),
-                            validator: (value) {
-                              if (value != null && value.isEmpty) {
-                                return "Username cannot be empty!";
-                              }
-                              else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            // focusNode: _focusNode,
-                            // onTap: _requestFocus,
-                            controller: lightLevelController,
-                            cursorColor: brown,
-                            style: TextStyle(
-                              color: brown,
-                            ),
-                            keyboardType: TextInputType.numberWithOptions(
-                                decimal: true),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: textColor, width: 32.0),
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                prefixIcon: Icon(
-                                  Icons.lightbulb,
-                                  color: brown,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
                                 ),
-                                labelText: "Light Level(Lumens)",
-                                labelStyle: TextStyle(
-                              color: brown,
-                            )
+
+                              ),
                             ),
-                            validator: (value) {
-                              if (value != null && value.isEmpty) {
-                                return "Password cannot be empty!";
-                              }
-                              else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            // focusNode: _focusNode,
-                            // onTap: _requestFocus,
-                            controller: roomTemperatureController,
-                            cursorColor: brown,
-                            style: TextStyle(
-                              color: brown,
+                            Center(
+                              child: Container(
+                                height: 90,
+                                  child: Lottie.network('https://assets6.lottiefiles.com/packages/lf20_dvleacuf.json')),
                             ),
-                            keyboardType: TextInputType.numberWithOptions(
-                                decimal: true),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: textColor, width: 32.0),
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                prefixIcon: Icon(
-                                  Icons.thermostat,
-                                  color: brown,
-                                ),
-                                labelText: "Room Temperature",
-                                labelStyle: TextStyle(
-                                  color: brown,
-                                )
-                            ),
-                            validator: (value) {
-                              if (value != null && value.isEmpty) {
-                                return "Username cannot be empty!";
-                              }
-                              else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            // focusNode: _focusNode,
-                            // onTap: _requestFocus,
-                            controller: roomHumidityController,
-                            cursorColor: brown,
-                            style: TextStyle(
-                              color: brown,
-                            ),
-                            keyboardType: TextInputType.numberWithOptions(
-                                decimal: true),
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: textColor, width: 32.0),
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                prefixIcon: Icon(
-                                    Icons.water_drop,
-                                    color: brown,
-                                ),
-                                labelText: "Humidity(Milibar)",
-                                labelStyle: TextStyle(
-                                  color: brown,
-                                )
-                            ),
-                            validator: (value) {
-                              if (value != null && value.isEmpty) {
-                                return "Username cannot be empty!";
-                              }
-                              else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(height: 30),
 
-
-                          SizedBox(height: 20,),
-                          OutlinedButton.icon(
-                            icon: Icon(Icons.query_stats, color: Colors.blueGrey),
-                            onPressed: () async {
-
-                              // final preprocess = Get_Dataset();
-
-                              final int batchNumber = int.parse(
-                                  batchController.text);
-                              final double lightLevel = double.parse(
-                                  lightLevelController.text);
-                              final double roomTemp = double.parse(
-                                  roomTemperatureController.text);
-                              final double humidity = double.parse(
-                                  roomHumidityController.text);
-                              final String outcome = (productionController.text);
-                              final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
-
-                              var datas = {
-                                // 'id' : userID,
-                                // 'batchNumber': batchController.text,
-                                'lightLevel': lightLevelController.text,
-                                'roomTemp': roomTemperatureController.text,
-                                'humidity': roomHumidityController.text,
-                                // 'outcome': 'ewan',
-                                // 'datetime': datetime,
-                              };
-
-                              print(datas.toString() + " is datas");
-                              // Passing the data and the endpoint
-                              var r = await CallApi().postData(datas, 'predict');
-                              print("printing r.body below: ..");
-                              print(r.body);
-                              print("Done printing r.body");
-                              final json = jsonDecode(r.body);
-                              print("printing json below: ..");
-                              print(json);
-                              print("Done printing json");
-                              // var decoded = jsonDecode(r);
-                              // print("printing decoded below: ..");
-                              // print(decoded);
-                              print("printing json['Prediction'] ");
-                              print(json['Prediction'][0]);
-                              final prediction = json['Prediction'][0];
-                              print("Printing accuracy: below");
-                              final accuracy = json['Accuracy'];
-                              print(json['Accuracy']);
-                              // print("json['Description']");
-                              // print(json['Description']);
-                              // described = json['Description'];
-                              int a = (json['Accuracy'] * 100).toInt();
-                              a.round();
-                              print(a);
-
-                              var values = {
-                                'prediction' : prediction,
-                                'accuracy' : a
-
-                              };
-
-                              var r2 = await CallApi().postData2(values,'description2');
-                              // json.decode(json.encode(response.databody);
-                              print("Done printing rspns.body from description2");
-                              final jsonss = jsonDecode(r2.body);
-                              print(jsonss.runtimeType);
-                              print(jsonss);
-                              // jsonss['Responde'].forEach((key, value) {
-                              //   print(key);
-                              //   print(value);
-                              //
-                              // });
-                              print("Responde: ");
-                              print(jsonss['Responde']);
-                              print("Done Responde");
-                              print(jsonss['Responde']['id']);
-                              print(jsonss['Responde']['batchNumber']);
-                              print(jsonss['Responde']['humidity']);
-                              print(jsonss['Responde']['lightLevel']);
-                              print(jsonss['Responde']['roomTemp']);
-                              print(jsonss['Response']['accuracy']);
-                              print(jsonss['Response']['prediction']);
-
-                              // var newTae =  jsonEncode(values) + jsonss;
-                              // print(newTae);
-                              // final con = json.add(jsonss);
-                              // print(con);
-                              print("Done with con");
-                              print(jsonss);
-                              print("Done");
-                              final jsonss2 = jsonDecode(r2.body);
-                              // final concat = jsonss2.concat(values);
-                              print('concat');
-                              // print(concat);
-                              print(jsonss2);
-                              // print(jsonss2['id']['count']);
-                              // Id idClass = Id.fromJson(jsonDecode(r2.body));
-                              // BatchNumber BatchNumberClass = BatchNumber.fromJson(jsonDecode(r2.body));
-                              // LightLevel LightLevelClass = LightLevel.fromJson(jsonDecode(r2.body));
-                              // RoomTemp RoomTempClass = RoomTemp.fromJson(jsonDecode(r2.body));
-                              // Humidity HumidityClass = Humidity.fromJson(jsonDecode(r2.body));
-
-                              print("This is idClass.count");
-                              // print(idClass.mean);
-                              // print(BatchNumberClass.mean);
-                              // print(LightLevelClass.mean);
-                              // print(RoomTempClass.mean);
-                              // print(HumidityClass.mean);
-                              print("printing jsons below: ..");
-                              print(jsonss2);
-                              print(jsonss2['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
-                              print(jsonss2['Responde']['id']['count']); // 25.0
-                              print(jsonss2['Responde']['id']['mean']);
-                              print(jsonss2['Responde']['id']['std']);
-                              print(jsonss2['Responde']['id']['min']);
-                              print(jsonss2['Responde']['id']['25%']);
-                              print(jsonss2['Responde']['id']['50%']);
-                              print(jsonss2['Responde']['id']['75%']);
-                              print(jsonss2['Responde']['id']['max']);
-
-                              print(jsonss2['Responde']['batchNumber']);
-                              print(jsonss2['Responde']['batchNumber']['count']);
-                              print(jsonss2['Responde']['batchNumber']['mean']);
-                              print(jsonss2['Responde']['batchNumber']['std']);
-                              print(jsonss2['Responde']['batchNumber']['min']);
-                              print(jsonss2['Responde']['batchNumber']['25%']);
-                              print(jsonss2['Responde']['batchNumber']['50%']);
-                              print(jsonss2['Responde']['batchNumber']['75%']);
-                              print(jsonss2['Responde']['batchNumber']['max']);
-
-                              print(jsonss2['Responde']['lightLevel']);
-                              print(jsonss2['Responde']['lightLevel']['count']);
-                              print(jsonss2['Responde']['lightLevel']['mean']);
-                              print(jsonss2['Responde']['lightLevel']['std']);
-                              print(jsonss2['Responde']['lightLevel']['min']);
-                              print(jsonss2['Responde']['lightLevel']['25%']);
-                              print(jsonss2['Responde']['lightLevel']['50%']);
-                              print(jsonss2['Responde']['lightLevel']['75%']);
-                              print(jsonss2['Responde']['lightLevel']['max']);
-
-                              print(jsonss2['Responde']['roomTemp']);
-                              print(jsonss2['Responde']['roomTemp']['count']);
-                              print(jsonss2['Responde']['roomTemp']['mean']);
-                              print(jsonss2['Responde']['roomTemp']['std']);
-                              print(jsonss2['Responde']['roomTemp']['min']);
-                              print(jsonss2['Responde']['roomTemp']['25%']);
-                              print(jsonss2['Responde']['roomTemp']['50%']);
-                              print(jsonss2['Responde']['roomTemp']['75%']);
-                              print(jsonss2['Responde']['roomTemp']['max']);
-
-                              print(jsonss2['Responde']['humidity']);
-                              print(jsonss2['Responde']['humidity']['count']);
-                              print(jsonss2['Responde']['humidity']['mean']);
-                              print(jsonss2['Responde']['humidity']['std']);
-                              print(jsonss2['Responde']['humidity']['min']);
-                              print(jsonss2['Responde']['humidity']['25%']);
-                              print(jsonss2['Responde']['humidity']['50%']);
-                              print(jsonss2['Responde']['humidity']['75%']);
-                              print(jsonss2['Responde']['humidity']['max']);
-
-
-
-
-
-                              setState(() {
-                                shuta = (json['Prediction'][0]);
-                                acu = (a.toString());
-                                // described = json['Description'];
-                              });
-
-                              final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
-
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                              print("Before Making pdf");
-                              final pdf = new Pdf.fromJson(jsonss2);
-                              // print("Hi");
-                              // print(pdf.batchNumber);
-                            
-                              // final pdf = new Pdf(
-                              //   prediction: prediction,
-                              //   accuracy: accuracy,
-                              //   id: null,
-                              //   batchNumber: null,
-                              //   lightLevel: null,
-                              //   roomTemp: null,
-                              //   humidity: null,
-                              //   // described: described,
-                              // );
-
-
-                              final pdfFile = await PdfApi.generateText(pdf);
-                              // PdfApi.openFile(pdfFile!);
-                              // final fi = await PdfApi.pickFile();
-                              // final fi = await PdfApi.pickFile();
-                              //
-                              // if (fi == null) return;
-                              // openPDF(context,fi);
-
-                              // output = decoded['Prediction'];
-                              // print(output);
-
-
-                              // print(r.body.toString() + " is r.body");
-                              // var bo = json.decode(json.encode(r.body));
-                              // print(bo + " is bo");
-
-                              createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
-
-                              batchController.text = '';
-                              lightLevelController.text = '';
-                              roomTemperatureController.text = '';
-                              roomHumidityController.text = '';
-                              productionController.text = '';
-
-
-
-                              final snackBar = SnackBar(content: Text("Data has been added."));
-
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                            },
-                            label: Text(
-                              'Predict',
+                            TextFormField(
+                              // focusNode: _focusNode,
+                              // onTap: _requestFocus,
+                              controller: batchController,
+                              cursorColor: textColor,
                               style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.blueGrey,
-                                fontWeight: FontWeight.bold,
+                                color: brown,
                               ),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              shape: StadiumBorder(),
-                              minimumSize: Size.fromHeight (40),
-                              backgroundColor: brown,
-                              side: BorderSide(color: outline),
-                            ),
-                          ),
-
-                          Center(
-                            child: Card(
-                              margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                              // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                // focusColor: textColor,
+                                border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: brown, width: 32.0),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  prefixIcon: Icon(
+                                      Icons.numbers,
+                                    color: brown,
+                                  ),
+                                  labelText: "Batch Number",
+                                  labelStyle: TextStyle(
+                                      color: brown,
+                                  )
                               ),
-                              color: pinkColor,
-                              elevation: 10,
-                              child: acu == "" ? Visibility(
-                                visible: false,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.info, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: " Outcome: " + shuta,
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.percent, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              validator: (value) {
+                                if (value != null && value.isEmpty) {
+                                  return "Username cannot be empty!";
+                                }
+                                else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              // focusNode: _focusNode,
+                              // onTap: _requestFocus,
+                              controller: lightLevelController,
+                              cursorColor: brown,
+                              style: TextStyle(
+                                color: brown,
+                              ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: textColor, width: 32.0),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  prefixIcon: Icon(
+                                    Icons.lightbulb,
+                                    color: brown,
+                                  ),
+                                  labelText: "Light Level(Lumens)",
+                                  labelStyle: TextStyle(
+                                color: brown,
                               )
-                                  :
-                              Visibility(
-                                visible: true,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.info, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: " Outcome: " + shuta,
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                              ),
+                              validator: (value) {
+                                if (value != null && value.isEmpty) {
+                                  return "Password cannot be empty!";
+                                }
+                                else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              // focusNode: _focusNode,
+                              // onTap: _requestFocus,
+                              controller: roomTemperatureController,
+                              cursorColor: brown,
+                              style: TextStyle(
+                                color: brown,
+                              ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: textColor, width: 32.0),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  prefixIcon: Icon(
+                                    Icons.thermostat,
+                                    color: brown,
+                                  ),
+                                  labelText: "Room Temperature",
+                                  labelStyle: TextStyle(
+                                    color: brown,
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value != null && value.isEmpty) {
+                                  return "Username cannot be empty!";
+                                }
+                                else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              // focusNode: _focusNode,
+                              // onTap: _requestFocus,
+                              controller: roomHumidityController,
+                              cursorColor: brown,
+                              style: TextStyle(
+                                color: brown,
+                              ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: textColor, width: 32.0),
+                                      borderRadius: BorderRadius.circular(15.0)),
+                                  prefixIcon: Icon(
+                                      Icons.water_drop,
+                                      color: brown,
+                                  ),
+                                  labelText: "Humidity(Milibar)",
+                                  labelStyle: TextStyle(
+                                    color: brown,
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value != null && value.isEmpty) {
+                                  return "Username cannot be empty!";
+                                }
+                                else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 10),
 
-                                          ],
+
+                            SizedBox(height: 20,),
+                            OutlinedButton.icon(
+                              icon: Icon(Icons.query_stats, color: Colors.blueGrey),
+                              onPressed: () async {
+
+                                // final preprocess = Get_Dataset();
+
+                                final int batchNumber = int.parse(
+                                    batchController.text);
+                                final double lightLevel = double.parse(
+                                    lightLevelController.text);
+                                final double roomTemp = double.parse(
+                                    roomTemperatureController.text);
+                                final double humidity = double.parse(
+                                    roomHumidityController.text);
+                                final String outcome = (productionController.text);
+                                final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
+
+                                var datas = {
+                                  // 'id' : userID,
+                                  // 'batchNumber': batchController.text,
+                                  'lightLevel': lightLevelController.text,
+                                  'roomTemp': roomTemperatureController.text,
+                                  'humidity': roomHumidityController.text,
+                                  // 'outcome': 'ewan',
+                                  // 'datetime': datetime,
+                                };
+
+                                print(datas.toString() + " is datas");
+                                // Passing the data and the endpoint
+                                var r = await CallApi().postData(datas, 'predict');
+                                print("printing r.body below: ..");
+                                print(r.body);
+                                print("Done printing r.body");
+                                final json = jsonDecode(r.body);
+                                print("printing json below: ..");
+                                print(json);
+                                print("Done printing json");
+                                // var decoded = jsonDecode(r);
+                                // print("printing decoded below: ..");
+                                // print(decoded);
+                                print("printing json['Prediction'] ");
+                                print(json['Prediction'][0]);
+                                final prediction = json['Prediction'][0];
+                                print("Printing accuracy: below");
+                                final accuracy = json['Accuracy'];
+                                print(json['Accuracy']);
+                                // print("json['Description']");
+                                // print(json['Description']);
+                                // described = json['Description'];
+                                int a = (json['Accuracy'] * 100).toInt();
+                                a.round();
+                                print(a);
+
+                                var values = {
+                                  'prediction' : prediction,
+                                  'accuracy' : a
+
+                                };
+
+                                var r2 = await CallApi().postData2(values,'description2');
+                                // json.decode(json.encode(response.databody);
+                                print("Done printing rspns.body from description2");
+                                final jsonss = jsonDecode(r2.body);
+                                print(jsonss.runtimeType);
+                                print(jsonss);
+                                // jsonss['Responde'].forEach((key, value) {
+                                //   print(key);
+                                //   print(value);
+                                //
+                                // });
+                                print("Responde: ");
+                                print(jsonss['Responde']);
+                                print("Done Responde");
+                                print(jsonss['Responde']['id']);
+                                print(jsonss['Responde']['batchNumber']);
+                                print(jsonss['Responde']['humidity']);
+                                print(jsonss['Responde']['lightLevel']);
+                                print(jsonss['Responde']['roomTemp']);
+                                print(jsonss['Response']['accuracy']);
+                                print(jsonss['Response']['prediction']);
+
+                                // var newTae =  jsonEncode(values) + jsonss;
+                                // print(newTae);
+                                // final con = json.add(jsonss);
+                                // print(con);
+                                print("Done with con");
+                                print(jsonss);
+                                print("Done");
+                                final jsonss2 = jsonDecode(r2.body);
+                                // final concat = jsonss2.concat(values);
+                                print('concat');
+                                // print(concat);
+                                print(jsonss2);
+                                // print(jsonss2['id']['count']);
+                                // Id idClass = Id.fromJson(jsonDecode(r2.body));
+                                // BatchNumber BatchNumberClass = BatchNumber.fromJson(jsonDecode(r2.body));
+                                // LightLevel LightLevelClass = LightLevel.fromJson(jsonDecode(r2.body));
+                                // RoomTemp RoomTempClass = RoomTemp.fromJson(jsonDecode(r2.body));
+                                // Humidity HumidityClass = Humidity.fromJson(jsonDecode(r2.body));
+
+                                print("This is idClass.count");
+                                // print(idClass.mean);
+                                // print(BatchNumberClass.mean);
+                                // print(LightLevelClass.mean);
+                                // print(RoomTempClass.mean);
+                                // print(HumidityClass.mean);
+                                print("printing jsons below: ..");
+                                print(jsonss2);
+                                print(jsonss2['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+                                print(jsonss2['Responde']['id']['count']); // 25.0
+                                print(jsonss2['Responde']['id']['mean']);
+                                print(jsonss2['Responde']['id']['std']);
+                                print(jsonss2['Responde']['id']['min']);
+                                print(jsonss2['Responde']['id']['25%']);
+                                print(jsonss2['Responde']['id']['50%']);
+                                print(jsonss2['Responde']['id']['75%']);
+                                print(jsonss2['Responde']['id']['max']);
+
+                                print(jsonss2['Responde']['batchNumber']);
+                                print(jsonss2['Responde']['batchNumber']['count']);
+                                print(jsonss2['Responde']['batchNumber']['mean']);
+                                print(jsonss2['Responde']['batchNumber']['std']);
+                                print(jsonss2['Responde']['batchNumber']['min']);
+                                print(jsonss2['Responde']['batchNumber']['25%']);
+                                print(jsonss2['Responde']['batchNumber']['50%']);
+                                print(jsonss2['Responde']['batchNumber']['75%']);
+                                print(jsonss2['Responde']['batchNumber']['max']);
+
+                                print(jsonss2['Responde']['lightLevel']);
+                                print(jsonss2['Responde']['lightLevel']['count']);
+                                print(jsonss2['Responde']['lightLevel']['mean']);
+                                print(jsonss2['Responde']['lightLevel']['std']);
+                                print(jsonss2['Responde']['lightLevel']['min']);
+                                print(jsonss2['Responde']['lightLevel']['25%']);
+                                print(jsonss2['Responde']['lightLevel']['50%']);
+                                print(jsonss2['Responde']['lightLevel']['75%']);
+                                print(jsonss2['Responde']['lightLevel']['max']);
+
+                                print(jsonss2['Responde']['roomTemp']);
+                                print(jsonss2['Responde']['roomTemp']['count']);
+                                print(jsonss2['Responde']['roomTemp']['mean']);
+                                print(jsonss2['Responde']['roomTemp']['std']);
+                                print(jsonss2['Responde']['roomTemp']['min']);
+                                print(jsonss2['Responde']['roomTemp']['25%']);
+                                print(jsonss2['Responde']['roomTemp']['50%']);
+                                print(jsonss2['Responde']['roomTemp']['75%']);
+                                print(jsonss2['Responde']['roomTemp']['max']);
+
+                                print(jsonss2['Responde']['humidity']);
+                                print(jsonss2['Responde']['humidity']['count']);
+                                print(jsonss2['Responde']['humidity']['mean']);
+                                print(jsonss2['Responde']['humidity']['std']);
+                                print(jsonss2['Responde']['humidity']['min']);
+                                print(jsonss2['Responde']['humidity']['25%']);
+                                print(jsonss2['Responde']['humidity']['50%']);
+                                print(jsonss2['Responde']['humidity']['75%']);
+                                print(jsonss2['Responde']['humidity']['max']);
+
+
+
+
+
+                                setState(() {
+                                  shuta = (json['Prediction'][0]);
+                                  acu = (a.toString());
+                                  // described = json['Description'];
+                                });
+
+                                final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
+
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                                print("Before Making pdf");
+                                final pdf = new Pdf.fromJson(jsonss2);
+                                // print("Hi");
+                                // print(pdf.batchNumber);
+
+                                // final pdf = new Pdf(
+                                //   prediction: prediction,
+                                //   accuracy: accuracy,
+                                //   id: null,
+                                //   batchNumber: null,
+                                //   lightLevel: null,
+                                //   roomTemp: null,
+                                //   humidity: null,
+                                //   // described: described,
+                                // );
+
+
+                                final pdfFile = await PdfApi.generateText(pdf);
+                                // PdfApi.openFile(pdfFile!);
+                                // final fi = await PdfApi.pickFile();
+                                // final fi = await PdfApi.pickFile();
+                                //
+                                // if (fi == null) return;
+                                // openPDF(context,fi);
+
+                                // output = decoded['Prediction'];
+                                // print(output);
+
+
+                                // print(r.body.toString() + " is r.body");
+                                // var bo = json.decode(json.encode(r.body));
+                                // print(bo + " is bo");
+
+                                createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
+
+                                batchController.text = '';
+                                lightLevelController.text = '';
+                                roomTemperatureController.text = '';
+                                roomHumidityController.text = '';
+                                productionController.text = '';
+
+
+
+                                final snackBar = SnackBar(content: Text("Data has been added."));
+
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                              },
+                              label: Text(
+                                'Predict',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                shape: StadiumBorder(),
+                                minimumSize: Size.fromHeight (40),
+                                backgroundColor: brown,
+                                side: BorderSide(color: outline),
+                              ),
+                            ),
+
+                            Center(
+                              child: Card(
+                                margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                                // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                color: pinkColor,
+                                elevation: 10,
+                                child: acu == "" ? Visibility(
+                                  visible: false,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.info, size: 24, color: textColor,),
+                                              ),
+                                              TextSpan(
+                                                text: " Outcome: " + shuta,
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.percent, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.percent, size: 24, color: textColor,),
                                               ),
-                                            ),
+                                              TextSpan(
+                                                text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
 
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                )
+                                    :
+                                Visibility(
+                                  visible: true,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.info, size: 24, color: textColor,),
+                                              ),
+                                              TextSpan(
+                                                text: " Outcome: " + shuta,
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.percent, size: 24, color: textColor,),
+                                              ),
+                                              TextSpan(
+                                                text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                          SizedBox(height: 20),
+                            SizedBox(height: 20),
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
 
