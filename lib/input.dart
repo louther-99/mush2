@@ -410,97 +410,6 @@ class _InputState extends State<Input> {
                       ),
                     ),
 
-                    // OutlinedButton.icon(
-                    //   icon: Icon(Icons.query_stats, color: textColor),
-                    //   onPressed: () async {
-                    //
-                    //     // final preprocess = Get_Dataset();
-                    //
-                    //     final int batchNumber = int.parse(
-                    //         batchController.text);
-                    //     final double lightLevel = double.parse(
-                    //         lightLevelController.text);
-                    //     final double roomTemp = double.parse(
-                    //         roomTemperatureController.text);
-                    //     final double humidity = double.parse(
-                    //         roomHumidityController.text);
-                    //     final String outcome = (productionController.text);
-                    //     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
-                    //
-                    //     var datas = {
-                    //       // 'id' : userID,
-                    //       // 'batchNumber': batchController.text,
-                    //       'lightLevel': lightLevelController.text,
-                    //       'roomTemp': roomTemperatureController.text,
-                    //       'humidity': roomHumidityController.text,
-                    //       // 'outcome': 'ewan',
-                    //       // 'datetime': datetime,
-                    //     };
-                    //
-                    //     print(datas.toString() + " is datas");
-                    //     // Passing the data and the endpoint
-                    //     var r = await CallApi().postData(datas, 'predict');
-                    //     print("printing r.body below: ..");
-                    //     print(r.body);
-                    //     print("Done printing r.body");
-                    //     final json = jsonDecode(r.body);
-                    //     print("printing json below: ..");
-                    //     print(json);
-                    //     print("Done printing json");
-                    //     // var decoded = jsonDecode(r);
-                    //     // print("printing decoded below: ..");
-                    //     // print(decoded);
-                    //     print("printing json['Prediction'] ");
-                    //     print(json['Prediction'][0]);
-                    //
-                    //     print("Printing accuracy: below");
-                    //     print(json['Accuracy']);
-                    //     double a = json['Accuracy'] * 100;
-                    //     print(a);
-                    //
-                    //     setState(() {
-                    //       shuta = (json['Prediction'][0]);
-                    //       acu = (a.toString());
-                    //     });
-                    //
-                    //     // output = decoded['Prediction'];
-                    //     // print(output);
-                    //
-                    //
-                    //     // print(r.body.toString() + " is r.body");
-                    //     // var bo = json.decode(json.encode(r.body));
-                    //     // print(bo + " is bo");
-                    //
-                    //     createData(batchNumber: batchNumber, lightLevel: lightLevel, roomTemp: roomTemp, humidity: humidity, outcome: shuta, datetime: datetime);
-                    //
-                    //     batchController.text = '';
-                    //     lightLevelController.text = '';
-                    //     roomTemperatureController.text = '';
-                    //     roomHumidityController.text = '';
-                    //     productionController.text = '';
-                    //
-                    //
-                    //
-                    //     final snackBar = SnackBar(content: Text("Data has been added."));
-                    //
-                    //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //
-                    //   },
-                    //   label: Text(
-                    //     'Predict',
-                    //     style: TextStyle(
-                    //       fontSize: 24,
-                    //       color: textColor,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    //   style: OutlinedButton.styleFrom(
-                    //     shape: StadiumBorder(),
-                    //     minimumSize: Size.fromHeight (40),
-                    //     backgroundColor: bgCard,
-                    //   ),
-                    // ),
-
 
 
                     SizedBox(height: 20),
@@ -994,23 +903,6 @@ class _InputState extends State<Input> {
     await docUser.set(json);
   }
 
-  // Get_Dataset() async {
-  //   final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
-  //   // final dataFrame = getWineQualityDataframe();
-  //   // final dataFrame = await fromCsv('/Users/loutherolayres/Documents/MyDataSetCSV2.csv.csv',
-  //   //     columns: [2,3]);
-  //   // final dataFrame = await fromCsv('/Users/loutherolayres/mush2 9.10.15 AM trashing/assets/MyDataSetCSV2.csv');
-  //   // final dataFrame2 = await fromCsv('MyDataSetCSV2.csv');
-  //
-  //   // final dataFrame = await fromCsv('assets/MyDataSetCSV2.csv');
-  //   print(dataFrame2);
-  //   final targetColumnName = 'outcome';
-  //   final splits = splitData(dataFrame2, [0.7]);
-  //   final splits2 = splitData(dataFrame2, [0.7]);
-  //   final trainData = splits.first;
-  //   final testData = splits.last;
-  //
-  // }
 
   fetchData (String url) async{
     // #before
@@ -1064,17 +956,6 @@ class _InputState extends State<Input> {
 
       //For the column
       for(int col = 0; col <fields[row].length; col++ ){
-        // print([col].length.toString() + "is fields.length");
-        // print("Counter is " + x.toString());
-
-        //Prints 1
-        // print(fields[row][col]);
-        // if(col == 0){
-        //   print(col);
-        // }
-        // print(fields[row][col]);
-        // print("Done with fields[row][col]");
-        // toJsn = ['id =' + [row][col].toString(), 'batchNumber =' + [row][col].toString(), 'datetime =' + [row][col].toString(), 'lightLevel =' + [row][col].toString(), 'roomTemp =' + [row][col].toString(), 'humidity =' + [row][col].toString(), 'outcome =' + [row][col].toString()];
 
         // print("Done with fields[row][col]");
         iyakan.add(fields[row][col]);
@@ -1084,33 +965,8 @@ class _InputState extends State<Input> {
       for(int row = 0; row<iyakan.length; row++ ){
 
       }
-      // print("Printing toJsn");
-      // print(toJsn);
 
-      // dat.add(fields[i]);
-      // for(int x = 1; x <=fields.length; x++){
-      //   print(fields[i][i]);
-      // }
-
-      // dat.add("index " + i.toString() +  fields[i].toString());
-      //  dat = {
-      //   "id" :  fields[i][i],
-      //   "batchNumber" : fields[i][i],
-      //   "datetime" : fields[i][i],
-      //   "lightLevel" : fields[i][i],
-      //   "roomTemp" : fields[i][i],
-      //   "humidity" : fields[i][i],
-      //    "outcome" : fields[i][i],
-      //
-      // };
-      // rows = rows.add(fields[i]);
-      // rows = rows.insertAll(fields[i]);
-      // rows = rows + fields[i];
     }
-    // print("\nAfter the loop, baliwan is:");
-    // print(baliwan);
-    // print("\nAfter the loop, iyakan is:");
-    // print(iyakan);
 
     for (int i = 0; i<iyakan.length; i++){
       // print(iyakan[i]);
@@ -1118,12 +974,7 @@ class _InputState extends State<Input> {
 
       }
     }
-    // print("After the loop, dat is:");
-    // print(dat);
-    // print("Length of dat is " + dat.length.toString() );
 
-
-    // print(fields.toString() + " is fields\n");
 
     var arr = {
       "title" : fields[0],
@@ -1215,46 +1066,7 @@ class _InputState extends State<Input> {
     print("Printing decoded");
     // print(decoded.toString() + " is decoded");
     print("Done with decoded");
-    // print("\jsonObject is " + jsonObject);
-    // print("\nDone with jsonObject");
-    // print(decoded[0]);  //{id: 1, batchNumber: 2, lightLevel: 40, roomTemp: 19, humidity: 50, outcome: No, datetime: 2021-11-01}
-    // print(decoded[24]); //{id: 25, batchNumber: 3, lightLevel: 76, roomTemp: 77, humidity: 13, outcome: No, datetime: 2021-11-25}
-    // print(decoded[24]['id']);  //25
-    // print("arr['title']");
-    // print(arr['title']);
-    // print("arr['data']");
-    // print(arr['data']);
-    // print("arr is");
-    // print(arr);
-    //
-    // print(arr);
-    // print(fields[0].toString() + " is fields[0]");
-    // final title = fields[0].toString();
-    // final title = fields[0];
-    // print("Title: ");
-    // print(title);
-    // print("fields[1][1]");
-    // print(fields[1][1]);
 
-      // print(fields[1][1+1]);
-      // "batchNumber" : fields[i][i+2],
-      // "datetime" : fields[i][i+3],
-      // "datetime" : fields[i][i+4],
-      // "datetime" : fields[i][i+5],
-      // "datetime" : fields[i][i+6],
-      // "datetime" : fields[i][i+7],
-
-    // print("Printing dat");
-    // print(dat);
-    // print("Printing rows");
-    // print(rows);
-    // print(fields[0][1].toString() + " is fields[0][1]");
-    // print(fields[1].toString() + " is fields[1] ");
-    //
-    //
-    //
-    // print("dat is below");
-    // print(dat);
 
     var res = await CallApi().postDataAgain(jsonObject, 'convert');
     print("printing res.body below: ..");
@@ -1264,12 +1076,7 @@ class _InputState extends State<Input> {
     print("printing jsons below: ..");
     print(jsons);
     print("test shuta");
-    // print(jsons['id']);
-    // print(jsons['Description'][3]);
-    // print(jsons['id']); //{count: 25, unique: 25, top: 1, freq: 1}
-    // print(jsons['batchNumber']); //{count: 25, unique: 2, top: 2, freq: 18}
-    // print(jsons['batchNumber']['freq']); //18
-    // print("Done");
+
     print(jsons[24]);
     print(jsons['Prediction'][24]);
     print(jsons['Prediction'][24]['outcome']);
@@ -1305,15 +1112,9 @@ class _InputState extends State<Input> {
       acurat = (acc.toString());
       // described = json['Description'];
     });
-    // var decoded = jsonDecode(r);
-    // print("printing decoded below: ..");
-    // print(decoded);
+
     print("printing json['Prediction'] ");
-    // print(json['Prediction'][0]);
 
-    // fields = kl
-
-    // fields
 
     var values2 = {
       'prediction' : shutarat,
@@ -1403,11 +1204,6 @@ class _InputState extends State<Input> {
           MaterialPageRoute(builder: (context) => PDFViewerPage(file: fi))
       );
 
-  // void _requestFocus() {
-  //   setState(() {
-  //     FocusScope.of(context).requestFocus(_focusNode);
-  //   });
-  // }
 }
 
 class CallApi {
