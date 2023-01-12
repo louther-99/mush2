@@ -20,6 +20,8 @@ import '../model/id.dart';
 import '../model/id.dart';
 import '../model/pdf.dart';
 
+//if (acurat == null  && shutarat == null )
+//acu == "" ?
 class PdfApi {
   static Future<io.File?> generateText(Pdf pdfi) async {
     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());

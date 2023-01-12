@@ -357,55 +357,112 @@ class _InputState extends State<Input> {
                         ),
                         color: pinkColor,
                         elevation: 10,
-                        child: Column(
-                          children: [
-                            Container(
-                              // height: 40,
-                              padding: EdgeInsets.all(2),
-                              margin:  EdgeInsets.all(20),
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    WidgetSpan(
-                                      child: Icon(Icons.info, size: 24, color: textColor,),
-                                    ),
-                                    TextSpan(
-                                      text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        color: textColor,
-                                        fontWeight: FontWeight.bold,
+                        child:  shutarat == null ? Visibility(
+                          visible: false,
+                          child: Column(
+                            children: [
+                              Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.info, size: 24, color: textColor,),
                                       ),
-                                    ),
+                                      TextSpan(
+                                        text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              // height: 40,
-                              padding: EdgeInsets.all(2),
-                              margin:  EdgeInsets.all(20),
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    WidgetSpan(
-                                      child: Icon(Icons.percent, size: 24, color: textColor,),
-                                    ),
-                                    TextSpan(
-                                      text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        color: textColor,
-                                        fontWeight: FontWeight.bold,
+                               Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.percent, size: 24, color: textColor,),
                                       ),
-                                    ),
+                                      TextSpan(
+                                        text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        )
+                            :
+                        Visibility(
+                          visible: true,
+                          child: Column(
+                            children: [
+                              Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.info, size: 24, color: textColor,),
+                                      ),
+                                      TextSpan(
+                                        text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                // height: 40,
+                                padding: EdgeInsets.all(2),
+                                margin:  EdgeInsets.all(20),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(Icons.percent, size: 24, color: textColor,),
+                                      ),
+                                      TextSpan(
+                                        text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -804,55 +861,112 @@ class _InputState extends State<Input> {
                               ),
                               color: pinkColor,
                               elevation: 10,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.info, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: " Outcome: " + shuta,
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
+                              child: acu == "" ? Visibility(
+                                visible: false,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.info, size: 24, color: textColor,),
                                             ),
-                                          ),
+                                            TextSpan(
+                                              text: " Outcome: " + shuta,
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.percent, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.percent, size: 24, color: textColor,),
                                             ),
-                                          ),
+                                            TextSpan(
+                                              text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              )
+                                  :
+                              Visibility(
+                                visible: true,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.info, size: 24, color: textColor,),
+                                            ),
+                                            TextSpan(
+                                              text: " Outcome: " + shuta,
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.percent, size: 24, color: textColor,),
+                                            ),
+                                            TextSpan(
+                                              text: acu == "" ? " Accuracy: " : " Accuracy: " + acu.toString() + "%",
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
