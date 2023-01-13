@@ -698,35 +698,35 @@ class _InputState extends State<Input> {
                                 print("printing r.body below: ..");
                                 print(r.body);
                                 print("Done printing r.body");
-                                final json = jsonDecode(r.body);
+                                final jsonpredictByIndiv = jsonDecode(r.body);
                                 print("printing json below: ..");
-                                print(json);
+                                print(jsonpredictByIndiv);
                                 print("Done printing json");
                                 // var decoded = jsonDecode(r);
                                 // print("printing decoded below: ..");
                                 // print(decoded);
                                 print("printing json['Prediction'] ");
-                                print(json['Response']['Prediction']);
+                                print(jsonpredictByIndiv['Prediction'][0]);
 
                                 print("Responde: ");
-                                print(json['Responde']);
+                                // print(json['Responde']);
                                 print("Done Responde");
-                                print(json['Responde']['id']);
-                                print(json['Responde']['batchNumber']);
-                                print(json['Responde']['humidity']);
-                                print(json['Responde']['lightLevel']);
-                                print(json['Responde']['roomTemp']);
-                                print(json['Responde']['accuracy']);
-                                print(json['Responde']['prediction']);
+                                print(jsonpredictByIndiv['Responde']['id']);
+                                print(jsonpredictByIndiv['Responde']['batchNumber']);
+                                print(jsonpredictByIndiv['Responde']['humidity']);
+                                print(jsonpredictByIndiv['Responde']['lightLevel']);
+                                print(jsonpredictByIndiv['Responde']['roomTemp']);
+                                print(jsonpredictByIndiv['Responde']['accuracy']);
+                                print(jsonpredictByIndiv['Responde']['prediction']);
 
-                                final prediction = json['Response']['Prediction'];
+                                final prediction = jsonpredictByIndiv['Prediction'][0];
                                 print("Printing accuracy: below");
-                                final accuracy = json['Response']['Accuracy'];
-                                print(json['Accuracy']);
+                                final accuracy = jsonpredictByIndiv['Accuracy'];
+                                print(jsonpredictByIndiv['Accuracy']);
                                 // print("json['Description']");
                                 // print(json['Description']);
                                 // described = json['Description'];
-                                int a = (json['Response']['Accuracy'] * 100).toInt();
+                                int a = (jsonpredictByIndiv['Accuracy'] * 100).toInt();
                                 a.round();
                                 print(a);
 
@@ -736,32 +736,38 @@ class _InputState extends State<Input> {
 
                                 };
 
-                                // var r2 = await CallApi().description2(values,'description2ByIndiv');
-                                // // json.decode(json.encode(response.databody);
-                                // print("Done printing rspns.body from description2");
-                                // final jsonss = jsonDecode(r2.body);
-                                // print(jsonss.runtimeType);
-                                // print(jsonss);
-                                // // jsonss['Responde'].forEach((key, value) {
-                                // //   print(key);
-                                // //   print(value);
-                                // //
-                                // // });
+                                var r2 = await CallApi().description2(values,'description2ByIndiv');
+
+                                // json.decode(json.encode(response.databody);
+                                print("Done printing rspns.body from description2");
+                                final jsndescription2ByIndiv = jsonDecode(r2.body);
+                                print(jsndescription2ByIndiv.runtimeType);
+                                print(jsndescription2ByIndiv);
+                                // jsonss['Responde'].forEach((key, value) {
+                                //   print(key);
+                                //   print(value);
+                                //
+                                // });
 
 
-                                // // var newTae =  jsonEncode(values) + jsonss;
-                                // // print(newTae);
-                                // // final con = json.add(jsonss);
-                                // // print(con);
-                                // print("Done with con");
-                                // print(jsonss);
-                                // print("Done");
-                                // final jsonss2 = jsonDecode(r2.body);
-                                // // final concat = jsonss2.concat(values);
-                                // print('concat');
-                                // // print(concat);
-                                // print(jsonss2);
-                                // print(jsonss2['id']['count']);
+                                // var newTae =  jsonEncode(values) + jsonss;
+                                // print(newTae);
+                                // final con = json.add(jsonss);
+                                // print(con);
+                                print(jsndescription2ByIndiv['Response']['accuracy']);
+                                print(jsndescription2ByIndiv['Response']['prediction']); //
+                                print(jsndescription2ByIndiv['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+                                print(jsndescription2ByIndiv['Responde']['id']['count']);
+
+                                print("Done with con");
+                                print(jsndescription2ByIndiv);
+                                print("Done");
+                                final jsonss2 = jsonDecode(r2.body);
+                                // final concat = jsonss2.concat(values);
+                                print('concat');
+                                // print(concat);
+                                print(jsonss2);
+                                print(jsndescription2ByIndiv['Responde']['id']['count']);
                                 // Id idClass = Id.fromJson(jsonDecode(r2.body));
                                 // BatchNumber BatchNumberClass = BatchNumber.fromJson(jsonDecode(r2.body));
                                 // LightLevel LightLevelClass = LightLevel.fromJson(jsonDecode(r2.body));
@@ -776,60 +782,60 @@ class _InputState extends State<Input> {
                                 // print(HumidityClass.mean);
                                 print("printing jsons below: ..");
                                 print(Response);
-                                print(json['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
-                                print(json['Responde']['id']['count']); // 25.0
-                                print(json['Responde']['id']['mean']);
-                                print(json['Responde']['id']['std']);
-                                print(json['Responde']['id']['min']);
-                                print(json['Responde']['id']['25%']);
-                                print(json['Responde']['id']['50%']);
-                                print(json['Responde']['id']['75%']);
-                                print(json['Responde']['id']['max']);
-
-                                print(json['Responde']['batchNumber']);
-                                print(json['Responde']['batchNumber']['count']);
-                                print(json['Responde']['batchNumber']['mean']);
-                                print(json['Responde']['batchNumber']['std']);
-                                print(json['Responde']['batchNumber']['min']);
-                                print(json['Responde']['batchNumber']['25%']);
-                                print(json['Responde']['batchNumber']['50%']);
-                                print(json['Responde']['batchNumber']['75%']);
-                                print(json['Responde']['batchNumber']['max']);
-
-                                print(json['Responde']['lightLevel']);
-                                print(json['Responde']['lightLevel']['count']);
-                                print(json['Responde']['lightLevel']['mean']);
-                                print(json['Responde']['lightLevel']['std']);
-                                print(json['Responde']['lightLevel']['min']);
-                                print(json['Responde']['lightLevel']['25%']);
-                                print(json['Responde']['lightLevel']['50%']);
-                                print(json['Responde']['lightLevel']['75%']);
-                                print(json['Responde']['lightLevel']['max']);
-
-                                print(json['Responde']['roomTemp']);
-                                print(json['Responde']['roomTemp']['count']);
-                                print(json['Responde']['roomTemp']['mean']);
-                                print(json['Responde']['roomTemp']['std']);
-                                print(json['Responde']['roomTemp']['min']);
-                                print(json['Responde']['roomTemp']['25%']);
-                                print(json['Responde']['roomTemp']['50%']);
-                                print(json['Responde']['roomTemp']['75%']);
-                                print(json['Responde']['roomTemp']['max']);
-
-                                print(json['Responde']['humidity']);
-                                print(json['Responde']['humidity']['count']);
-                                print(json['Responde']['humidity']['mean']);
-                                print(json['Responde']['humidity']['std']);
-                                print(json['Responde']['humidity']['min']);
-                                print(json['Responde']['humidity']['25%']);
-                                print(json['Responde']['humidity']['50%']);
-                                print(json['Responde']['humidity']['75%']);
-                                print(json['Responde']['humidity']['max']);
+                                // print(json['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
+                                // print(json['Responde']['id']['count']); // 25.0
+                                // print(json['Responde']['id']['mean']);
+                                // print(json['Responde']['id']['std']);
+                                // print(json['Responde']['id']['min']);
+                                // print(json['Responde']['id']['25%']);
+                                // print(json['Responde']['id']['50%']);
+                                // print(json['Responde']['id']['75%']);
+                                // print(json['Responde']['id']['max']);
+                                //
+                                // print(json['Responde']['batchNumber']);
+                                // print(json['Responde']['batchNumber']['count']);
+                                // print(json['Responde']['batchNumber']['mean']);
+                                // print(json['Responde']['batchNumber']['std']);
+                                // print(json['Responde']['batchNumber']['min']);
+                                // print(json['Responde']['batchNumber']['25%']);
+                                // print(json['Responde']['batchNumber']['50%']);
+                                // print(json['Responde']['batchNumber']['75%']);
+                                // print(json['Responde']['batchNumber']['max']);
+                                //
+                                // print(json['Responde']['lightLevel']);
+                                // print(json['Responde']['lightLevel']['count']);
+                                // print(json['Responde']['lightLevel']['mean']);
+                                // print(json['Responde']['lightLevel']['std']);
+                                // print(json['Responde']['lightLevel']['min']);
+                                // print(json['Responde']['lightLevel']['25%']);
+                                // print(json['Responde']['lightLevel']['50%']);
+                                // print(json['Responde']['lightLevel']['75%']);
+                                // print(json['Responde']['lightLevel']['max']);
+                                //
+                                // print(json['Responde']['roomTemp']);
+                                // print(json['Responde']['roomTemp']['count']);
+                                // print(json['Responde']['roomTemp']['mean']);
+                                // print(json['Responde']['roomTemp']['std']);
+                                // print(json['Responde']['roomTemp']['min']);
+                                // print(json['Responde']['roomTemp']['25%']);
+                                // print(json['Responde']['roomTemp']['50%']);
+                                // print(json['Responde']['roomTemp']['75%']);
+                                // print(json['Responde']['roomTemp']['max']);
+                                //
+                                // print(json['Responde']['humidity']);
+                                // print(json['Responde']['humidity']['count']);
+                                // print(json['Responde']['humidity']['mean']);
+                                // print(json['Responde']['humidity']['std']);
+                                // print(json['Responde']['humidity']['min']);
+                                // print(json['Responde']['humidity']['25%']);
+                                // print(json['Responde']['humidity']['50%']);
+                                // print(json['Responde']['humidity']['75%']);
+                                // print(json['Responde']['humidity']['max']);
 
 
 
                                 setState(() {
-                                  shuta = (json['Response']['Prediction'][0]);
+                                  shuta = (jsonpredictByIndiv['Prediction'][0]);
                                   acu = (a.toString());
                                   // described = json['Description'];
                                 });
@@ -839,8 +845,8 @@ class _InputState extends State<Input> {
                                 final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
 
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                                print("Before Making pdf for indiv");
-                                final pdf = new Pdf.fromJson(json);
+                                print("Before Making pdf");
+                                final pdf = new Pdf.fromJson(jsndescription2ByIndiv);
                                 // print("Hi");
                                 // print(pdf.batchNumber);
 
@@ -1297,6 +1303,9 @@ class _InputState extends State<Input> {
     final jsonss = jsonDecode(ress.body);
     print("printing jsons below: ..");
     print(jsonss);
+
+    print(jsonss['Response']['accuracy']);
+    print(jsonss['Response']['prediction']); //
     print(jsonss['Responde']['id']); // {count: 25.0, mean: 13.0, std: 7.3598007219, min: 1.0, 25%: 7.0, 50%: 13.0, 75%: 19.0, max: 25.0}
     print(jsonss['Responde']['id']['count']); // 25.0
     print(jsonss['Responde']['id']['mean']);
