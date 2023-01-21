@@ -115,7 +115,10 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
-
+  var jsndescription2ByIndiv;
+  var jsonss;
+  bool hasPdfBatch = false;
+  bool hasPdfIndiv = false;
   List crazy = [];
   String shutaa = "";
   List <String> jsonObject = [];
@@ -212,13 +215,13 @@ class _InputState extends State<Input> {
             // final RenderBox renderBox = _widgetKey.currentContext?.findRenderObject() as RenderBox;
             // final Size size = renderBox.size; // or _widgetKey.currentContext?.size
             // print('Size: ${size.width}, ${size.height}');
-            color: Colors.blueGrey,
+            // color: Colors.red,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: Column(
               children: [
                 Container(
-                  // color: green,
+                  // color: Colors.green,
                   padding: EdgeInsets.all(20),
                   // padding: EdgeInsets.fromLTRB(40,20,40,40),
                   child: Center(
@@ -271,222 +274,372 @@ class _InputState extends State<Input> {
                     ),
                     SizedBox(height: 20),
 
-                  Container(
-                    height: 500,
-                    // color: Colors.red,
-                    // child: DataTable(
-                    //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
-                    //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
-                    // ),
+                  Stack(
+                    children: [Container(
+                      height: 500,
+                      // color: Colors.pink,
+                      // child: DataTable(
+                      //   columns: _data![0].map((e) => DataColumn(label: Text(e.toString()))).toList(),
+                      //   rows: _data!.map((e) => DataRow(cells: e.map((e) => DataCell(Text(e.toString(),),),).toList())).toList(),
+                      // ),
 
-                    child: file_result == null ? Container(
+                      child: file_result == null ? Container(
+                        // color: Colors.blue,
+                        child: Stack(
+                          children:  [SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                AnimatedTextKit(
+                                  animatedTexts: [
+                                    TypewriterAnimatedText('Upload', textAlign: TextAlign.center,
+                                      textStyle: TextStyle(
+                                        color: brown,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),),
+                                    TypewriterAnimatedText('your', textAlign: TextAlign.center,
+                                      textStyle: TextStyle(
+                                        color: brown,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),),
+                                    TypewriterAnimatedText('CSV', textAlign: TextAlign.center,
+                                      textStyle: TextStyle(
+                                        color: brown,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),),
+                                    TypewriterAnimatedText('File', textAlign: TextAlign.center,
+                                      textStyle: TextStyle(
+                                        color: brown,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),),
 
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            AnimatedTextKit(
-                              animatedTexts: [
-                                TypewriterAnimatedText('Upload', textAlign: TextAlign.center,
-                                  textStyle: TextStyle(
-                                    color: brown,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),),
-                                TypewriterAnimatedText('your', textAlign: TextAlign.center,
-                                  textStyle: TextStyle(
-                                    color: brown,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),),
-                                TypewriterAnimatedText('CSV', textAlign: TextAlign.center,
-                                  textStyle: TextStyle(
-                                    color: brown,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),),
-                                TypewriterAnimatedText('File', textAlign: TextAlign.center,
-                                  textStyle: TextStyle(
-                                    color: brown,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),),
+                                  ],
+                                  // 'Upload your CSV File',
+
+                                ),
+                                // Container(
+                                //     height: 250,
+                                //     child: Center(child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'))),
+                                SizedBox(height: 10),
+                                Container(
+                                  // height: 00,
+                                  // color: Colors.red,
+                                  child: Column(
+                                    children: [
+                                      Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
+                                      Lottie.network('https://assets7.lottiefiles.com/packages/lf20_rqo8mcum.json'),
+                                    ],
+                                  )),
 
                               ],
-                              // 'Upload your CSV File',
 
                             ),
-                            // Container(
-                            //     height: 250,
-                            //     child: Center(child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'))),
-                            SizedBox(height: 10),
-                            Container(
-                              // height: 00,
-                              // color: Colors.red,
-                              child: Column(
-                                children: [
-                                  Lottie.network('https://assets5.lottiefiles.com/packages/lf20_komemhfl.json'),
-                                  Lottie.network('https://assets7.lottiefiles.com/packages/lf20_rqo8mcum.json'),
-                                ],
-                              )),
+                          ),
+                            Positioned(
+                              top: 455.0,
+                              left: 300.0,
+                              right: 0,
+                              child: hasPdfBatch == true ? Visibility(
+                                visible: true,
+                                child: IconButton(
 
-                          ],
+                                  icon: Icon(Icons.download_for_offline, color: Colors.white),
+                                  color: Colors.white,
+                                  iconSize: 50,
+                                  onPressed: () async {
+                                    final snackBar6 = SnackBar(content: Text("Batch report has been regenerated"));
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar6);
+                                    print("Before Making pdf by batch");
+                                    final pdff = new Pdf.fromJson(jsonss);
+                                    final pdfFile = await PdfApi.generateText(pdff);
 
-                        ),
-                      )
-                    ) : Column(
-                      children: [
-                        Container(
-                          height: 300,
-                          child: ListView.builder(
-                            itemCount: _data.length, //docs mean row
-                            // scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                margin: const EdgeInsets.all(3),
-                                color: index == 0 ? pinkColor : Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+
+
+
+
+                                    // final snackBar = SnackBar(content: Text("Data has been added."));
+                                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    setState(() {
+                                      hasPdfBatch = false;
+
+                                    });
+
+                                  },
+                                  //
+                                  // style: OutlinedButton.styleFrom(
+                                  //   // : BorderRadius.all( Radius.circular(10)),
+                                  //   minimumSize: Size.fromHeight (20),
+                                  //   backgroundColor: Colors.white,
+                                  //   side: BorderSide(color: outline, width: 5),
+                                  // ),
+
+
                                 ),
-                                // color: pinkColor,
-                                // elevation: 10,
-                                child: ListTile(
-                                  leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
-                                  title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                              ) :
+                              Visibility(
+                                visible: false,
+                                child: OutlinedButton.icon(
+                                  icon: Icon(Icons.download, color: Colors.blueGrey),
+                                  onPressed: () async {
+                                      print("Before Making pdf by batch");
+                                    final pdff = new Pdf.fromJson(jsonss);
+                                    final pdfFile = await PdfApi.generateText(pdff);
+                                    // final snackBar = SnackBar(content: Text("Data has been added."));
+                                    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  },
+
+                                  label: Text(
+                                    'CSV',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    shape: StadiumBorder(),
+                                    minimumSize: Size.fromHeight (40),
+                                    backgroundColor: brown,
+                                    side: BorderSide(color: outline),
+                                  ),
+
                                 ),
-                                  trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                              ),
+                            ),],
+                        )
+                      ) : Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            // color: Colors.purple,
+                            child: ListView.builder(
+                              itemCount: _data.length, //docs mean row
+                              // scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  margin: const EdgeInsets.all(3),
+                                  color: index == 0 ? pinkColor : Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  // color: pinkColor,
+                                  // elevation: 10,
+                                  child: ListTile(
+                                    leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
+                                    title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
                                       style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
                                   ),
+                                    trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Center(
+                            child: Card(
+                              margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                              // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: pinkColor,
+                              elevation: 10,
+                              child:  shutarat == null ? Visibility(
+                                visible: false,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.info, size: 24, color: textColor,),
+                                            ),
+                                            TextSpan(
+                                              text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.percent, size: 24, color: textColor,),
+                                            ),
+                                            TextSpan(
+                                              text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                        Center(
-                          child: Card(
-                            margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                            // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            color: pinkColor,
-                            elevation: 10,
-                            child:  shutarat == null ? Visibility(
-                              visible: false,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.info, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
+                              )
+                                  :
+                              Visibility(
+                                visible: true,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.info, size: 24, color: textColor,),
                                             ),
-                                          ),
+                                            TextSpan(
+                                              text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.percent, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
+                                    Container(
+                                      // height: 40,
+                                      padding: EdgeInsets.all(2),
+                                      margin:  EdgeInsets.all(20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.percent, size: 24, color: textColor,),
                                             ),
-                                          ),
+                                            TextSpan(
+                                              text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                                :
-                            Visibility(
-                              visible: true,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.info, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    // height: 40,
-                                    padding: EdgeInsets.all(2),
-                                    margin:  EdgeInsets.all(20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Icon(Icons.percent, size: 24, color: textColor,),
-                                          ),
-                                          TextSpan(
-                                            text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              color: textColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+
+
+                        ],
+
+                      ),
+
+
+
+                    ),Positioned(
+                      // top: 455.0,
+                      // left: 300.0,
+                      // right: 0,
+                      top: 350.0,
+                      left: 240.0,
+                      right: 0,
+                      child: hasPdfBatch == true ? Visibility(
+                        visible: true,
+                        child: IconButton(
+
+                          icon: Icon(Icons.download_for_offline, color: Colors.white),
+                          color: Colors.white,
+                          iconSize: 100,
+                          onPressed: () async {
+                            final snackBar5 = SnackBar(content: Text("Batch report has been regenerated"));
+
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar5);
+                            print("Before Making pdf by batch");
+                            final pdff = new Pdf.fromJson(jsonss);
+                            final pdfFile = await PdfApi.generateText(pdff);
+
+
+                            setState(() {
+                              hasPdfBatch = false;
+                            });
+
+
+                          },
+
+
+                          //
+                          // style: OutlinedButton.styleFrom(
+                          //   // : BorderRadius.all( Radius.circular(10)),
+                          //   minimumSize: Size.fromHeight (20),
+                          //   backgroundColor: Colors.white,
+                          //   side: BorderSide(color: outline, width: 5),
+                          // ),
+
+
                         ),
-                      ],
-                    ),
+                      ) :
+                      Visibility(
+                        visible: false,
+                        child: OutlinedButton.icon(
+                          icon: Icon(Icons.download, color: Colors.blueGrey),
+                          onPressed: () async {
+                            print("Before Making pdf by batch");
+                            final pdff = new Pdf.fromJson(jsonss);
+                            final pdfFile = await PdfApi.generateText(pdff);
+                            // final snackBar = SnackBar(content: Text("Data has been added."));
+                            // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          },
 
+                          label: Text(
+                            'CSV',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            minimumSize: Size.fromHeight (40),
+                            backgroundColor: brown,
+                            side: BorderSide(color: outline),
+                          ),
 
-
+                        ),
+                      ),
+                    ),],
                   ),
                     SizedBox(height: 20,),
 
@@ -495,7 +648,8 @@ class _InputState extends State<Input> {
 
 
                     SizedBox(height: 100),
-                    Container(
+                    Stack(
+                      children: [Container(
                       color: Colors.blueGrey,
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: Form(
@@ -740,7 +894,7 @@ class _InputState extends State<Input> {
 
                                 // json.decode(json.encode(response.databody);
                                 print("Done printing rspns.body from description2");
-                                final jsndescription2ByIndiv = jsonDecode(r2.body);
+                                jsndescription2ByIndiv = jsonDecode(r2.body);
                                 print(jsndescription2ByIndiv.runtimeType);
                                 print(jsndescription2ByIndiv);
                                 // jsonss['Responde'].forEach((key, value) {
@@ -837,16 +991,16 @@ class _InputState extends State<Input> {
                                 setState(() {
                                   shuta = (jsonpredictByIndiv['Prediction'][0]);
                                   acu = (a.toString());
+                                  hasPdfIndiv = true;
                                   // described = json['Description'];
                                 });
 
 
 
-                                final snackBar2 = SnackBar(content: Text("Sample report has been regenerated"));
+                                final snackBar2 = SnackBar(content: Text("Individual report has been regenerated"));
 
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                                print("Before Making pdf");
-                                final pdf = new Pdf.fromJson(jsndescription2ByIndiv);
+
                                 // print("Hi");
                                 // print(pdf.batchNumber);
 
@@ -862,7 +1016,7 @@ class _InputState extends State<Input> {
                                 // );
 
 
-                                final pdfFile = await PdfApi.generateText(pdf);
+                                // final pdfFile = await PdfApi.generateText(pdf);
                                 // PdfApi.openFile(pdfFile!);
                                 // final fi = await PdfApi.pickFile();
                                 // final fi = await PdfApi.pickFile();
@@ -887,10 +1041,6 @@ class _InputState extends State<Input> {
                                 productionController.text = '';
 
 
-
-                                final snackBar = SnackBar(content: Text("Data has been added."));
-
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                               },
                               label: Text(
@@ -1033,7 +1183,70 @@ class _InputState extends State<Input> {
                           ],
                         ),
                       ),
+                        ),Positioned(
+                      top: 540.0,
+                      left: 240.0,
+                      right: 0,
+                      child: hasPdfIndiv == true ? Visibility(
+                        visible: true,
+                        child: IconButton(
+                          icon: Icon(Icons.download_for_offline, color: Colors.white),
+                          color: Colors.white,
+                          iconSize: 100,
+                          onPressed: () async {
+                            print("Before Making pdf");
+                            final pdf = new Pdf.fromJson(jsndescription2ByIndiv);
+                            final pdfFile = await PdfApi.generateText(pdf);
+                            // final snackBar = SnackBar(content: Text("Data has been added."));
+                            // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            setState(() {
+                              hasPdfIndiv = false;
+                            });
+                          },
+                          //
+                          // style: OutlinedButton.styleFrom(
+                          //   // : BorderRadius.all( Radius.circular(10)),
+                          //   minimumSize: Size.fromHeight (20),
+                          //   backgroundColor:
+                          //   Colors.white,
+                          //   side: BorderSide(color: outline, width: 5),
+                          // ),
+
+
+                        ),
+                      ) :
+                      Visibility(
+                        visible: false,
+                        child: OutlinedButton.icon(
+                          icon: Icon(Icons.download, color: Colors.blueGrey),
+                          onPressed: () async {
+                            print("Before Making pdf");
+                            final pdf = new Pdf.fromJson(jsndescription2ByIndiv);
+                            final pdfFile = await PdfApi.generateText(pdf);
+                            // final snackBar = SnackBar(content: Text("Data has been added."));
+                            // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          },
+
+                          label: Text(
+                            'CSV',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            minimumSize: Size.fromHeight (40),
+                            backgroundColor: brown,
+                            side: BorderSide(color: outline),
+                          ),
+
+                        ),
+                      ),
+                    ),],
                     ),
+
 
                   ],
                 ),
@@ -1049,6 +1262,37 @@ class _InputState extends State<Input> {
   Future createData({required int batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required String datetime}) async {
   //Future createData(User user) async {
   final docUser = FirebaseFirestore.instance.collection('mushroom').doc();
+
+    // final json = {
+    //   'batchNumber': batchNumber,
+    //   'lightLevel': lightLevel,
+    //   'roomTemp': roomTemp,
+    //   'humidity': humidity,
+    //   'outcome': outcome,
+    //   'datetime': datetime,
+    //
+    // };
+    // await docUser.set(json);
+
+    final user  = MushroomData(
+      id: userID,
+      batchNumber: batchNumber,
+      lightLevel: lightLevel,
+      roomTemp: roomTemp,
+      humidity: humidity,
+      outcome: outcome,
+      datetime: datetime,
+    );
+
+    final json = user.toJson();
+
+    await docUser.set(json);
+  }
+
+
+  Future createReport({required int batchNumber, required double lightLevel, required double roomTemp, required double humidity, required String outcome, required String datetime}) async {
+    //Future createData(User user) async {
+    final docUser = FirebaseFirestore.instance.collection('mushroom').doc();
 
     // final json = {
     //   'batchNumber': batchNumber,
@@ -1257,6 +1501,7 @@ class _InputState extends State<Input> {
     print("Here's the outcome for batch:");
     print(jsons['Outcome']);
     setState(() {
+      hasPdfBatch = true;
       if(jsons['Outcome'] < 80 )
       {
         shutarat = "No";
@@ -1300,7 +1545,7 @@ class _InputState extends State<Input> {
     // json.decode(json.encode(response.databody);
     print("Done printing rspns.body from description");
     // final jsonss = jsonDecode(jsonEncode(ress.body));
-    final jsonss = jsonDecode(ress.body);
+    jsonss = jsonDecode(ress.body);
     print("printing jsons below: ..");
     print(jsonss);
 
@@ -1362,9 +1607,15 @@ class _InputState extends State<Input> {
       _data = fields;
     });
 
-    print("Before Making pdf");
-    final pdff = new Pdf.fromJson(jsonss);
-    final pdfFile = await PdfApi.generateText(pdff);
+    for(int q = 0; q<jsonss['Prediction'].length;q++){
+      print(jsons['Prediction'][q]);
+      createData(batchNumber: int.parse(jsons['Prediction'][q]['batchNumber']), lightLevel: double.parse(jsons['Prediction'][q]['lightLevel']), roomTemp: double.parse(jsons['Prediction'][q]['roomTemp']), humidity: double.parse(jsons['Prediction'][q]['humidity']), outcome: jsons['Prediction'][q]['outcome'], datetime: jsons['Prediction'][q]['datetime']);
+    }
+
+
+
+
+
 
   }
 
@@ -1384,7 +1635,8 @@ class _InputState extends State<Input> {
 class CallApi {
 
   predictByIndiv(datas, apiurl) async {
-    String _url = "http://10.0.2.2:5000/";
+    // String _url = "http://10.0.2.2:5000/";
+    String _url = "https://mushie.herokuapp.com/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
     // print(fullUrl + " is full url");
@@ -1430,7 +1682,8 @@ class CallApi {
     print("This is ewan: " + ewan.toString());
     print(ewan);
     print("Done printing shits");
-    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
@@ -1455,7 +1708,8 @@ class CallApi {
   }
 
   descriptionByBatch(values2, urlss) async {
-    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss;
     var resInPeaces = await http.post(
       Uri.parse(fullUrls),
@@ -1468,7 +1722,8 @@ class CallApi {
   }
 
   description2(values, urlss2) async {
-    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),

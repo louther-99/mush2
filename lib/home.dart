@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     // final u = UserPreferences.getUser();
     final user = FirebaseAuth.instance.currentUser!;
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(120),
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 // Tab(icon: Icon(Icons.notifications), text: 'NOTIFICATION'),
                 // Tab(icon: Icon(Icons.menu), text: 'MENU'),
                 Tab(icon: Icon(Icons.insert_drive_file)),
-                Tab(icon: Icon(Icons.file_present)),
+                // Tab(icon: Icon(Icons.file_present)),
                 Tab(icon: Icon(Icons.table_view)),
                 // Tab(icon: Icon(Icons.home)),
 
@@ -84,10 +84,10 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: Input(),
             ),
-            Center(
-              child: Status(),
-
-            ),
+            // Center(
+            //   child: Status(),
+            //
+            // ),
             // Center(
             //   // child: Timeline(),
             // ),

@@ -108,8 +108,8 @@ class PdfApi {
                                     ]),
                                     pw.TableRow(children: [
                                       pw.Text("Mean", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
-                                      pw.Text(pdfi.id.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
-                                      pw.Text(pdfi.batchNumber.mean.toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.id.mean.round().toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.batchNumber.mean.round().toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
                                       pw.Text(pdfi.lightLevel.mean.round().toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
                                       pw.Text(pdfi.roomTemp.mean.round().toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),
                                       pw.Text(pdfi.humidity.mean.round().toString(), textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0),),

@@ -140,7 +140,7 @@ class _ProfileState extends State<Profile> {
           buildAbout(usrs), //Error
           const SizedBox(height: 24),
           buildSignOutButton(),
-          const SizedBox(height: 24),
+          const SizedBox(height: 45),
         ]
     );
 
