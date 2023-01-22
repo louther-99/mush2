@@ -2,7 +2,7 @@
     package="com.example.mush2">
     <uses-permission-sdk-23 android:name="android.permission.WAKE_LOCK"></uses-permission-sdk-23>
    <application
-        android:label="mush2"
+        android:label="Mush Mush"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
