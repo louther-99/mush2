@@ -142,6 +142,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget buildProfileWidget() {
     return ProfileWidget(
+      // imagePath: widget.user.profilePath.toString(),
       imagePath: widget.user.profilePath.toString(),
       isEdit: true,
       onClicked: () async {
@@ -164,7 +165,8 @@ class _EditProfileState extends State<EditProfile> {
     return Container(
       // padding: EdgeInsets.all(0),
       color: Colors.grey,
-      child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+      // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+      child: Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
         width: double.infinity,
         height: coverHeight,
         fit: BoxFit.cover,),
