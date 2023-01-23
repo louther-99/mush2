@@ -245,11 +245,11 @@ class _SignUpState extends State<SignUp> {
 
       final user = UserData(
       IDUser: a,
-      profilePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+      profilePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
       name: nameController.text.trim(),
       email: emailController.text.trim(),
       about: 'Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf',
-      coverPath: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60',
+      coverPath: 'https://removal.ai/wp-content/uploads/2021/02/no-img.png',
       lastMessageTime: DateTime.now().toString(),
   );
 

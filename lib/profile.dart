@@ -94,15 +94,29 @@ class _ProfileState extends State<Profile> {
             .snapshots()
             .map((snapshot) =>
             snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList()),
-
             builder: (context,  streamSnapshot){
           print("The user: $streamSnapshot");
 
           if (streamSnapshot.hasData) {
             final usr = streamSnapshot.data! as List<UserData>;
+            print(usr[1]);
+            final listUser = usr.map((e) => e).toList();
+            print(listUser[1]);
+            final ab = listUser[1];
+            final UserData e = listUser[1] as UserData;
             print('Has data');
+            print(usr[1].email);
+            print("printed");
+            var u = usr.map;
+            print(u);
+            print(usr.length);
+            final usr1 = usr[1] as UserData;
             return ListView(
-              children: usr.map(buildEverything).toList()
+              // children: widget()buildEverything(usr[1]).toList(),
+              children: <Widget>[
+                buildEverything(usr1),
+              ],
+              // children:  usr(buildEverything),
             );
 
 
@@ -121,7 +135,13 @@ class _ProfileState extends State<Profile> {
   }
 
 
-  Widget buildEverything(UserData usrs) {
+   Widget buildEverything(UserData usrs) {
+    print("buildEverything");
+    print(usrs.name);
+    print(usrs.email);
+    print(usrs.IDUser);
+    print(usrs.profilePath);
+    print(usrs.coverPath);
     Text(usrs.email);
     print(usrs.name);
     print(usrs.email);
@@ -197,7 +217,8 @@ class _ProfileState extends State<Profile> {
     print(doesnothavecover);
     return Container(
       color: Colors.grey,
-      child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+      // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+      child: Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
         width: double.infinity,
         height: coverHeight,
         fit: BoxFit.cover,),
@@ -209,7 +230,8 @@ class _ProfileState extends State<Profile> {
   Widget buildProfileWidget( UserData user) {
     return ProfileWidget(
       // imagePath: user.profilePath!,
-      imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+      // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+      imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
       onClicked: () async{
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => EditProfile(user: user)),

@@ -36,7 +36,7 @@ dependencies:
   http: ^0.13.5
   provider: ^6.0.4
   email_validator: ^2.0.1
-  flutter_native_splash: ^2.2.3+1
+  flutter_native_splash: ^2.2.3+1 #flutter pub run flutter_native_splash:create
   google_maps_flutter: ^2.2.1
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
@@ -118,11 +118,13 @@ flutter_icons:
   ios: true
   image_path: "assets/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_foreground: "assets/1024.png"
+  adaptive_icon_background: "#ffffff"
 
 
-flutter_native_splash:
+flutter_native_splash: #flutter pub run flutter_native_splash:create
   image: assets/logo.png
-  color: "#b56d2d"
+  color: "#F6BD60"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
