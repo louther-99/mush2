@@ -230,9 +230,9 @@ class _ProfileState extends State<Profile> {
 
   Widget buildProfileWidget( UserData user) {
     return ProfileWidget(
-      // imagePath: user.profilePath!,
+      imagePath: user.profilePath!,
       // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
-      imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+      // imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
       onClicked: () async{
         await Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => EditProfile(user: user)),

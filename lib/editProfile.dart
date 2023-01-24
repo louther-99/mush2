@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,6 +29,10 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  var urlDownload;
+  PlatformFile? pickFile;
+  UploadTask? uploadTask;
+  String imageUrl = "";
   final emailController = TextEditingController();
 
   // print(doc_ref); //P7vYlvT5twXR7GtBsokC
@@ -214,6 +219,23 @@ class _EditProfileState extends State<EditProfile> {
           print(user.profilePath);
           _updateUsers(user);
 
+          final pat = 'files/${pickFile!.name}';
+          final fil = File(pickFile!.path!);
+          print('Pat: $pat');
+          print('Fil: $fil');
+          final ref = FirebaseStorage.instance.ref().child(pat);
+          // await ref.putFile(fil);
+          // ref.getDownloadURL().then((value) => print(value));
+          uploadTask = ref.putFile(fil);
+
+          final snapshot = await  uploadTask!.whenComplete(() {});
+
+          urlDownload = await snapshot.ref.getDownloadURL();
+          print('Pat: $pat');
+          print('Fil: $fil');
+          print('Download Link: $urlDownload');
+
+
           final snackBar = SnackBar(content: Text("Data has been updated."));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
@@ -265,6 +287,13 @@ class _EditProfileState extends State<EditProfile> {
           top: top,
           child: buildProfileWidget(),
         ),
+        // if (pickFile != null ) Container(
+        //   // padding: EdgeInsets.all(0),
+        //   margin: EdgeInsets.only(bottom: bottom),
+        //   child: Image.file(
+        //     File(pickFile!.path!),
+        //   ),
+        // ),
       ],
     );
   }
@@ -273,8 +302,10 @@ class _EditProfileState extends State<EditProfile> {
     return ProfileWidget(
       // imagePath: widget.user.profilePath.toString(),
       imagePath: widget.user.profilePath.toString(),
+      // imagePath: pickFile.name;
       isEdit: true,
       onClicked: () async {
+        final r = await FilePicker.platform.pickFiles();
         final image = await ImagePicker()
             .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
         if(image == null) return; //Check image if null or not
@@ -283,8 +314,15 @@ class _EditProfileState extends State<EditProfile> {
         final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
         final newImage = await File(image.path).copy(imageFile.path);
 
-        setState(() => user = widget.user.copyWith(profilePath: newImage.path));
+        setState(() {
+          pickFile = r!.files.first;
+          user = widget.user.copyWith(profilePath: urlDownload);
+        });
+
         // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+
+
+
 
       },
     );
