@@ -4,72 +4,26 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta_meta.dart';
 import 'package:mush2/model/mushroomData.dart';
-import 'package:mush2/model/userData.dart';
 import 'package:mush2/pdf_viewer.dart';
-import 'package:provider/provider.dart';
-import 'package:mush2/services/auth_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:json_annotation/json_annotation.dart';
-// import 'package:sklite/SVM/SVM.dart';
-// import 'package:sklite/base.dart';
-// import 'package:sklite/ensemble/forest.dart';
-// import 'package:sklite/naivebayes/naive_bayes.dart';
-// import 'package:sklite/neighbors/neighbors.dart';
-// import 'package:sklite/neural_network/neural_network.dart';
-// import 'package:sklite/pipeline/pipeline.dart';
-// import 'package:sklite/tree/tree.dart';
-// import 'package:sklite/utils/exceptions.dart';
-// import 'package:sklite/utils/io.dart';
-// import 'package:sklite/utils/mathutils.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:ml_preprocessing/ml_preprocessing.dart';
 import 'package:mush2/utils/colors.dart';
-// import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:ml_algo/ml_algo.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:ml_algo/ml_algo.dart';
-import 'package:ml_dataframe/ml_dataframe.dart';
-import 'package:ml_preprocessing/ml_preprocessing.dart';
+
 
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:ml_dataframe/ml_dataframe.dart';
+
 
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // For google maps
 import 'package:intl/intl.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:ml_algo/ml_algo.dart';
-import 'package:ml_dataframe/ml_dataframe.dart';
-import 'package:ml_preprocessing/ml_preprocessing.dart';
-// import 'package:tflite_flutter/tflite_flutter.dart';
 
-// import 'package:sklite/SVM/SVM.dart';
-// import 'package:sklite/base.dart';
-// import 'package:sklite/ensemble/forest.dart';
-// import 'package:sklite/naivebayes/naive_bayes.dart';
-// import 'package:sklite/neighbors/neighbors.dart';
-// import 'package:sklite/neural_network/neural_network.dart';
-// import 'package:sklite/pipeline/pipeline.dart';
-// import 'package:sklite/tree/tree.dart';
-// import 'package:sklite/utils/exceptions.dart';
-// import 'package:sklite/utils/io.dart';
-// import 'package:sklite/utils/mathutils.dart';
 
-// import 'package:tflite/tflite.dart';
-// import 'package:tflite/tflite.dart';
-// import 'package:tflite_flutter/tflite_flutter.dart';
-// import 'package:chaquopy/chaquopy.dart';
 import 'package:csv/csv.dart';
-import 'package:ml_dataframe/ml_dataframe.dart';
 import 'package:http/http.dart';
 import 'package:file_picker/file_picker.dart';
-// import 'package:open_file/open_file.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'api/pdf_api.dart';
@@ -92,8 +46,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:io' as io;
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 
 
 
@@ -247,6 +200,7 @@ class _InputState extends State<Input> {
                     OutlinedButton.icon(
                       icon: Icon(Icons.upload, color: Colors.blueGrey),
                       onPressed: () async {
+                        // FirebaseAuth.instance.signOut();
 
                         _upload();
 
@@ -353,6 +307,8 @@ class _InputState extends State<Input> {
                                     final snackBar6 = SnackBar(content: Text("Batch report has been regenerated"));
                                     ScaffoldMessenger.of(context).showSnackBar(snackBar6);
                                     print("Before Making pdf by batch");
+                                    print(jsonss['Yes']);
+                                    print(jsonss['No']);
                                     final pdff = new Pdf.fromJson(jsonss);
                                     final pdfFile = await PdfApi.generateText(pdff);
 
@@ -385,8 +341,12 @@ class _InputState extends State<Input> {
                                   icon: Icon(Icons.download, color: Colors.blueGrey),
                                   onPressed: () async {
                                       print("Before Making pdf by batch");
+                                      print(jsonss['Yes']);
+                                      print(jsonss['No']);
                                     final pdff = new Pdf.fromJson(jsonss);
                                     final pdfFile = await PdfApi.generateText(pdff);
+
+                                    print("What now");
                                     // final snackBar = SnackBar(content: Text("Data has been added."));
                                     // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                   },
@@ -1485,14 +1445,17 @@ class _InputState extends State<Input> {
 
 
     var res = await CallApi().convertByBatch(jsonObject, 'convertByBatch');
-    print("printing res.body below: ..");
+    print("convertByBatch printing res.body below: ..");
     print(res.body);
     print("Done printing rspn.body");
     final jsons = jsonDecode(res.body);
     print("printing jsons below: ..");
     print(jsons);
+    print(jsons['Yes']);
+    print(jsons['No']);
+    var yy = jsons['Yes'];
+    var nn = jsons['No'];
     print("test shuta");
-
     print(jsons[24]);
     print(jsons['Prediction'][24]);
     print(jsons['Prediction'][24]['outcome']);
@@ -1500,6 +1463,7 @@ class _InputState extends State<Input> {
     print(jsons['Accuracy']);
     print("Here's the outcome for batch:");
     print(jsons['Outcome']);
+
     setState(() {
       hasPdfBatch = true;
       if(jsons['Outcome'] < 80 )
@@ -1546,8 +1510,9 @@ class _InputState extends State<Input> {
     print("Done printing rspns.body from description");
     // final jsonss = jsonDecode(jsonEncode(ress.body));
     jsonss = jsonDecode(ress.body);
-    print("printing jsons below: ..");
+    print("printing jsonss below: ..");
     print(jsonss);
+
 
     print(jsonss['Response']['accuracy']);
     print(jsonss['Response']['prediction']); //
@@ -1601,17 +1566,14 @@ class _InputState extends State<Input> {
     print(jsonss['Responde']['humidity']['75%']);
     print(jsonss['Responde']['humidity']['max']);
 
-
-
     setState(() {
       _data = fields;
     });
 
-    for(int q = 0; q<jsonss['Prediction'].length;q++){
-      print(jsons['Prediction'][q]);
-      createData(batchNumber: int.parse(jsons['Prediction'][q]['batchNumber']), lightLevel: double.parse(jsons['Prediction'][q]['lightLevel']), roomTemp: double.parse(jsons['Prediction'][q]['roomTemp']), humidity: double.parse(jsons['Prediction'][q]['humidity']), outcome: jsons['Prediction'][q]['outcome'], datetime: jsons['Prediction'][q]['datetime']);
-    }
-
+    // for(int q = 0; q<jsonss['Prediction'].length;q++){
+    //   print(jsons['Prediction'][q]);
+    //   createData(batchNumber: int.parse(jsons['Prediction'][q]['batchNumber']), lightLevel: double.parse(jsons['Prediction'][q]['lightLevel']), roomTemp: double.parse(jsons['Prediction'][q]['roomTemp']), humidity: double.parse(jsons['Prediction'][q]['humidity']), outcome: jsons['Prediction'][q]['outcome'], datetime: jsons['Prediction'][q]['datetime']);
+    // }
 
 
 
@@ -1635,8 +1597,8 @@ class _InputState extends State<Input> {
 class CallApi {
 
   predictByIndiv(datas, apiurl) async {
-    // String _url = "http://10.0.2.2:5000/";
-    String _url = "https://mushie.herokuapp.com/";
+    String _url = "http://10.0.2.2:5000/";
+    // String _url = "https://mushie.herokuapp.com/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
     // print(fullUrl + " is full url");
@@ -1682,8 +1644,8 @@ class CallApi {
     print("This is ewan: " + ewan.toString());
     print(ewan);
     print("Done printing shits");
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
@@ -1708,8 +1670,8 @@ class CallApi {
   }
 
   descriptionByBatch(values2, urlss) async {
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss;
     var resInPeaces = await http.post(
       Uri.parse(fullUrls),
@@ -1722,8 +1684,8 @@ class CallApi {
   }
 
   description2(values, urlss2) async {
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),

@@ -68,7 +68,7 @@ class UserData{
       profilePath: json['profilePath'],
       name: json['name'],
       email: json['email'],
-      about: json['email'],
+      about: json['about'],
       coverPath: json['coverPath'],
       lastMessageTime : json['lastMessageTime']
 
@@ -76,11 +76,11 @@ class UserData{
 
   Map<String, dynamic> toJson() => { //To convert UserData object to JSON
     'IDUser': IDUser,
-    'imagePath': profilePath,
+    'profilePath': profilePath,
     'name': name,
     'email': email,
     'about': about,
-    'AvatarURL': coverPath,
+    'coverPath': coverPath,
     'lastMessageTime' : lastMessageTime
   };
 

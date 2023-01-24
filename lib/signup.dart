@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
     try{ //Creating user with email and password accepting the email and password
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
       String a = await getID() as String;
-      final docUser = await FirebaseFirestore.instance.collection('user').doc();
+      final docUser = await FirebaseFirestore.instance.collection('user').doc(a);
       print(a);
       print(docUser);
       //  AvatarURL
@@ -248,7 +248,7 @@ class _SignUpState extends State<SignUp> {
       profilePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
       name: nameController.text.trim(),
       email: emailController.text.trim(),
-      about: 'Lorem upsum wakaru waku ahflasfjalksdfjal;skdfjal;skdfjla;sdkf',
+      about: 'Short description about yourself',
       coverPath: 'https://removal.ai/wp-content/uploads/2021/02/no-img.png',
       lastMessageTime: DateTime.now().toString(),
   );

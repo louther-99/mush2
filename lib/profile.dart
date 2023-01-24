@@ -99,18 +99,18 @@ class _ProfileState extends State<Profile> {
 
           if (streamSnapshot.hasData) {
             final usr = streamSnapshot.data! as List<UserData>;
-            print(usr[1]);
+            print(usr[0]);
             final listUser = usr.map((e) => e).toList();
-            print(listUser[1]);
-            final ab = listUser[1];
-            final UserData e = listUser[1] as UserData;
+            print(listUser[0]);
+            final ab = listUser[0];
+            final UserData e = listUser[0] as UserData;
             print('Has data');
-            print(usr[1].email);
+            print(usr[0].email);
             print("printed");
             var u = usr.map;
             print(u);
             print(usr.length);
-            final usr1 = usr[1] as UserData;
+            final usr1 = usr[0] as UserData;
             return ListView(
               // children: widget()buildEverything(usr[1]).toList(),
               children: <Widget>[
@@ -140,6 +140,7 @@ class _ProfileState extends State<Profile> {
     print(usrs.name);
     print(usrs.email);
     print(usrs.IDUser);
+    print(usrs.about);
     print(usrs.profilePath);
     print(usrs.coverPath);
     Text(usrs.email);
@@ -285,7 +286,7 @@ class _ProfileState extends State<Profile> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: textColor),
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(20),
           color: bgCard,
         ),
 

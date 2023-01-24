@@ -68,6 +68,8 @@ class PdfApi {
                                 pw.SizedBox(height: 10),
                                 pw.Text("Outcome: " + pdfi.prediction, style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
                                 pw.Text("Accuracy: " + pdfi.accuracy.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                                // pw.Text("Yes: " + pdfi.yes.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                                // pw.Text("No: " + pdfi.no.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
 
                                 pw.Row(
                                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,

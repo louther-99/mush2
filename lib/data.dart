@@ -1,15 +1,9 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
-import 'package:mush2/Utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:mush2/model/mushroomData.dart';
 import 'package:mush2/searchWidget.dart';
 import 'package:mush2/utils/colors.dart';
@@ -62,25 +56,6 @@ class _DataState extends State<Data> {
   DateTime newDated = DateTime.now();
   String s = "";
 
-
-//final CollectionReference _mushroom = FirebaseFirestore.instance.collection('mushroom');
-
-  //await _mushroom.add({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.update({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.doc({"batch": batchController, "lightLevel": lightLevelController, "roomTemp": roomTemperatureController, "humidity": roomHumidityController, "outcome": "none", "date": date });
-  // await _mushroom.doc(productId).delete();
-
-  // Future <void> _create([DocumentSnapshot? documentSnapshot]) async {
-  //   if(documentSnapshot != null){
-  //     _batchController.text = documentSnapshot['batch'].toString();
-  //     _lightLevelController.text = documentSnapshot['lightLevel'].toString();
-  //     _roomTemperatureController.text = documentSnapshot['roomTemp'].toString();
-  //     _roomHumidityController.text = documentSnapshot['humidity'].toString();
-  //     _productionController.text = documentSnapshot['outcome'].toString();
-  //     // _dateController.text = documentSnapshot['date'].toString();
-  //   }
-  //
-  // } //Future void _create
 
 
   Future <void> _delete(String productId ) async {
@@ -289,41 +264,6 @@ class _DataState extends State<Data> {
                     ),
                     SizedBox(height: 30),
 
-                    // OutlinedButton.icon(
-                    //   icon: Icon(Icons.date_range, color: textColor),
-                    //   onPressed: () async {
-                    //     DateTime? newDate = await showDatePicker(
-                    //     context: context,
-                    //     initialDate: datetime,
-                    //     firstDate: DateTime(2000),
-                    //     lastDate: DateTime(2100),
-                    //     );
-                    //     if (newDate == null) return;
-                    //     // final datetime = DateFormat('MM-dd-yyyy KK:mm:ss').format(DateTime.now());
-                    //     final dat = DateFormat('MM-dd-yyyy KK:mm:ss a').format(newDate);
-                    //     s = dat;
-                    //     final dt1 = DateTime.tryParse(dat);
-                    //     // setState(() => datetime = dt1!);
-                    //     setState((){
-                    //       datetime = dat.toString() as DateTime;
-                    //       _dateController.text = dat.toString();
-                    //     });
-                    //     },
-                    //   label: Text(
-                    //     'Select Date',
-                    //     style: TextStyle(
-                    //       fontSize: 24,
-                    //       color: textColor,
-                    //     ),
-                    //   ),
-                    //   style: OutlinedButton.styleFrom(
-                    //     shape: StadiumBorder(),
-                    //     minimumSize: Size.fromHeight (40),
-                    //     backgroundColor: bgCard,
-                    //   ),
-                    //
-                    // ),
-
 
                     const SizedBox(
                       height: 20,
@@ -366,24 +306,9 @@ class _DataState extends State<Data> {
                         }
 
 
-                        //
-                        // if (s == null)
-                        //   {
-                        //     print("S is null and s is: " + s );
-                        //     if(batchNumber != null){
-                        //       await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": _dateController.text});
-                        //       _batchController.text = '';
-                        //       _lightLevelController.text = '';
-                        //       _roomTemperatureController.text = '';
-                        //       _roomHumidityController.text = '';
-                        //       _productionController.text = '';
-                        //       _dateController.text  = " ";
-                        //
-                        //
-                        //     }
-                        //   }
                         if(batchNumber != null){
                           print("S is not null and s is " + s);
+                          print(documentSnapshot!.id);
                           await _mushroom.doc(documentSnapshot!.id).update({"batchNumber": batchNumber, "lightLevel": lightLevel, "roomTemp": roomTemp, "humidity": humidity, "outcome": outcome, "datetime": myNewDate});
                           _batchController.text = '';
                           _lightLevelController.text = '';
