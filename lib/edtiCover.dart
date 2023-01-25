@@ -35,29 +35,27 @@ final CollectionReference usersRef = FirebaseFirestore.instance.collection('user
 String userID = "";
 bool hide = false;
 
-class EditProfile extends StatefulWidget {
+class EditCover extends StatefulWidget {
   final UserData user;
-  const EditProfile({
+  const EditCover({
     Key? key,
     required this.user,
   }) : super(key: key);
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditCover> createState() => _EditCoverState();
 }
 
-class _EditProfileState extends State<EditProfile> {
-  var profilePath;
-  var profileFile;
-  var coverPath;
-  var coverFile;
-  var profileUrlDownload ,CoverUrlDownload;
-  PlatformFile? pickFile, pickFileCover;
-  UploadTask? uploadTaskProfile, uploadTaskCover;
-
+class _EditCoverState extends State<EditCover> {
   bool doesnothavecover = false;
+  var  CoverUrlDownload;
+  PlatformFile? pickFileCover;
+  UploadTask? uploadTaskCover;
   final dotaUser = FirebaseAuth.instance.currentUser;
 
+
+  var coverPath;
+  var coverFile;
   final userID = FirebaseAuth.instance.currentUser!.uid;
   final double coverHeight = 200;
   final double profileHeight = 150;
@@ -97,6 +95,7 @@ class _EditProfileState extends State<EditProfile> {
     // final docUser = await FirebaseFirestore.instance.collection('user').doc(dotaUser!.uid);
     CollectionReference collection = FirebaseFirestore.instance.collection('user');
     DocumentReference document = collection.doc(dotaUser!.uid);
+
     print("_updateUsers user.name " + user.name);
     print("_updateUsers user.about " + user.about.toString());
     final json = user.toJson();
@@ -198,34 +197,33 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
   Widget buildCoverPhoto(UserData user) {
-    return Container(
-      // padding: EdgeInsets.all(0),
-      color: Colors.grey,
-      // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-      child: Image.network(user.profilePath.toString(),
-        width: double.infinity,
-        height: coverHeight,
-        fit: BoxFit.cover,)
+    return GestureDetector(
+      onTap: selectFile2,
+      child: Container(
+        // padding: EdgeInsets.all(0),
+        color: Colors.grey,
+        // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+        child: pickFileCover == null ? Image.network(widget.user.coverPath.toString(),
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,)
+            : Image.file(File(pickFileCover!.path!),
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,),
+
+
+
+      ),
     );
 
   }
 
   Widget buildProfileWidget( UserData user) {
-    return Column(
-      children: [
-        if (pickFile != null)
-          Visibility(
-            visible: true,
-            child: ProfileWidget(
-              imagePath: pickFile!.path!,
-              isEdit: true,
-              onClicked: selectFile,
-
-            ),
-
-          ),
-        pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)),
-      ],
+    return ProfileWidget2(
+      imagePath: user.profilePath!,
+      onClicked: () {
+      },
     );
 
 
@@ -276,14 +274,13 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  Future  selectFile2() async{
+    final result2 = await FilePicker.platform.pickFiles();
 
-  Future  selectFile() async{
-    final result = await FilePicker.platform.pickFiles();
-
-    if(result == null) return; //Check image if null or not
+    if(result2 == null) return; //Check image if null or not2
 
     setState(() {
-      pickFile = result!.files.first;
+      pickFileCover = result2!.files.first;
       // user = widget.user.copyWith(profilePath: urlDownload);
     });
 
@@ -300,22 +297,22 @@ class _EditProfileState extends State<EditProfile> {
           onPressed: () async {
 
             print('OutlinedButton pickFileCover != null?????');
-            if(pickFile != null) {
+            if(pickFileCover != null) {
               print('OutlinedButton pickFileCover != null?????=TRUEEEeE');
-              profilePath = 'files/${pickFile!.name}';
-              profileFile = File(pickFile!.path!);
-              print('OutlinedButton profilePath != null?????=TRUEEEeE pickFileCover  coverPath: $profilePath');
-              print('OutlinedButton profileFile != null?????=TRUEEEeE pickFileCover  coverFile: $profileFile');
-              final ref = FirebaseStorage.instance.ref().child(profilePath);
+              coverPath = 'files/${pickFileCover!.name}';
+              coverFile = File(pickFileCover!.path!);
+              print('OutlinedButton pickFileCover != null?????=TRUEEEeE pickFileCover  coverPath: $coverPath');
+              print('OutlinedButton pickFileCover != null?????=TRUEEEeE pickFileCover  coverFile: $coverFile');
+              final ref2 = FirebaseStorage.instance.ref().child(coverPath);
 
               setState(() {
-                uploadTaskProfile = ref.putFile(profileFile);
+                uploadTaskCover = ref2.putFile(coverFile);
               });
               // print('After some covering: $user.coverPath');
-              final snapshot = await uploadTaskProfile!.whenComplete(() {});
-              profileUrlDownload = await snapshot.ref.getDownloadURL();
-              print("OutlinedButton profileUrlDownload: " + profileUrlDownload);
-              user = widget.user.copyWith(profilePath: profileUrlDownload);
+              final snapshot2 = await uploadTaskCover!.whenComplete(() {});
+              CoverUrlDownload = await snapshot2.ref.getDownloadURL();
+              print("OutlinedButton urlDownloadCover: " + CoverUrlDownload);
+              user = widget.user.copyWith(coverPath: CoverUrlDownload);
               print("OutlinedButton user.profilePath in pickFileCover != null " +
                   user.profilePath.toString());
             }

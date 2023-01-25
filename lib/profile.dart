@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
 import 'package:mush2/home.dart';
+import 'edtiCover.dart';
 import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
@@ -216,18 +217,25 @@ class _ProfileState extends State<Profile> {
 
     user.coverPath == "" ? doesnothavecover = true : doesnothavecover = false;
     print(doesnothavecover);
-    return Container(
-      color: Colors.grey,
-      // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-      child: user.coverPath == null ?  Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
-        width: double.infinity,
-        height: coverHeight,
-        fit: BoxFit.cover,)
-      :  Image.network(user.coverPath!.toString(),
-        width: double.infinity,
-        height: coverHeight,
-        fit: BoxFit.cover,),
 
+    return GestureDetector(
+        onTap: () async{
+          await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => EditCover(user: user)),
+          );},
+      child: Container(
+        color: Colors.grey,
+        // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+        child: user.coverPath == null ?  Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,)
+        :  Image.network(user.coverPath!.toString(),
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,),
+
+      ),
     );
 
   }
