@@ -137,12 +137,12 @@ class _ProfileState extends State<Profile> {
 
    Widget buildEverything(UserData usrs) {
     print("buildEverything");
-    print(usrs.name);
-    print(usrs.email);
-    print(usrs.IDUser);
-    print(usrs.about);
-    print(usrs.profilePath);
-    print(usrs.coverPath);
+    print('usrs.name: ' + usrs.name);
+    print('usrs.email: ' + usrs.email);
+    print('usrs.IDUsermail: ' + usrs.IDUser);
+    print('usrs.about: ' + usrs.about.toString());
+    print('usrs.profilePath: ' + usrs.profilePath.toString());
+    print('usrs.coverPath: ' + usrs.coverPath.toString());
     Text(usrs.email);
     print(usrs.name);
     print(usrs.email);
@@ -219,7 +219,11 @@ class _ProfileState extends State<Profile> {
     return Container(
       color: Colors.grey,
       // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-      child: Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
+      child: user.coverPath == null ?  Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
+        width: double.infinity,
+        height: coverHeight,
+        fit: BoxFit.cover,)
+      :  Image.network(user.coverPath!.toString(),
         width: double.infinity,
         height: coverHeight,
         fit: BoxFit.cover,),
@@ -230,14 +234,25 @@ class _ProfileState extends State<Profile> {
 
   Widget buildProfileWidget( UserData user) {
     return ProfileWidget(
-      imagePath: user.profilePath!,
-      // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
-      // imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-      onClicked: () async{
-        await Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => EditProfile(user: user)),
-        );
-        setState(() {}); //Update UI
+
+        imagePath: user.profilePath!,
+        // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+        // imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+        onClicked: () async{
+      await Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => EditProfile(user: user)),
+      );
+      // setState(() {}); //Update UI
+
+
+      //  imagePath : user.profilePath == null ?  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png' : user.profilePath!,
+      // // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
+      // // imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+      // onClicked: () async{
+      //   await Navigator.of(context).push(
+      //     MaterialPageRoute(builder: (context) => EditProfile(user: user)),
+      //   );
+        // setState(() {}); //Update UI
       },
     );
 

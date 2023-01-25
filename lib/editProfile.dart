@@ -29,9 +29,15 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  var pat;
+  var pat2;
   var urlDownload;
+  var urlDownloadCover;
   PlatformFile? pickFile;
+  PlatformFile? pickFileCover;
   UploadTask? uploadTask;
+  UploadTask? uploadTask2;
+
   String imageUrl = "";
   final emailController = TextEditingController();
 
@@ -85,20 +91,21 @@ class _EditProfileState extends State<EditProfile> {
   }
   Future <void> _updateUsers(UserData user) async {
     final docUser = await FirebaseFirestore.instance.collection('user').doc();
-    print("Function _updateUsers");
-    print(doc_ref); //P7vYlvT5twXR7GtBsokC
-    print(ID); //ih0mXMco2OalE7ZpnqPcvT1HcPk1
-    print(_db);  //FirebaseFirestore(app: [DEFAULT])
-    print(dotaUser); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
-    print(lols);
-    print(dotaUser!.uid);
-    print(user.IDUser);
-    print(user.name);
-    print(user.about);
-    print(user.email);
-    print(user.coverPath);
-    print(user.profilePath);
-
+    print("Function _updateUsers#################");
+    print("doc_ref " + doc_ref); //P7vYlvT5twXR7GtBsokC
+    print("ID " + ID); //P7vYlvT5twXR7GtBsokC
+    print("_db " + _db.toString()); //FirebaseFirestore(app: [DEFAULT])
+    print("dotaUser " + dotaUser.toString()); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
+    print("lols " + lols); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
+    print("dotaUser!.uid" + dotaUser!.uid);
+    print("user.IDUser" + user.IDUser!);
+    print("user.name " + user.name);
+    print("user.about " + user.about.toString());
+    print("user.email " + user.email);
+    print("user.coverPath " + user.coverPath.toString());
+    print("user.profilePath " + user.profilePath.toString());
+    print(' final json = user.toJson();');
+    print('     docUser.update(json);');
     final json = user.toJson();
     docUser.update(json);
     // await _db.collection('user').doc(user.IDUser).update({IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime});
@@ -149,7 +156,7 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'Full Name',
-            text: widget.user.name,
+            text: widget.user.name.toString(),
             // onChanged: (name) {},
             onChanged: (name) => user = widget.user.copyWith(name: name), //Create copy of the user object in the UserData class
             // onChanged: (name) => userData = userData.copyWith(name: name),
@@ -207,33 +214,93 @@ class _EditProfileState extends State<EditProfile> {
           Navigator.of(context).pop(); //Pop the editing page to show up the profile page
           // await _mushroom.doc(IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime);
           // await _user.doc(documentSnapshot!.id).update({});
-          print("OutlinedButton");
-          // doc_ref
-          print(doc_ref);
-          print(lols);
-          print(user.IDUser);
-          print(user.name);
-          print(user.about);
-          print(user.email);
-          print(user.coverPath);
-          print(user.profilePath);
-          _updateUsers(user);
 
-          final pat = 'files/${pickFile!.name}';
-          final fil = File(pickFile!.path!);
+          if(pickFile != null){
+            final pat = 'files/${pickFile!.name}';
+            final fil = File(pickFile!.path!);
+            print('Fil: $fil');
+            // final ref = FirebaseStorage.instance.ref().child(pat);
+            final ref = FirebaseStorage.instance.ref().child(pat);
+            setState((){
+              uploadTask = ref.putFile(fil);
+            });
+
+            final snapshot = await  uploadTask!.whenComplete(() {});
+            urlDownload = await snapshot.ref.getDownloadURL();
+            user = widget.user.copyWith(profilePath: urlDownload);
+
+          }
+
           print('Pat: $pat');
-          print('Fil: $fil');
-          final ref = FirebaseStorage.instance.ref().child(pat);
+          // print('Fil: $fil');
+
           // await ref.putFile(fil);
           // ref.getDownloadURL().then((value) => print(value));
-          uploadTask = ref.putFile(fil);
 
-          final snapshot = await  uploadTask!.whenComplete(() {});
-
-          urlDownload = await snapshot.ref.getDownloadURL();
           print('Pat: $pat');
-          print('Fil: $fil');
+          // print('Fil: $fil');
           print('Download Link: $urlDownload');
+          user = widget.user.copyWith(profilePath: urlDownload);
+
+          print('user.profilePath now shitty is: ' + user.profilePath.toString());
+          print("OutlinedButton##############");
+          // doc_ref
+          print("doc_ref: " + doc_ref.toString());
+          print("lols: " + lols.toString());
+          print("user.IDUser: " + user.IDUser.toString());
+          print("user.name: " + user.name.toString());
+          print("user.about: " + user.about.toString());
+          print("user.email: " + user.email.toString());
+          print("user.IDUser: " + user.IDUser.toString());
+          print("user.coverPath: " + user.coverPath.toString());
+          print("user.profilePath: " + user.profilePath.toString());
+          print("Calling _updateUsers(user);");
+          _updateUsers(user);
+
+
+
+          // final pat = 'files/${pickFile!.name}';
+          // final pat2 = 'files/${pickFileCover!.name}';
+          //
+          // pickFile == null ? print('pickFile == null') : print ('pickFile == not null');
+          // pat == null ? print('pat == null') : print ('pat == not null');
+          //
+          // if(pickFile != null){
+          //   final fil = File(pickFile!.path!);
+          //   print('Fil: $fil');
+          //   final ref = FirebaseStorage.instance.ref().child(pat);
+          //   setState((){
+          //     uploadTask = ref.putFile(fil);
+          //   });
+          //
+          //   final snapshot = await  uploadTask!.whenComplete(() {});
+          //
+          //   urlDownload = await snapshot.ref.getDownloadURL();
+          //
+          //   user = widget.user.copyWith(profilePath: urlDownload);
+          //
+          // }
+          // pickFileCover == null ? print('pickFileCover == null') : print ('pickFileCover == not null');
+          // pat2 == null ? print('pat2 == null') : print ('pat2 == not null');
+          //
+          // if(pickFileCover != null)
+          // {
+          //   final fil2 = File(pickFileCover!.path!);
+          //   print('Fil2: $fil2');
+          //   final ref2 = FirebaseStorage.instance.ref().child(pat2);
+          //   uploadTask2 = ref2.putFile(fil2);
+          //   final snapshot2 = await  uploadTask2!.whenComplete(() {});
+          //   urlDownloadCover = await snapshot2.ref.getDownloadURL();
+          //   setState(() {
+          //     user = widget.user.copyWith(coverPath: urlDownloadCover);
+          //   });
+          // }
+          //
+          // print('Pat: $pat');
+          // print('Pat2: $pat2');
+          //
+          // print('Download Link: $urlDownload');
+          // print('Download Link Cover: $urlDownloadCover');
 
 
           final snackBar = SnackBar(content: Text("Data has been updated."));
@@ -271,7 +338,6 @@ class _EditProfileState extends State<EditProfile> {
 
 
  Widget buildTop() {
-
     final  top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
     return Stack(
@@ -299,13 +365,59 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Widget buildProfileWidget() {
-    return ProfileWidget(
-      // imagePath: widget.user.profilePath.toString(),
-      imagePath: widget.user.profilePath.toString(),
-      // imagePath: pickFile.name;
-      isEdit: true,
-      onClicked: () async {
-        final r = await FilePicker.platform.pickFiles();
+    return Column(
+      children: [
+        if (pickFile != null)
+        ProfileWidget(
+          // imagePath: widget.user.coverPath == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" : pickFile!.path!,
+          // // imagePath: widget.user.profilePath! == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" :  widget.user.profilePath!,
+          // // imagePath: pickFile.name;
+          // isEdit: true,
+          // onClicked: () async {
+          //   print('widget.user.profilePath:  $widget.user.profilePath');
+          //   final result = await FilePicker.platform.pickFiles();
+          //   final image = await ImagePicker()
+          //       .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
+          //   if(image == null) return; //Check image if null or not
+          //   final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
+          //   final name = basename(image.path); //Getting the name of the file and the extension using the package path
+          //   final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
+          //   final newImage = await File(image.path).copy(imageFile.path);
+          //
+          //   if (result == null) return;
+          //   setState(() {
+          //     pickFile = result.files.first;
+          //     print('pickFile: $pickFile');
+          //     // user = widget.user.copyWith(profilePath: urlDownload);
+          //     // print('profilePath: $user.profilePath');
+          //   });
+          //   // print('After some profiling: $user.profilePath');
+          //
+          //   // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+          //
+          //
+          //
+          //
+          // },
+
+          // imagePath: widget.user.profilePath.toString(),
+          // imagePath: widget.user.profilePath.toString() == null ?  pickFile!.path! : widget.user.profilePath.toString(),
+          // imagePath: pickFile.name;
+        imagePath: pickFile!.path!,
+        isEdit: true,
+          onClicked: selectFile,
+
+        // );
+        ),
+        pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)),
+      ],
+    );
+  }
+
+  Widget buildCoverPhoto() {
+    return GestureDetector(
+      onTap: () async {
+        final coverPick = await FilePicker.platform.pickFiles();
         final image = await ImagePicker()
             .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
         if(image == null) return; //Check image if null or not
@@ -315,29 +427,35 @@ class _EditProfileState extends State<EditProfile> {
         final newImage = await File(image.path).copy(imageFile.path);
 
         setState(() {
-          pickFile = r!.files.first;
-          user = widget.user.copyWith(profilePath: urlDownload);
+          pickFileCover = coverPick!.files.first;
+          print('pickFileCover: $pickFileCover');
+          // user = widget.user.copyWith(coverPath: urlDownloadCover);
+          // print('coverPath: $user.coverPath');
+          // user = widget.user.copyWith(coverPath: urlDownloadCover);
         });
+        // print('After some covering: $user.coverPath');
 
         // setState(() => userData = userData.copyWith(imagePath: newImage.path));
 
-
-
-
       },
-    );
-  }
+      child: Container(
+        // padding: EdgeInsets.all(0),
+        color: Colors.grey,
+        // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
+        child: pickFileCover == null ? Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,)
+        : Image.file(File(pickFileCover!.path!),
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,),
 
-  Widget buildCoverPhoto() {
-    return Container(
-      // padding: EdgeInsets.all(0),
-      color: Colors.grey,
-      // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-      child: Image.network('https://removal.ai/wp-content/uploads/2021/02/no-img.png',
-        width: double.infinity,
-        height: coverHeight,
-        fit: BoxFit.cover,),
 
+
+
+
+      ),
     );
   }
 
@@ -356,5 +474,20 @@ class _EditProfileState extends State<EditProfile> {
     final json = user.toJson();
     await docUser.set(json);
   }
+
+  Future  selectFile() async{
+    final result = await FilePicker.platform.pickFiles();
+
+    if(result == null) return; //Check image if null or not
+
+    setState(() {
+      pickFile = result!.files.first;
+      // user = widget.user.copyWith(profilePath: urlDownload);
+    });
+
+    // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+
+
   }
+}
 
