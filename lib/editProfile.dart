@@ -1,20 +1,16 @@
 import 'dart:io';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mush2/model/userData.dart';
 import 'package:mush2/profileWidget.dart';
 import 'package:mush2/utils/colors.dart';
-import 'package:mush2/utils/userPreferences.dart';
 import 'package:mush2/widget/buildAppBar.dart';
-import 'package:mush2/widget/buttonWidget.dart';
 import 'package:mush2/widget/textFieldWidget.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+
 
 class EditProfile extends StatefulWidget {
   final UserData user;
@@ -29,14 +25,13 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var pat;
-  var pat2;
-  var urlDownload;
-  var urlDownloadCover;
-  PlatformFile? pickFile;
-  PlatformFile? pickFileCover;
-  UploadTask? uploadTask;
-  UploadTask? uploadTask2;
+  var profilePath;
+  var profileFile;
+  var coverPath;
+  var coverFile;
+  var profileUrlDownload ,CoverUrlDownload;
+  PlatformFile? pickFile, pickFileCover;
+  UploadTask? uploadTaskProfile, uploadTaskCover;
 
   String imageUrl = "";
   final emailController = TextEditingController();
@@ -90,43 +85,51 @@ class _EditProfileState extends State<EditProfile> {
         snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
   }
   Future <void> _updateUsers(UserData user) async {
-    final docUser = await FirebaseFirestore.instance.collection('user').doc();
-    print("Function _updateUsers#################");
-    print("doc_ref " + doc_ref); //P7vYlvT5twXR7GtBsokC
-    print("ID " + ID); //P7vYlvT5twXR7GtBsokC
-    print("_db " + _db.toString()); //FirebaseFirestore(app: [DEFAULT])
-    print("dotaUser " + dotaUser.toString()); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
-    print("lols " + lols); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
-    print("dotaUser!.uid" + dotaUser!.uid);
-    print("user.IDUser" + user.IDUser!);
-    print("user.name " + user.name);
-    print("user.about " + user.about.toString());
-    print("user.email " + user.email);
-    print("user.coverPath " + user.coverPath.toString());
-    print("user.profilePath " + user.profilePath.toString());
-    print(' final json = user.toJson();');
-    print('     docUser.update(json);');
+
+    final docUser = await FirebaseFirestore.instance.collection('user').doc(dotaUser!.uid);
+    // print("Function _updateUsers#################");
+    // print("doc_ref " + doc_ref); //P7vYlvT5twXR7GtBsokC
+    // print("ID " + ID); //P7vYlvT5twXR7GtBsokC
+    // print("_db " + _db.toString()); //FirebaseFirestore(app: [DEFAULT])
+    // print("dotaUser " + dotaUser.toString()); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
+    // print("lols " + lols); //User(displayName: , email: diazlouther@gmail.com, emailVerified: true, isAnonymous: false, metadata: UserMetadata(creationTime: 2023-01-24 14:54:56.986Z, lastSignInTime: 2023-01-24 15:38:12.202Z), phoneNumber: , photoURL: null, providerData, [UserInfo(displayName: , email: diazlouther@gmail.com, phoneNumber: , photoURL: null, providerId: password, uid: diazlouther@gmail.com)], refreshToken: , tenantId: null, uid: ih0mXMco2OalE7ZpnqPcvT1HcPk1)
+    // print("dotaUser!.uid" + dotaUser!.uid);
+    // print("user.IDUser" + user.IDUser!);
+    // print("user.name " + user.name);
+    // print("user.about " + user.about.toString());
+    // print("user.email " + user.email);
+    // print("user.coverPath " + user.coverPath.toString());
+    // print("user.profilePath " + user.profilePath.toString());
+    // print(' final json = user.toJson();');
+    // print('     docUser.update(json);');
     final json = user.toJson();
+    print("Before update");
     docUser.update(json);
+    print(user.coverPath);
+    print(user.profilePath);
+    print(dotaUser!.uid.toString());
     // await _db.collection('user').doc(user.IDUser).update({IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime});
-    await _db.collection('user').doc(dotaUser!.uid).update(user.toJson());
+    // await _db.collection('user').doc(dotaUser!.uid).update(user.toJson());
+    // await _db.collection('user').doc(dotaUser!.uid).update(user.toJson());
+    // await _db.collection('user').doc(dotaUser!.uid).update(json);
+
     // await _db.collection('user').doc('RJSFlOB048I7hiIYMTFa').update(user.toJson());
     // FirebaseFirestore.instance.collection('mushroom')
 
-    print("After _db.collection('user').doc().update(user.toJson());");
-    print(doc_ref);
-    print(doc_ref);
-    print(ID);
-    print(_db);
-    print(dotaUser);
-    print(lols);
-    print(dotaUser!.uid);
-    print(user.IDUser);
-    print(user.name);
-    print(user.about);
-    print(user.email);
-    print(user.coverPath);
-    print(user.profilePath);
+    // print("After _db.collection('user').doc().update(user.toJson());");
+    // print(doc_ref);
+    // print(doc_ref);
+    // print(ID);
+    // print(_db);
+    // print(dotaUser);
+    // print(lols);
+    // print(dotaUser!.uid);
+    // print(user.IDUser);
+    // print(user.name);
+    // print(user.about);
+    // print(user.email);
+    // print(user.coverPath);
+    // print(user.profilePath);
     // await _db.collection('user').doc(user.IDUser).update({IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime});
 
   }
@@ -166,6 +169,7 @@ class _EditProfileState extends State<EditProfile> {
           // TextFormField(
           //   onChanged: (email) => user = widget.user.copyWith(email: email), //Create copy of the user object in the UserData class
           //   controller: emailController,
+          //   initialValue: widget.user.email,
           //   cursorColor: textColor,
           //   textInputAction: TextInputAction.next,
           //   decoration: InputDecoration(
@@ -210,101 +214,131 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 24),
       OutlinedButton(
         onPressed: () async {
+          // _updateUsers;
           // UserPreferences.setUser(user); //Calling setUSer method passing the user object
-          Navigator.of(context).pop(); //Pop the editing page to show up the profile page
           // await _mushroom.doc(IDUser: userID, profilePath: widget.user.profilePath, name: widget.user.name, email: widget.user.email, about: widget.user.about, coverPath: widget.user.coverPath, lastMessageTime: widget.user.lastMessageTime);
           // await _user.doc(documentSnapshot!.id).update({});
 
-          if(pickFile != null){
-            final pat = 'files/${pickFile!.name}';
-            final fil = File(pickFile!.path!);
-            print('Fil: $fil');
+          print('pickFile != null && uploadTaskProfile != null??????');
+          if(pickFile != null && uploadTaskProfile != null) {
+            print('pickFile != null && uploadTaskProfile != null??????====TRUE');
+            profilePath = "files/${pickFile!.name}";
+            profileFile = File(pickFile!.path!);
             // final ref = FirebaseStorage.instance.ref().child(pat);
-            final ref = FirebaseStorage.instance.ref().child(pat);
-            setState((){
-              uploadTask = ref.putFile(fil);
+            final ref = FirebaseStorage.instance.ref().child(profilePath);
+            setState(() {
+              uploadTaskProfile = ref.putFile(profileFile);
             });
 
-            final snapshot = await  uploadTask!.whenComplete(() {});
-            urlDownload = await snapshot.ref.getDownloadURL();
-            user = widget.user.copyWith(profilePath: urlDownload);
+            final snapshot = await uploadTaskProfile!.whenComplete(() {});
+            profileUrlDownload = await snapshot.ref.getDownloadURL();
+            user = widget.user.copyWith(profilePath: profileUrlDownload);
+            user = widget.user.copyWith(profilePath: profileUrlDownload);
+            print("pickFile != null " + user.profilePath.toString());
+            print("pickFile != null " + user.coverPath.toString());
 
           }
 
-          print('Pat: $pat');
+
+          print('pickFile != null??????');
+          if(pickFile !=  null) {
+            print('pickFile != null????????????====TRUE');
+            profilePath = "files/${pickFile!.name}";
+            profileFile = File(pickFile!.path!);
+            // final ref = FirebaseStorage.instance.ref().child(pat);
+            final ref = FirebaseStorage.instance.ref().child(profilePath);
+            setState(() {
+              uploadTaskProfile = ref.putFile(profileFile);
+            });
+
+            final snapshot = await uploadTaskProfile!.whenComplete(() {});
+            profileUrlDownload = await snapshot.ref.getDownloadURL();
+            user = widget.user.copyWith(profilePath: profileUrlDownload);
+            user = widget.user.copyWith(profilePath: profileUrlDownload);
+            print("pickFile != null user.profilePath.toString()" + user.profilePath.toString());
+            print("pickFile != null user.coverPath.toString()" + user.coverPath.toString());
+
+          }
+
+
+
+
+            print('pickFileCover != null && uploadTaskCover != null?????');
+          if(pickFileCover != null && uploadTaskCover != null) {
+            print('pickFileCover != null && uploadTaskCover != null?????=TRUEEEeE');
+            coverPath = 'files/${pickFileCover!.name}';
+            coverFile = File(pickFileCover!.path!);
+            print('pickFileCover != null coverPath: $coverPath');
+            print('pickFileCover != null coverFile: $coverFile');
+            final ref2 = FirebaseStorage.instance.ref().child(coverPath);
+
+            setState(() {
+              uploadTaskCover = ref2.putFile(coverFile);
+            });
+            // print('After some covering: $user.coverPath');
+            final snapshot2 = await uploadTaskCover!.whenComplete(() {});
+            CoverUrlDownload = await snapshot2.ref.getDownloadURL();
+            print("urlDownloadCover: " + CoverUrlDownload);
+            user = widget.user.copyWith(coverPath: CoverUrlDownload);
+            print("user.profilePath in pickFileCover != null " +
+                user.profilePath.toString());
+            print("pickFileCover != null " + user.profilePath.toString());
+            print("pickFileCover != null " + user.coverPath.toString());
+          }
+
+          print('pickFileCover != null?????');
+          if(pickFileCover != null) {
+            print('pickFileCover != null?????=TRUEEEeE');
+            coverPath = 'files/${pickFileCover!.name}';
+            coverFile = File(pickFileCover!.path!);
+            print('pickFileCover != null coverPath: $coverPath');
+            print('pickFileCover != null coverFile: $coverFile');
+            final ref2 = FirebaseStorage.instance.ref().child(coverPath);
+
+            setState(() {
+              uploadTaskCover = ref2.putFile(coverFile);
+            });
+            // print('After some covering: $user.coverPath');
+            final snapshot2 = await uploadTaskCover!.whenComplete(() {});
+            CoverUrlDownload = await snapshot2.ref.getDownloadURL();
+            print("urlDownloadCover: " + CoverUrlDownload);
+            user = widget.user.copyWith(coverPath: CoverUrlDownload);
+            print("user.profilePath in pickFileCover != null " +
+                user.profilePath.toString());
+            print("pickFileCover != null " + user.profilePath.toString());
+            print("pickFileCover != null " + user.coverPath.toString());
+          }
+
+          print("After all the if");
+          print("user.profilePath.toString() " + user.profilePath.toString());
+          print("user.coverPath.toString() " + user.coverPath.toString());
+
+          print('coverPath: $coverPath');
           // print('Fil: $fil');
-
-          // await ref.putFile(fil);
-          // ref.getDownloadURL().then((value) => print(value));
-
-          print('Pat: $pat');
-          // print('Fil: $fil');
-          print('Download Link: $urlDownload');
-          user = widget.user.copyWith(profilePath: urlDownload);
-
-          print('user.profilePath now shitty is: ' + user.profilePath.toString());
-          print("OutlinedButton##############");
-          // doc_ref
-          print("doc_ref: " + doc_ref.toString());
-          print("lols: " + lols.toString());
-          print("user.IDUser: " + user.IDUser.toString());
-          print("user.name: " + user.name.toString());
-          print("user.about: " + user.about.toString());
-          print("user.email: " + user.email.toString());
-          print("user.IDUser: " + user.IDUser.toString());
-          print("user.coverPath: " + user.coverPath.toString());
-          print("user.profilePath: " + user.profilePath.toString());
+          print('Download Link: $profileUrlDownload');
+          print('Download Link Cover: $CoverUrlDownload');
+          user = widget.user.copyWith(profilePath: profileUrlDownload);
+          user = widget.user.copyWith(coverPath: CoverUrlDownload);
+          //
+          // print('user.profilePath now shitty is: ' + user.profilePath.toString());
+          // print('user.coverPath now shitty is: ' + user.coverPath.toString());
+          // print("OutlinedButton##############");
+          // // doc_ref
+          // print("doc_ref: " + doc_ref.toString());
+          // print("lols: " + lols.toString());
+          // print("user.IDUser: " + user.IDUser.toString());
+          // print("user.name: " + user.name.toString());
+          // print("user.about: " + user.about.toString());
+          // print("user.email: " + user.email.toString());
+          // print("user.IDUser: " + user.IDUser.toString());
+          // print("user.coverPath: " + user.coverPath.toString());
+          // print("user.profilePath: " + user.profilePath.toString());
           print("Calling _updateUsers(user);");
           _updateUsers(user);
-
-
-
-          // final pat = 'files/${pickFile!.name}';
-          // final pat2 = 'files/${pickFileCover!.name}';
-          //
-          // pickFile == null ? print('pickFile == null') : print ('pickFile == not null');
-          // pat == null ? print('pat == null') : print ('pat == not null');
-          //
-          // if(pickFile != null){
-          //   final fil = File(pickFile!.path!);
-          //   print('Fil: $fil');
-          //   final ref = FirebaseStorage.instance.ref().child(pat);
-          //   setState((){
-          //     uploadTask = ref.putFile(fil);
-          //   });
-          //
-          //   final snapshot = await  uploadTask!.whenComplete(() {});
-          //
-          //   urlDownload = await snapshot.ref.getDownloadURL();
-          //
-          //   user = widget.user.copyWith(profilePath: urlDownload);
-          //
-          // }
-          // pickFileCover == null ? print('pickFileCover == null') : print ('pickFileCover == not null');
-          // pat2 == null ? print('pat2 == null') : print ('pat2 == not null');
-          //
-          // if(pickFileCover != null)
-          // {
-          //   final fil2 = File(pickFileCover!.path!);
-          //   print('Fil2: $fil2');
-          //   final ref2 = FirebaseStorage.instance.ref().child(pat2);
-          //   uploadTask2 = ref2.putFile(fil2);
-          //   final snapshot2 = await  uploadTask2!.whenComplete(() {});
-          //   urlDownloadCover = await snapshot2.ref.getDownloadURL();
-          //   setState(() {
-          //     user = widget.user.copyWith(coverPath: urlDownloadCover);
-          //   });
-          // }
-          //
-          // print('Pat: $pat');
-          // print('Pat2: $pat2');
-          //
-          // print('Download Link: $urlDownload');
-          // print('Download Link Cover: $urlDownloadCover');
-
-
           final snackBar = SnackBar(content: Text("Data has been updated."));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.of(context).pop(); //Pop the editing page to show up the profile page
+
         },
         //required IDUser, required profilePath, required name, required email, required about, required coverPath, required lastMessageTime
         child: Text(
@@ -368,46 +402,51 @@ class _EditProfileState extends State<EditProfile> {
     return Column(
       children: [
         if (pickFile != null)
-        ProfileWidget(
-          // imagePath: widget.user.coverPath == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" : pickFile!.path!,
-          // // imagePath: widget.user.profilePath! == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" :  widget.user.profilePath!,
-          // // imagePath: pickFile.name;
-          // isEdit: true,
-          // onClicked: () async {
-          //   print('widget.user.profilePath:  $widget.user.profilePath');
-          //   final result = await FilePicker.platform.pickFiles();
-          //   final image = await ImagePicker()
-          //       .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
-          //   if(image == null) return; //Check image if null or not
-          //   final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
-          //   final name = basename(image.path); //Getting the name of the file and the extension using the package path
-          //   final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
-          //   final newImage = await File(image.path).copy(imageFile.path);
-          //
-          //   if (result == null) return;
-          //   setState(() {
-          //     pickFile = result.files.first;
-          //     print('pickFile: $pickFile');
-          //     // user = widget.user.copyWith(profilePath: urlDownload);
-          //     // print('profilePath: $user.profilePath');
-          //   });
-          //   // print('After some profiling: $user.profilePath');
-          //
-          //   // setState(() => userData = userData.copyWith(imagePath: newImage.path));
-          //
-          //
-          //
-          //
-          // },
+        Visibility(
+          visible: true,
+          child: ProfileWidget(
+            // imagePath: widget.user.coverPath == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" : pickFile!.path!,
+            // // imagePath: widget.user.profilePath! == null ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" :  widget.user.profilePath!,
+            // // imagePath: pickFile.name;
+            // isEdit: true,
+            // onClicked: () async {
+            //   print('widget.user.profilePath:  $widget.user.profilePath');
+            //   final result = await FilePicker.platform.pickFiles();
+            //   final image = await ImagePicker()
+            //       .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
+            //   if(image == null) return; //Check image if null or not
+            //   final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
+            //   final name = basename(image.path); //Getting the name of the file and the extension using the package path
+            //   final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
+            //   final newImage = await File(image.path).copy(imageFile.path);
+            //
+            //   if (result == null) return;
+            //   setState(() {
+            //     pickFile = result.files.first;
+            //     print('pickFile: $pickFile');
+            //     // user = widget.user.copyWith(profilePath: urlDownload);
+            //     // print('profilePath: $user.profilePath');
+            //   });
+            //   // print('After some profiling: $user.profilePath');
+            //
+            //   // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+            //
+            //
+            //
+            //
+            // },
 
-          // imagePath: widget.user.profilePath.toString(),
-          // imagePath: widget.user.profilePath.toString() == null ?  pickFile!.path! : widget.user.profilePath.toString(),
-          // imagePath: pickFile.name;
-        imagePath: pickFile!.path!,
-        isEdit: true,
-          onClicked: selectFile,
+            // imagePath: widget.user.profilePath.toString(),
+            // imagePath: widget.user.profilePath.toString() == null ?  pickFile!.path! : widget.user.profilePath.toString(),
+            // imagePath: pickFile.name;
+          imagePath: pickFile!.path!,
+          // imagePath: widget.user.profilePath!,
+          isEdit: true,
+            onClicked: selectFile,
 
-        // );
+          // );
+          ),
+
         ),
         pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)),
       ],
@@ -416,28 +455,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget buildCoverPhoto() {
     return GestureDetector(
-      onTap: () async {
-        final coverPick = await FilePicker.platform.pickFiles();
-        final image = await ImagePicker()
-            .pickImage(source: ImageSource.gallery); //Open the phone gallery to pick image
-        if(image == null) return; //Check image if null or not
-        final directory = await getApplicationDocumentsDirectory();//store directory if image is not null
-        final name = basename(image.path); //Getting the name of the file and the extension using the package path
-        final imageFile = File('${directory.path}/$name'); //Creating the image file base on the directory
-        final newImage = await File(image.path).copy(imageFile.path);
-
-        setState(() {
-          pickFileCover = coverPick!.files.first;
-          print('pickFileCover: $pickFileCover');
-          // user = widget.user.copyWith(coverPath: urlDownloadCover);
-          // print('coverPath: $user.coverPath');
-          // user = widget.user.copyWith(coverPath: urlDownloadCover);
-        });
-        // print('After some covering: $user.coverPath');
-
-        // setState(() => userData = userData.copyWith(imagePath: newImage.path));
-
-      },
+      onTap: selectFile2,
       child: Container(
         // padding: EdgeInsets.all(0),
         color: Colors.grey,
@@ -489,5 +507,30 @@ class _EditProfileState extends State<EditProfile> {
 
 
   }
+
+  Future  selectFile2() async{
+    final result2 = await FilePicker.platform.pickFiles();
+
+    if(result2 == null) return; //Check image if null or not2
+
+    setState(() {
+      pickFileCover = result2!.files.first;
+      // user = widget.user.copyWith(profilePath: urlDownload);
+    });
+
+    // setState(() => userData = userData.copyWith(imagePath: newImage.path));
+
+
+  }
 }
+
+//// rules_version = '2';
+// // service firebase.storage {
+// //   match /b/{bucket}/o {
+// //     match /{allPaths=**} {
+// //       allow read;
+// //       allow write;
+// //     }
+// //   }
+// // }
 
