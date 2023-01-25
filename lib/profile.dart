@@ -242,7 +242,6 @@ class _ProfileState extends State<Profile> {
 
   Widget buildProfileWidget( UserData user) {
     return ProfileWidget(
-
         imagePath: user.profilePath!,
         // imagePath: 'https://flxt.tmsimg.com/assets/4950_v9_bb.jpg',
         // imagePath: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
@@ -289,17 +288,20 @@ class _ProfileState extends State<Profile> {
     //   ),
   }
   Widget buildName(UserData user) {
-    return Column(
-      children: [
-        Text(user.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
-        ),
-        Text(
-          user.email,
-          style: TextStyle(color: textColor),
-        ),
+    return GestureDetector(
 
-      ],
+      child: Column(
+        children: [
+          Text(user.name,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
+          ),
+          Text(
+            user.email,
+            style: TextStyle(color: textColor),
+          ),
+
+        ],
+      ),
     );
 
   }

@@ -202,7 +202,7 @@ class _EditProfileState extends State<EditProfile> {
       // padding: EdgeInsets.all(0),
       color: Colors.grey,
       // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-      child: Image.network(user.profilePath.toString(),
+      child: Image.network(user.coverPath.toString(),
         width: double.infinity,
         height: coverHeight,
         fit: BoxFit.cover,)
@@ -224,7 +224,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
 
           ),
-        pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)),
+        pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.profilePath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.profilePath!, onClicked: selectFile)),
       ],
     );
 
