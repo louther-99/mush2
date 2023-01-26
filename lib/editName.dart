@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,6 +17,7 @@ import 'package:mush2/utils/colors.dart';
 import 'package:mush2/utils/colors.dart';
 import 'package:mush2/utils/userPreferences.dart';
 import 'package:mush2/widget/numbersWidget.dart';
+import 'package:mush2/widget/textFieldWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
@@ -35,29 +37,31 @@ final CollectionReference usersRef = FirebaseFirestore.instance.collection('user
 String userID = "";
 bool hide = false;
 
-class EditProfile extends StatefulWidget {
+
+class EditName extends StatefulWidget {
+
+
   final UserData user;
-  const EditProfile({
+  const EditName({
     Key? key,
     required this.user,
   }) : super(key: key);
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditName> createState() => _EditNameState();
 }
 
-class _EditProfileState extends State<EditProfile> {
-  var profilePath;
-  var profileFile;
-  var coverPath;
-  var coverFile;
-  var profileUrlDownload ,CoverUrlDownload;
-  PlatformFile? pickFile, pickFileCover;
-  UploadTask? uploadTaskProfile, uploadTaskCover;
+class _EditNameState extends State<EditName> {
 
   bool doesnothavecover = false;
+  var  CoverUrlDownload;
+  PlatformFile? pickFileCover;
+  UploadTask? uploadTaskCover;
   final dotaUser = FirebaseAuth.instance.currentUser;
 
+
+  var coverPath;
+  var coverFile;
   final userID = FirebaseAuth.instance.currentUser!.uid;
   final double coverHeight = 200;
   final double profileHeight = 150;
@@ -97,61 +101,70 @@ class _EditProfileState extends State<EditProfile> {
     // final docUser = await FirebaseFirestore.instance.collection('user').doc(dotaUser!.uid);
     CollectionReference collection = FirebaseFirestore.instance.collection('user');
     DocumentReference document = collection.doc(dotaUser!.uid);
+
     print("_updateUsers user.name " + user.name);
     print("_updateUsers user.about " + user.about.toString());
     final json = user.toJson();
     print("_updateUsers Before update");
     // docUser.update(json);
-    print("_updateUsers user.coverPath " + user.coverPath.toString());
-    print("_updateUsers user.profilePath " + user.profilePath.toString());
-    print("_updateUsers dotaUser!.uid " + dotaUser!.uid.toString());
+     print("_updateUsers dotaUser!.uid " + dotaUser!.uid.toString());
     document.update(json);
 
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<List<UserData>>(
-        // stream: readUsers(),
-          stream: FirebaseFirestore.instance.collection('user')
-              .where("IDUser", isEqualTo: userID) //id should match the id field in the database
-              .snapshots()
-              .map((snapshot) =>
-              snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList()),
-          builder: (context,  streamSnapshot){
-            print("The user: $streamSnapshot");
 
-            if (streamSnapshot.hasData) {
-              final usr = streamSnapshot.data! as List<UserData>;
-              print(usr[0]);
-              final listUser = usr.map((e) => e).toList();
-              print(listUser[0]);
-              final ab = listUser[0];
-              final UserData e = listUser[0] as UserData;
-              print('Has data');
-              print(usr[0].email);
-              print("printed");
-              var u = usr.map;
-              print(u);
-              print(usr.length);
-              final usr1 = usr[0] as UserData;
-              return ListView(
-                // children: widget()buildEverything(usr[1]).toList(),
-                children: <Widget>[
-                  buildEverything(usr1),
-                ],
-                // children:  usr(buildEverything),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: StreamBuilder<List<UserData>>(
+          // stream: readUsers(),
+            stream: FirebaseFirestore.instance.collection('user')
+                .where("IDUser", isEqualTo: userID) //id should match the id field in the database
+                .snapshots()
+                .map((snapshot) =>
+                snapshot.docs.map((doc) => UserData.fromJson(doc.data())).toList()),
+            builder: (context,  streamSnapshot){
+              print("The user: $streamSnapshot");
+
+              if (streamSnapshot.hasData) {
+                final usr = streamSnapshot.data! as List<UserData>;
+                print(usr[0]);
+                final listUser = usr.map((e) => e).toList();
+                print(listUser[0]);
+                final ab = listUser[0];
+                final UserData e = listUser[0] as UserData;
+                print('Has data');
+                print(usr[0].email);
+                print("printed");
+                var u = usr.map;
+                print(u);
+                print(usr.length);
+                final usr1 = usr[0] as UserData;
+                return ListView(
+                  // children: widget()buildEverything(usr[1]).toList(),
+                  children: <Widget>[
+                    buildEverything(usr1),
+                  ],
+                  // children:  usr(buildEverything),
+                );
+
+
+              }
+              return Center(
+
+                child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
+
               );
-
-
             }
-            return Center(
-
-              child: Lottie.network('https://assets5.lottiefiles.com/packages/lf20_tmsiddoc.json'),
-
-            );
-          }
+        ),
       ),
     );
   }
@@ -171,8 +184,6 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 48),
           buildAbout(usrs), //Error
           const SizedBox(height: 24),
-          buildSaveButton(usrs),
-          const SizedBox(height: 45),
         ]
     );
 
@@ -198,34 +209,33 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
   Widget buildCoverPhoto(UserData user) {
-    return Container(
-      // padding: EdgeInsets.all(0),
+    return GestureDetector(
+      onTap: selectFile2,
+      child: Container(
+        // padding: EdgeInsets.all(0),
         color: Colors.grey,
         // child: Image.network('https://images.pexels.com/photos/268941/pexels-photo-268941.jpeg?cs=srgb&dl=pexels-pixabay-268941.jpg&fm=jpg',
-        child: Image.network(user.profilePath.toString(),
+        child: pickFileCover == null ? Image.network(widget.user.coverPath.toString(),
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,)
+            : Image.file(File(pickFileCover!.path!),
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,),
+
+
+
+      ),
     );
 
   }
 
   Widget buildProfileWidget( UserData user) {
-    return Column(
-      children: [
-        if (pickFile != null)
-          Visibility(
-            visible: true,
-            child: ProfileWidget(
-              imagePath: pickFile!.path!,
-              isEdit: true,
-              onClicked: selectFile,
-
-            ),
-
-          ),
-        pickFile == null ? Visibility(visible: true, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)) : Visibility(visible: false, child: ProfileWidget(imagePath: widget.user.coverPath!, onClicked: selectFile)),
-      ],
+    return ProfileWidget2(
+      imagePath: user.profilePath!,
+      onClicked: () {
+      },
     );
 
 
@@ -233,12 +243,23 @@ class _EditProfileState extends State<EditProfile> {
   Widget buildName(UserData user) {
     return Column(
       children: [
+
         Text(user.name,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color:  textColor),
         ),
         Text(
           user.email,
           style: TextStyle(color: textColor),
+        ),
+        Center(
+          child: Container(
+            margin: EdgeInsets.all(30),
+              child: TextFieldWidget(
+                label: 'Name (Auto Save)',
+                text: widget.user.name,
+                onChanged: (name)  {user = widget.user.copyWith(name: name); print(user.name); _updateUsers(user);}, //Create copy of the user object in the UserData class
+            ),
+          ),
         ),
 
       ],
@@ -276,14 +297,13 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  Future  selectFile2() async{
+    final result2 = await FilePicker.platform.pickFiles();
 
-  Future  selectFile() async{
-    final result = await FilePicker.platform.pickFiles();
-
-    if(result == null) return; //Check image if null or not
+    if(result2 == null) return; //Check image if null or not2
 
     setState(() {
-      pickFile = result!.files.first;
+      pickFileCover = result2!.files.first;
       // user = widget.user.copyWith(profilePath: urlDownload);
     });
 
@@ -292,63 +312,6 @@ class _EditProfileState extends State<EditProfile> {
 
   }
 
-  Widget buildSaveButton(UserData user) {
-    return
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
-        child:   OutlinedButton(
-          onPressed: () async {
-
-            print('OutlinedButton pickFileCover != null?????');
-            if(pickFile != null) {
-              print('OutlinedButton pickFileCover != null?????=TRUEEEeE');
-              profilePath = 'files/${pickFile!.name}';
-              profileFile = File(pickFile!.path!);
-              print('OutlinedButton profilePath != null?????=TRUEEEeE pickFileCover  coverPath: $profilePath');
-              print('OutlinedButton profileFile != null?????=TRUEEEeE pickFileCover  coverFile: $profileFile');
-              final ref = FirebaseStorage.instance.ref().child(profilePath);
-
-              setState(() {
-                uploadTaskProfile = ref.putFile(profileFile);
-              });
-              // print('After some covering: $user.coverPath');
-              final snapshot = await uploadTaskProfile!.whenComplete(() {});
-              profileUrlDownload = await snapshot.ref.getDownloadURL();
-              print("OutlinedButton profileUrlDownload: " + profileUrlDownload);
-              user = widget.user.copyWith(profilePath: profileUrlDownload);
-              print("OutlinedButton user.profilePath in pickFileCover != null " +
-                  user.profilePath.toString());
-            }
-
-            _updateUsers(user);
-            final snackBar = SnackBar(content: Text("Data has been updated."));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            Navigator.of(context).pop(); //Pop the editing page to show up the profile page
-
-          },
-          //required IDUser, required profilePath, required name, required email, required about, required coverPath, required lastMessageTime
-          child: Text(
-            'Save',
-            style: TextStyle(
-              fontSize: 24,
-              color: textColor,
-            ),
-          ),
-          style: OutlinedButton.styleFrom(
-            shape: StadiumBorder(),
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-            //minimumSize: Size.fromHeight (40),
-            backgroundColor: pinkColor,
-          ),
-
-        ),
-      );
-
-    //   ButtonWidget(
-    //   text: 'Book Now',
-    //   onClicked: () {},
-    // );
-  }
 
 
 

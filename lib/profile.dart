@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
 import 'package:mush2/home.dart';
+import 'editAbout.dart';
+import 'editName.dart';
 import 'edtiCover.dart';
 import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
@@ -289,7 +291,10 @@ class _ProfileState extends State<Profile> {
   }
   Widget buildName(UserData user) {
     return GestureDetector(
-
+      onTap: () async{
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => EditName(user: user)),
+        );},
       child: Column(
         children: [
           Text(user.name,
@@ -306,29 +311,35 @@ class _ProfileState extends State<Profile> {
 
   }
   buildAbout(UserData user) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 48),
+    return GestureDetector(
+      onTap: () async{
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => EditAbout(user: user)),
+        );},
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: textColor),
-          borderRadius: BorderRadius.circular(20),
-          color: bgCard,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 48),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: textColor),
+            borderRadius: BorderRadius.circular(20),
+            color: bgCard,
+          ),
 
-        padding: EdgeInsets.symmetric(horizontal: 48, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'About',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              user.about!,
-              style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
-            ),
-          ],
+          padding: EdgeInsets.symmetric(horizontal: 48, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'About',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                user.about!,
+                style: TextStyle(fontSize: 16, height: 1.4, color: textColor),
+              ),
+            ],
+          ),
         ),
       ),
     );
