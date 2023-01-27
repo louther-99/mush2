@@ -521,3 +521,26 @@ class _EditAboutState extends State<EditAbout> {
 // //   }
 // // }
 
+//
+// StreamBuilder<User?>( //Question mark for null content
+// stream: FirebaseAuth.instance.authStateChanges(),
+// builder: (context, snapshot) {
+// if(snapshot.connectionState == ConnectionState.waiting){ //If loading
+// return Center(child: CircularProgressIndicator());
+// }
+// else if(snapshot.hasError){
+// return Center (child: Text('Something went wrong!')); //Then error
+// }
+// else if(snapshot.hasData) {
+// //return HomePage();
+// return VerifyEmailPage();
+// //Navigator.pushReplacementNamed(context, '/homepage'); //return HomePage();
+// }
+// else{
+// return AuthService();
+//
+// }
+//
+// }
+// ),
+

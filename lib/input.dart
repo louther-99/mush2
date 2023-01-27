@@ -68,6 +68,8 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  var inputs;
+  var values2;
   var jsndescription2ByIndiv;
   var jsonss;
   bool hasPdfBatch = false;
@@ -545,8 +547,11 @@ class _InputState extends State<Input> {
                           onPressed: () async {
                             final snackBar5 = SnackBar(content: Text("Batch report has been regenerated"));
 
+
                             ScaffoldMessenger.of(context).showSnackBar(snackBar5);
                             print("Before Making pdf by batch");
+                            print(jsonss['No']);
+                            print(jsonss['Yes']);
                             final pdff = new Pdf.fromJson(jsonss);
                             final pdfFile = await PdfApi.generateText(pdff);
 
@@ -1290,6 +1295,20 @@ class _InputState extends State<Input> {
   }
 
   void _upload() async {
+    // inputs = null;
+
+    setState(() {
+      file_result = null;
+      this.file_result = null;
+      dat = [];
+      jsonObject = [];
+      this.jsonObject = [];
+      values2 = [];
+      inputs = null;
+      _data = [];
+      mush = [];
+    });
+
     file_result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
     //If null do return nothing
@@ -1304,7 +1323,7 @@ class _InputState extends State<Input> {
 
 
     //Opening the file
-    final inputs = File(filePath!).openRead();
+    inputs = File(filePath!).openRead();
 
     //Converting csv to arrays
     final fields = await inputs.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
@@ -1449,6 +1468,9 @@ class _InputState extends State<Input> {
     print(res.body);
     print("Done printing rspn.body");
     final jsons = jsonDecode(res.body);
+    print("Yes/No");
+    print(jsons['Yes']);
+    print(jsons['No']);
     print("printing jsons below: ..");
     print(jsons);
     print(jsons['Yes']);
@@ -1497,7 +1519,7 @@ class _InputState extends State<Input> {
     print("printing json['Prediction'] ");
 
 
-    var values2 = {
+     values2 = {
       'prediction' : shutarat,
       'accuracy' : acc
 
@@ -1597,8 +1619,8 @@ class _InputState extends State<Input> {
 class CallApi {
 
   predictByIndiv(datas, apiurl) async {
-    String _url = "http://10.0.2.2:5000/";
-    // String _url = "https://mushie.herokuapp.com/";
+    // String _url = "http://10.0.2.2:5000/";
+    String _url = "https://mushie.herokuapp.com/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
     // print(fullUrl + " is full url");
@@ -1644,8 +1666,8 @@ class CallApi {
     print("This is ewan: " + ewan.toString());
     print(ewan);
     print("Done printing shits");
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
@@ -1670,8 +1692,8 @@ class CallApi {
   }
 
   descriptionByBatch(values2, urlss) async {
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss;
     var resInPeaces = await http.post(
       Uri.parse(fullUrls),
@@ -1684,8 +1706,8 @@ class CallApi {
   }
 
   description2(values, urlss2) async {
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),

@@ -15,9 +15,11 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mush2/logInWidget.dart';
 import 'package:mush2/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'editAbout.dart';
 import 'editName.dart';
 import 'edtiCover.dart';
+import 'main.dart';
 import 'services/auth_service.dart';
 import 'package:mush2/services/auth_service.dart';
 import 'package:mush2/Utils.dart';
@@ -351,7 +353,13 @@ class _ProfileState extends State<Profile> {
       child: OutlinedButton.icon(
         icon: Icon(Icons.run_circle, color: textColor, size: 24,),
         onPressed: () async {
+          //
+          // final pre = await SharedPreferences.getInstance();
+          // pre.setBool('showMeMyHome', false);
           FirebaseAuth.instance.signOut();
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(builder: (context) => MyApp()),
+          // );
           // final report = Invoice(
           //   userID
           // );

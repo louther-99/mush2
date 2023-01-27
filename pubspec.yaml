@@ -52,7 +52,7 @@ dependencies:
   json_serializable: ^6.5.4 #import 'package:json_serializable/json_serializable.dart';
   json_annotation: ^4.7.0 #import 'package:json_annotation/json_annotation.dart';
   flutter_launcher_icons: ^0.11.0
-
+  smooth_page_indicator: ^1.0.0+2 #import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
   # Machine Learning
   ml_algo: ^16.17.4 #import 'package:ml_algo/ml_algo.dart';
