@@ -27,6 +27,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'api/pdf_api.dart';
+import 'api/pdf_api2.dart';
 import 'model/ap.dart';
 import 'model/pdf.dart';
 
@@ -46,6 +47,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:io' as io;
+
+import 'model/pdf2.dart';
 
 
 
@@ -1122,9 +1125,17 @@ class _InputState extends State<Input> {
                                 // Passing the data and the endpoint
                                 var r = await CallApi().predictByIndiv(datas, 'predictByIndiv');
                                 print("printing r.body below: ..");
+
                                 print(r.body);
                                 print("Done printing r.body");
                                 final jsonpredictByIndiv = jsonDecode(r.body);
+                                print(jsonpredictByIndiv['TrueNegative']);
+                                print(jsonpredictByIndiv['FalsePositive']);
+                                print(jsonpredictByIndiv['FalseNegative']);
+                                print(jsonpredictByIndiv['TruePositive']);
+                                // print(jsonpredictByIndiv['Yes']);
+                                // print(jsonpredictByIndiv['No']);
+
                                 print("printing json below: ..");
                                 print(jsonpredictByIndiv);
                                 print("Done printing json");
@@ -1145,6 +1156,7 @@ class _InputState extends State<Input> {
                                 print(jsonpredictByIndiv['Responde']['accuracy']);
                                 print(jsonpredictByIndiv['Responde']['prediction']);
 
+
                                 final prediction = jsonpredictByIndiv['Prediction'][0];
                                 print("Printing accuracy: below");
                                 final accuracy = jsonpredictByIndiv['Accuracy'];
@@ -1158,9 +1170,17 @@ class _InputState extends State<Input> {
 
                                 var values = {
                                   'prediction' : prediction,
-                                  'accuracy' : a
+                                  'accuracy' : a,
+                                  'trueNegative' : jsonpredictByIndiv['TrueNegative'],
+                                  'falsePositive' : jsonpredictByIndiv['FalsePositive'],
+                                  'falseNegative' : jsonpredictByIndiv['FalseNegative'],
+                                  'truePositive' : jsonpredictByIndiv['TruePositive'],
+                                  'yes' : jsonpredictByIndiv['Yes'],
+                                  'no' : jsonpredictByIndiv['No'],
 
                                 };
+
+
 
                                 var r2 = await CallApi().description2(values,'description2ByIndiv');
 
@@ -1467,8 +1487,8 @@ class _InputState extends State<Input> {
                           iconSize: 100,
                           onPressed: () async {
                             print("Before Making pdf");
-                            final pdf = new Pdf.fromJson(jsndescription2ByIndiv);
-                            final pdfFile = await PdfApi.generateText(pdf);
+                            final pdf = new Pdf2.fromJson(jsndescription2ByIndiv);
+                            final pdfFile = await PdfApi2.generateText(pdf);
                             // final snackBar = SnackBar(content: Text("Data has been added."));
                             // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             setState(() {
