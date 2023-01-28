@@ -22,8 +22,55 @@ import '../model/pdf.dart';
 
 class PdfApi {
   static Future<io.File?> generateText(Pdf pdfi) async {
+
     final datetime = DateFormat('MM-dd-yyyy KK:mm:ss a').format(DateTime.now());
     final pdfs = pw.Document();
+
+    final lightMean = pdfi.lightLevel.mean.round();
+    final tempMean  = pdfi.roomTemp.mean.round();
+    final humidMean = pdfi.humidity.mean.round();
+
+    bool lightPassed = false;
+    bool tempPassed = false;
+    bool humidPassed = false;
+    bool lightRecommend = false;
+    bool tempRecommend  = false;
+    bool humidRecommend  = false;
+
+    String lightPassedString = "";
+    String tempPassedString = "";
+    String humidPassedString = "";
+
+    if(lightMean >= 50 && lightMean <= 100){
+        lightPassed = true;
+        lightPassedString = "within the threshold value.";
+    }
+    else{
+        lightPassedString = "outside the threshold value.";
+        lightRecommend = true;
+    }
+    if(tempMean >= 22 && tempMean <= 30){
+      tempPassed = true;
+      tempPassedString = "within the threshold value.";
+
+
+    }
+    else{
+    tempPassedString = "outside the threshold value.";
+    tempRecommend = true;
+    }
+    if(humidMean >= 70 && humidMean <= 85){
+      humidPassed = true;
+      humidPassedString = "within the threshold value.";
+    }
+    else{
+    humidPassedString = "outside the threshold value.";
+    humidRecommend = true;
+    }
+
+
+
+
 
     //final image = await imaegeFromAssestBundle('assets/image/png');
     // document.pageSettings.margins.all = 50;
@@ -68,8 +115,6 @@ class PdfApi {
                                 pw.SizedBox(height: 10),
                                 pw.Text("Outcome: " + pdfi.prediction, style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
                                 pw.Text("Accuracy: " + pdfi.accuracy.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                                // pw.Text("Yes: " + pdfi.yes.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
-                                // pw.Text("No: " + pdfi.no.toString(), style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
 
                                 pw.Row(
                                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -175,7 +220,68 @@ class PdfApi {
                                   ],
                                 ),
 
-                                 ],
+
+                                pw.SizedBox(height: 20),
+                                pw.Text("Confusion Matrix", style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+
+                                pw.Table(
+                                  border: pw.TableBorder.all(color: PdfColors.orange400, width: 1.5),
+                                  columnWidths: const {
+                                    0: pw.FlexColumnWidth(2),
+                                    1: pw.FlexColumnWidth(2),
+                                    2: pw.FlexColumnWidth(2),
+
+                                  },
+                                  children: [
+                                    pw.TableRow( children: [
+                                      pw.Text("N = " + (pdfi.yes + pdfi.no).toString() , textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black,),),
+                                      pw.Text("Predicted - ", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black,),),
+                                      pw.Text("Predicted + ", textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 15.0, fontWeight: pw.FontWeight.bold, color: PdfColors.black),),
+                                      ]),
+                                    pw.TableRow(children: [
+                                      pw.Text("Actual - ", textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.trueNegative.toString(), textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.falsePositive.toString(), textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+
+                                        ]),
+                                      pw.TableRow(children: [
+                                      pw.Text("Actual + ", textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.falseNegative.toString(), textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+                                      pw.Text(pdfi.truePositive.toString(), textAlign: pw.TextAlign.center ,style: pw.TextStyle(fontSize: 15.0),),
+
+                                    ]),
+
+
+                                  ],
+                                ),
+                                pw.Column(
+                                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.SizedBox(height: 20),
+                                    pw.Text("Interpretation for confusion matrix: " , style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                                    pw.Text("N is the total number of records including yes and no as predicted values ", style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("With 20% test data, " + pdfi.trueNegative.toString() + " is the number of actual data that has NO outcome and correctly predicted as No", style: pw.TextStyle(fontSize: 12, )),
+                                    pw.Text("With 20% test data, " + pdfi.falsePositive.toString() + " is the number of actual data that has NO outcome and incorrectly predicted as YES", style: pw.TextStyle(fontSize: 12, )),
+                                    pw.Text("With 20% test data, " + pdfi.falseNegative.toString() + " is the number of actual data that has YES outcome and incorrectly predicted as NO", style: pw.TextStyle(fontSize: 12, )),
+                                    pw.Text("With 20% test data, " + pdfi.truePositive.toString() + " is the number of actual data that has YES outcome and incorrectly predicted as YES", style: pw.TextStyle(fontSize: 12, )),
+
+                                    pw.SizedBox(height: 20),
+                                    pw.Text("Threshold Value:", style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                                    pw.Text("Light Level Threshold Value: 50-100", style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("Temperature Threshold Value: 22-30", style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("Humidity Threshold Value: 70-85", style: pw.TextStyle(fontSize: 12,)),
+
+                                    pw.SizedBox(height: 20),
+                                    pw.Text("Total Record: " + (pdfi.yes + pdfi.no).toString() , style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("Total Predicted Value as No: " + pdfi.no.toString(), style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("Total Predicted Value as Yes: " + pdfi.yes.toString(), style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("The average Light Level is : " + pdfi.lightLevel.mean.round().toString() + " which is " + lightPassedString, style: pw.TextStyle(fontSize: 12, )),
+                                    pw.Text("The average Room Temperature is : " + pdfi.roomTemp.mean.round().toString() + " which is " + tempPassedString , style: pw.TextStyle(fontSize: 12,)),
+                                    pw.Text("The average Humidity is : " + pdfi.humidity.mean.round().toString() + " which is " + humidPassedString, style: pw.TextStyle(fontSize: 12,)),
+
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         ]
@@ -191,9 +297,12 @@ class PdfApi {
                     children: [
                       pw.Container(
                         // color: Color(Colors._redAccentValue),
-                        child: pw.Center(child: pw.Text("Mushroom", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold))),
+                        child: pw.Center(child: pw.Text("Recommendation", style: pw.TextStyle(fontSize: 25, fontWeight: pw.FontWeight.bold))),
                       ),
-                      pw.Text("Date generated: " + datetime.toString(), style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      lightRecommend == true ? pw.Text("Increase Light", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      tempRecommend == true ? pw.Text("Increase Temperature", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                      humidRecommend == true ? pw.Text("Increase Humidity", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+
                       // pw.Text(context.pageNumber.toString()),
                     ],
                   )

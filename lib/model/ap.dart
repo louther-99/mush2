@@ -39,7 +39,4 @@ class Mushi {
     datetime: json['datetime'],
   );//Converts object to JSON
 
-
-
-
 }

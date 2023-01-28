@@ -10,9 +10,14 @@ part 'pdf.g.dart';
 @JsonSerializable(explicitToJson: true)
 
 class Pdf {
+
+final int trueNegative;
+final int falsePositive;
+final int falseNegative;
+final int truePositive;
+final int yes;
+final int no;
 final String prediction;
-// final int yes;
-// final int no;
 final double accuracy;
 final Id id;
 final BatchNumber batchNumber;
@@ -25,9 +30,12 @@ final Humidity humidity;
 // final String described;
 
 Pdf({
-
-  // required this.no,
-  // required this.yes,
+  required this.trueNegative,
+  required this.falsePositive,
+  required this.falseNegative,
+  required this.truePositive,
+  required this.yes,
+  required this.no,
   required this.prediction,
   required this.accuracy,
   required this.id,

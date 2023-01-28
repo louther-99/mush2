@@ -7,8 +7,12 @@ part of 'pdf.dart';
 // **************************************************************************
 
 Pdf _$PdfFromJson(Map<String, dynamic> json) => Pdf(
-      // no: (json['No']),
-      // yes: (json['Yes']),
+      trueNegative :  (json['Response']['trueNegative']),
+      falsePositive :  (json['Response']['falsePositive']),
+      falseNegative : (json['Response']['falseNegative']),
+      truePositive : (json['Response']['truePositive']),
+      no: (json['Response']['no']),
+      yes: (json['Response']['yes']),
       prediction: (json['Response']['prediction'] as String),
       accuracy: (json['Response']["accuracy"].toDouble()),
       id: Id.fromJson(json['Responde']['id'] as Map<String, dynamic>),
@@ -22,8 +26,12 @@ Pdf _$PdfFromJson(Map<String, dynamic> json) => Pdf(
 
 Map<String, dynamic> _$PdfToJson(Pdf instance) => <String, dynamic>{
 
-      // 'no': instance.no,
-      // 'yes': instance.yes,
+      'trueNegative' : instance.trueNegative,
+      'falsePositive' : instance.falsePositive,
+      'falseNegative' : instance.falseNegative,
+      'truePositive' : instance.truePositive,
+      'no': instance.no,
+      'yes': instance.yes,
       'prediction': instance.prediction,
       'accuracy': instance.accuracy,
       'id': instance.id.toJson(),

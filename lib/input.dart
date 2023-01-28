@@ -68,6 +68,20 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+
+
+  bool lightPassed = false;
+  bool tempPassed = false;
+  bool humidPassed = false;
+  bool lightRecommend = false;
+  bool tempRecommend  = false;
+  bool humidRecommend  = false;
+
+  String lightPassedString = "";
+  String tempPassedString = "";
+  String humidPassedString = "";
+
+
   var inputs;
   var values2;
   var jsndescription2ByIndiv;
@@ -308,9 +322,59 @@ class _InputState extends State<Input> {
                                   onPressed: () async {
                                     final snackBar6 = SnackBar(content: Text("Batch report has been regenerated"));
                                     ScaffoldMessenger.of(context).showSnackBar(snackBar6);
-                                    print("Before Making pdf by batch");
-                                    print(jsonss['Yes']);
-                                    print(jsonss['No']);
+
+                                    final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
+                                    final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
+                                    final humidMean = jsonss['Responde']['humidity']['mean'].round();
+
+                                    print("Check here");
+                                    print(lightMean);
+                                    print(tempMean);
+                                    print(humidMean);
+
+
+
+                                    if(lightMean >= 50 && lightMean <= 100){
+                                      lightPassed = true;
+                                      lightPassedString = "within the threshold value.";
+                                    }
+                                    else{
+                                      lightPassedString = "outside the threshold value.";
+                                      lightRecommend = true;
+                                    }
+                                    if(tempMean >= 22 && tempMean <= 30){
+                                      tempPassed = true;
+                                      tempPassedString = "within the threshold value.";
+
+
+                                    }
+                                    else{
+                                      tempPassedString = "outside the threshold value.";
+                                      tempRecommend = true;
+                                    }
+                                    if(humidMean >= 70 && humidMean <= 85){
+                                      humidPassed = true;
+                                      humidPassedString = "within the threshold value.";
+                                    }
+                                    else{
+                                      humidPassedString = "outside the threshold value.";
+                                      humidRecommend = true;
+                                    }
+
+                                    lightRecommend == true ? Text("Increase Light", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                    tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                    humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+
+
+                                    print("hasPdfBatch == true ? Visibility Before Making pdf by batch");
+                                    print(jsonss['Response']['yes']);
+                                    print(jsonss['Response']['no']);
+                                    print(jsonss['Response']['trueNegative']);
+                                    print(jsonss['Response']['falsePositive']);
+                                    print(jsonss['Response']['falseNegative']);
+                                    print(jsonss['Response']['truePositive']);
+
                                     final pdff = new Pdf.fromJson(jsonss);
                                     final pdfFile = await PdfApi.generateText(pdff);
 
@@ -342,9 +406,10 @@ class _InputState extends State<Input> {
                                 child: OutlinedButton.icon(
                                   icon: Icon(Icons.download, color: Colors.blueGrey),
                                   onPressed: () async {
-                                      print("Before Making pdf by batch");
-                                      print(jsonss['Yes']);
-                                      print(jsonss['No']);
+                                      print("visible: false, Before Making pdf by batch");
+                                      print(jsonss['Response']['yes']);
+                                      print(jsonss['Response']['nes']);
+
                                     final pdff = new Pdf.fromJson(jsonss);
                                     final pdfFile = await PdfApi.generateText(pdff);
 
@@ -372,160 +437,357 @@ class _InputState extends State<Input> {
                               ),
                             ),],
                         )
-                      ) : Column(
-                        children: [
-                          Container(
-                            height: 300,
-                            // color: Colors.purple,
-                            child: ListView.builder(
-                              itemCount: _data.length, //docs mean row
-                              // scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  margin: const EdgeInsets.all(3),
-                                  color: index == 0 ? pinkColor : Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  // color: pinkColor,
-                                  // elevation: 10,
-                                  child: ListTile(
-                                    leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
-                                    title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
-                                  ),
-                                    trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                      ) : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 300,
+                              // color: Colors.purple,
+                              child: ListView.builder(
+                                itemCount: _data.length, //docs mean row
+                                // scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    margin: const EdgeInsets.all(3),
+                                    color: index == 0 ? pinkColor : Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    // color: pinkColor,
+                                    // elevation: 10,
+                                    child: ListTile(
+                                      leading: Text(_data[index][3].toString(), textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black),),
+                                      title: Text(_data[index][4].toString(), textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
                                     ),
+                                      trailing: Text(_data[index][5].toString() , textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: index == 0? 18 : 15, fontWeight: index == 0? FontWeight.bold : FontWeight.normal, color: index == 0? textColor : Colors.black)
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Center(
+                              child: Card(
+                                margin: const EdgeInsets.fromLTRB(0,20,5,5),
+                                // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                color: pinkColor,
+                                elevation: 10,
+                                child:  shutarat == null ? Visibility(
+                                  visible: false,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.info, size: 24, color: textColor,),
+                                              ),
+                                              TextSpan(
+                                                text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.percent, size: 24, color: textColor,),
+                                              ),
+                                              TextSpan(
+                                                text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                          Center(
-                            child: Card(
-                              margin: const EdgeInsets.fromLTRB(0,20,5,5),
-                              // margin: EdgeInsets.fromLTRB(15, 15, 15, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: pinkColor,
-                              elevation: 10,
-                              child:  shutarat == null ? Visibility(
-                                visible: false,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.info, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
+                                )
+                                    :
+                                Visibility(
+                                  visible: true,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.info, size: 24, color: textColor,),
                                               ),
-                                            ),
+                                              TextSpan(
+                                                text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
 
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.percent, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
+                                      Container(
+                                        // height: 40,
+                                        padding: EdgeInsets.all(2),
+                                        margin:  EdgeInsets.all(20),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Icon(Icons.percent, size: 24, color: textColor,),
                                               ),
-                                            ),
+                                              TextSpan(
+                                                text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: textColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
 
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      lightRecommend == true ? Visibility(
+                                        visible: true,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                    text: lightRecommend == true ?  "Increase Light" : "",
+                                                    // text: tempRecommend == true ?  "Increase Temp" : "",
+                                                    // text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                    // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                    // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ) : Visibility(
+                                        visible: false,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                  text: lightRecommend == true ?  "Increase Light" : "",
+                                                  // text: tempRecommend == true ?  "Increase Temp" : "",
+                                                  // text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                  // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                  // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+
+                                      humidRecommend == true ? Visibility(
+                                        visible: true,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                  // text: lightRecommend == true ?  "Increase Light" : "",
+                                                  // text: tempRecommend == true ?  "Increase Temp" : "",
+                                                  text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                  // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                  // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ) : Visibility(
+                                        visible: false,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                  text: lightRecommend == true ?  "Increase Light" : "",
+                                                  // text: tempRecommend == true ?  "Increase Temp" : "",
+                                                  // text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                  // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                  // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+
+
+                                      tempRecommend == true ? Visibility(
+                                        visible: true,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                  // text: lightRecommend == true ?  "Increase Light" : "",
+                                                  text: tempRecommend == true ?  "Increase Temp" : "",
+                                                  // text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                  // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                  // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ) : Visibility(
+                                        visible: false,
+                                        child: Container(
+                                          // height: 40,
+                                          padding: EdgeInsets.all(2),
+                                          margin:  EdgeInsets.all(20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                ),
+                                                TextSpan(
+                                                  text: lightRecommend == true ?  "Increase Light" : "",
+                                                  // text: tempRecommend == true ?  "Increase Temp" : "",
+                                                  // text: humidRecommend == true ?  "Increase Humidity" : "",
+                                                  // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                                  // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+
+                                                  // text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
+                                                  style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
                                 ),
-                              )
-                                  :
-                              Visibility(
-                                visible: true,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.info, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: shutarat == null ? " Outcome: " : " Outcome: " + shutarat.toString(),
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      // height: 40,
-                                      padding: EdgeInsets.all(2),
-                                      margin:  EdgeInsets.all(20),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(Icons.percent, size: 24, color: textColor,),
-                                            ),
-                                            TextSpan(
-                                              text: acurat == null ? " Accuracy: " : " Accuracy: " + acurat.toString() + "%",
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                color: textColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
-                          ),
 
 
-                        ],
+                          ],
 
+                        ),
                       ),
 
 
@@ -549,9 +811,54 @@ class _InputState extends State<Input> {
 
 
                             ScaffoldMessenger.of(context).showSnackBar(snackBar5);
-                            print("Before Making pdf by batch");
-                            print(jsonss['No']);
-                            print(jsonss['Yes']);
+
+                            final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
+                            final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
+                            final humidMean = jsonss['Responde']['humidity']['mean'].round();
+
+                            print("Check here again");
+                            print(lightMean);
+                            print(tempMean);
+                            print(humidMean);
+
+
+                            if(lightMean >= 50 && lightMean <= 100){
+                              lightPassed = true;
+                              lightPassedString = "within the threshold value.";
+                            }
+                            else{
+                              lightPassedString = "outside the threshold value.";
+                              lightRecommend = true;
+                            }
+                            if(tempMean >= 22 && tempMean <= 30){
+                              tempPassed = true;
+                              tempPassedString = "within the threshold value.";
+
+
+                            }
+                            else{
+                              tempPassedString = "outside the threshold value.";
+                              tempRecommend = true;
+                            }
+                            if(humidMean >= 70 && humidMean <= 85){
+                              humidPassed = true;
+                              humidPassedString = "within the threshold value.";
+                            }
+                            else{
+                              humidPassedString = "outside the threshold value.";
+                              humidRecommend = true;
+                            }
+
+
+
+                            print("hasPdfBatch == true ? Before Making pdf by batch");
+                            print(jsonss['Response']['no']);
+                            print(jsonss['Response']['yes']);
+                            print(jsonss['Response']['trueNegative']);
+                            print(jsonss['Response']['falsePositive']);
+                            print(jsonss['Response']['falseNegative']);
+                            print(jsonss['Response']['truePositive']);
+
                             final pdff = new Pdf.fromJson(jsonss);
                             final pdfFile = await PdfApi.generateText(pdff);
 
@@ -1468,6 +1775,17 @@ class _InputState extends State<Input> {
     print(res.body);
     print("Done printing rspn.body");
     final jsons = jsonDecode(res.body);
+    print("Con");
+
+    print(jsons['Confusion']);
+    print(jsons['TrueNegative']);
+    print(jsons['FalsePositive']);
+    print(jsons['FalseNegative']);
+    print(jsons['TruePositive']);
+    final TrueNegative = jsons['TrueNegative'];
+    final FalsePositive = jsons['FalsePositive'];
+    final FalseNegative = jsons['FalseNegative'];
+    final TruePositive = jsons['TruePositive'];
     print("Yes/No");
     print(jsons['Yes']);
     print(jsons['No']);
@@ -1475,8 +1793,8 @@ class _InputState extends State<Input> {
     print(jsons);
     print(jsons['Yes']);
     print(jsons['No']);
-    var yy = jsons['Yes'];
-    var nn = jsons['No'];
+    final yy = jsons['Yes'];
+    final nn = jsons['No'];
     print("test shuta");
     print(jsons[24]);
     print(jsons['Prediction'][24]);
@@ -1521,7 +1839,13 @@ class _InputState extends State<Input> {
 
      values2 = {
       'prediction' : shutarat,
-      'accuracy' : acc
+      'accuracy' : acc,
+      'trueNegative' : jsons['TrueNegative'],
+      'falsePositive' : jsons['FalsePositive'],
+      'falseNegative' : jsons['FalseNegative'],
+      'truePositive' : jsons['TruePositive'],
+      'yes' : jsons['Yes'],
+      'no' : jsons['No'],
 
     };
 
@@ -1532,8 +1856,15 @@ class _InputState extends State<Input> {
     print("Done printing rspns.body from description");
     // final jsonss = jsonDecode(jsonEncode(ress.body));
     jsonss = jsonDecode(ress.body);
-    print("printing jsonss below: ..");
+    print(jsonss['Response']['no']);
+    print(jsonss['Response']['yes']);
+    print(jsonss['Response']['trueNegative']);
+    print(jsonss['Response']['falsePositive']);
+    print(jsonss['Response']['falseNegative']);
+    print(jsonss['Response']['truePositive']);
+
     print(jsonss);
+
 
 
     print(jsonss['Response']['accuracy']);
@@ -1619,8 +1950,8 @@ class _InputState extends State<Input> {
 class CallApi {
 
   predictByIndiv(datas, apiurl) async {
-    // String _url = "http://10.0.2.2:5000/";
-    String _url = "https://mushie.herokuapp.com/";
+    String _url = "http://10.0.2.2:5000/";
+    // String _url = "https://mushie.herokuapp.com/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
     // print(fullUrl + " is full url");
@@ -1666,8 +1997,8 @@ class CallApi {
     print("This is ewan: " + ewan.toString());
     print(ewan);
     print("Done printing shits");
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
@@ -1692,8 +2023,8 @@ class CallApi {
   }
 
   descriptionByBatch(values2, urlss) async {
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss;
     var resInPeaces = await http.post(
       Uri.parse(fullUrls),
@@ -1706,8 +2037,8 @@ class CallApi {
   }
 
   description2(values, urlss2) async {
-    // String _urls = "http://10.0.2.2:5000/";
-    String _urls = "https://mushie.herokuapp.com/";
+    String _urls = "http://10.0.2.2:5000/";
+    // String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),
