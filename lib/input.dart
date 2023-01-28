@@ -364,9 +364,9 @@ class _InputState extends State<Input> {
                                       humidRecommend = true;
                                     }
 
-                                    lightRecommend == true ? Text("Increase Light", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
-                                    tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
-                                    humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                    // lightRecommend == true ? Text("Increase Light", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                    // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
+                                    // humidRecommend == true ? Text("Increase Humidity", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
 
 
 
@@ -596,7 +596,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.lightbulb, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                     text: lightRecommend == true ?  "Increase Light" : "",
@@ -627,7 +627,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.lightbulb, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                   text: lightRecommend == true ?  "Increase Light" : "",
@@ -661,7 +661,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.water_drop, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                   // text: lightRecommend == true ?  "Increase Light" : "",
@@ -692,7 +692,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.lightbulb, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                   text: lightRecommend == true ?  "Increase Light" : "",
@@ -727,7 +727,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.thermostat, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                   // text: lightRecommend == true ?  "Increase Light" : "",
@@ -758,7 +758,7 @@ class _InputState extends State<Input> {
                                             text: TextSpan(
                                               children: [
                                                 WidgetSpan(
-                                                  child: Icon(Icons.percent, size: 24, color: textColor,),
+                                                  child: Icon(Icons.lightbulb, size: 24, color: textColor,),
                                                 ),
                                                 TextSpan(
                                                   text: lightRecommend == true ?  "Increase Light" : "",

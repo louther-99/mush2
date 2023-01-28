@@ -295,13 +295,21 @@ class PdfApi2 {
               decoration: pw.BoxDecoration(color: PdfColors.orange200),
               title: pw.Column(
                 children: [
+                  // pw.Container(
+                  //   // color: Color(Colors._redAccentValue),
+                  //   child: pw.Center(child: pw.Text("Recommendation", style: pw.TextStyle(fontSize: 25, fontWeight: pw.FontWeight.bold))),
+                  // ),
+                  // lightRecommend == true ? pw.Text("Increase Light", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                  // tempRecommend == true ? pw.Text("Increase Temperature", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                  // humidRecommend == true ? pw.Text("Increase Humidity", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+
                   pw.Container(
                     // color: Color(Colors._redAccentValue),
-                    child: pw.Center(child: pw.Text("Recommendation", style: pw.TextStyle(fontSize: 25, fontWeight: pw.FontWeight.bold))),
+                    child: pw.Center(child: pw.Text("", style: pw.TextStyle(fontSize: 25, fontWeight: pw.FontWeight.bold))),
                   ),
-                  lightRecommend == true ? pw.Text("Increase Light", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
-                  tempRecommend == true ? pw.Text("Increase Temperature", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
-                  humidRecommend == true ? pw.Text("Increase Humidity", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                  lightRecommend == true ? pw.Text("", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                  tempRecommend == true ? pw.Text("", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+                  humidRecommend == true ? pw.Text("", style: pw.TextStyle(fontSize: 20, color: PdfColors.red, fontWeight: pw.FontWeight.bold)) : pw.Text("", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
 
                   // pw.Text(context.pageNumber.toString()),
                 ],
