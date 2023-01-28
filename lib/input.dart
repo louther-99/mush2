@@ -326,43 +326,43 @@ class _InputState extends State<Input> {
                                     final snackBar6 = SnackBar(content: Text("Batch report has been regenerated"));
                                     ScaffoldMessenger.of(context).showSnackBar(snackBar6);
 
-                                    final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
-                                    final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
-                                    final humidMean = jsonss['Responde']['humidity']['mean'].round();
-
-                                    print("Check here");
-                                    print(lightMean);
-                                    print(tempMean);
-                                    print(humidMean);
-
-
-
-                                    if(lightMean >= 50 && lightMean <= 100){
-                                      lightPassed = true;
-                                      lightPassedString = "within the threshold value.";
-                                    }
-                                    else{
-                                      lightPassedString = "outside the threshold value.";
-                                      lightRecommend = true;
-                                    }
-                                    if(tempMean >= 22 && tempMean <= 30){
-                                      tempPassed = true;
-                                      tempPassedString = "within the threshold value.";
-
-
-                                    }
-                                    else{
-                                      tempPassedString = "outside the threshold value.";
-                                      tempRecommend = true;
-                                    }
-                                    if(humidMean >= 70 && humidMean <= 85){
-                                      humidPassed = true;
-                                      humidPassedString = "within the threshold value.";
-                                    }
-                                    else{
-                                      humidPassedString = "outside the threshold value.";
-                                      humidRecommend = true;
-                                    }
+                                    // final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
+                                    // final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
+                                    // final humidMean = jsonss['Responde']['humidity']['mean'].round();
+                                    //
+                                    // print("Check here");
+                                    // print(lightMean);
+                                    // print(tempMean);
+                                    // print(humidMean);
+                                    //
+                                    //
+                                    //
+                                    // if(lightMean >= 50 && lightMean <= 100){
+                                    //   lightPassed = true;
+                                    //   lightPassedString = "within the threshold value.";
+                                    // }
+                                    // else{
+                                    //   lightPassedString = "outside the threshold value.";
+                                    //   lightRecommend = true;
+                                    // }
+                                    // if(tempMean >= 22 && tempMean <= 30){
+                                    //   tempPassed = true;
+                                    //   tempPassedString = "within the threshold value.";
+                                    //
+                                    //
+                                    // }
+                                    // else{
+                                    //   tempPassedString = "outside the threshold value.";
+                                    //   tempRecommend = true;
+                                    // }
+                                    // if(humidMean >= 70 && humidMean <= 85){
+                                    //   humidPassed = true;
+                                    //   humidPassedString = "within the threshold value.";
+                                    // }
+                                    // else{
+                                    //   humidPassedString = "outside the threshold value.";
+                                    //   humidRecommend = true;
+                                    // }
 
                                     // lightRecommend == true ? Text("Increase Light", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
                                     // tempRecommend == true ? Text("Increase Temperature", style: TextStyle(fontSize: 20, color: Colors.red, fontWeight: FontWeight.bold)) : Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold));
@@ -814,43 +814,6 @@ class _InputState extends State<Input> {
 
 
                             ScaffoldMessenger.of(context).showSnackBar(snackBar5);
-
-                            final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
-                            final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
-                            final humidMean = jsonss['Responde']['humidity']['mean'].round();
-
-                            print("Check here again");
-                            print(lightMean);
-                            print(tempMean);
-                            print(humidMean);
-
-
-                            if(lightMean >= 50 && lightMean <= 100){
-                              lightPassed = true;
-                              lightPassedString = "within the threshold value.";
-                            }
-                            else{
-                              lightPassedString = "outside the threshold value.";
-                              lightRecommend = true;
-                            }
-                            if(tempMean >= 22 && tempMean <= 30){
-                              tempPassed = true;
-                              tempPassedString = "within the threshold value.";
-
-
-                            }
-                            else{
-                              tempPassedString = "outside the threshold value.";
-                              tempRecommend = true;
-                            }
-                            if(humidMean >= 70 && humidMean <= 85){
-                              humidPassed = true;
-                              humidPassedString = "within the threshold value.";
-                            }
-                            else{
-                              humidPassedString = "outside the threshold value.";
-                              humidRecommend = true;
-                            }
 
 
 
@@ -1938,6 +1901,45 @@ class _InputState extends State<Input> {
     print(jsonss['Responde']['humidity']['50%']);
     print(jsonss['Responde']['humidity']['75%']);
     print(jsonss['Responde']['humidity']['max']);
+
+    final lightMean = jsonss['Responde']['lightLevel']['mean'].round();
+    final tempMean = jsonss['Responde']['roomTemp']['mean'].round();
+    final humidMean = jsonss['Responde']['humidity']['mean'].round();
+
+    print("Check here again");
+    print(lightMean);
+    print(tempMean);
+    print(humidMean);
+
+
+    if(lightMean >= 50 && lightMean <= 100){
+      lightPassed = true;
+      lightPassedString = "within the threshold value.";
+    }
+    else{
+      lightPassedString = "outside the threshold value.";
+      lightRecommend = true;
+    }
+    if(tempMean >= 22 && tempMean <= 30){
+      tempPassed = true;
+      tempPassedString = "within the threshold value.";
+
+
+    }
+    else{
+      tempPassedString = "outside the threshold value.";
+      tempRecommend = true;
+    }
+    if(humidMean >= 70 && humidMean <= 85){
+      humidPassed = true;
+      humidPassedString = "within the threshold value.";
+    }
+    else{
+      humidPassedString = "outside the threshold value.";
+      humidRecommend = true;
+    }
+
+
 
     setState(() {
       _data = fields;
