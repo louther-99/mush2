@@ -1970,8 +1970,8 @@ class _InputState extends State<Input> {
 class CallApi {
 
   predictByIndiv(datas, apiurl) async {
-    String _url = "http://10.0.2.2:5000/";
-    // String _url = "https://mushie.herokuapp.com/";
+    // String _url = "http://10.0.2.2:5000/";
+    String _url = "https://mushie.herokuapp.com/";
     String fullUrl = _url + apiurl;
     print(fullUrl + " is full url");
     // print(fullUrl + " is full url");
@@ -2017,8 +2017,8 @@ class CallApi {
     print("This is ewan: " + ewan.toString());
     print(ewan);
     print("Done printing shits");
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urls;
     var resInPeace = await http.post(
       Uri.parse(fullUrls),
@@ -2043,8 +2043,8 @@ class CallApi {
   }
 
   descriptionByBatch(values2, urlss) async {
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss;
     var resInPeaces = await http.post(
       Uri.parse(fullUrls),
@@ -2057,8 +2057,8 @@ class CallApi {
   }
 
   description2(values, urlss2) async {
-    String _urls = "http://10.0.2.2:5000/";
-    // String _urls = "https://mushie.herokuapp.com/";
+    // String _urls = "http://10.0.2.2:5000/";
+    String _urls = "https://mushie.herokuapp.com/";
     String fullUrls = _urls + urlss2;
     var resInPeaces2 = await http.post(
       Uri.parse(fullUrls),
