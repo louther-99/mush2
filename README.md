@@ -1,12 +1,13 @@
-# mush2
 
-A new Flutter project.
+# MushMush: Mushroom Growth Prediction Using Naïve Bayes Algorithm
 
-## Getting Started
+A project that aims to create a mobile application that will aid first-time mushroom farmers in finding the optimal conditions for successful mushroom growth. 
 
-This project is aigt starting point for a Flutter application.
+## Authors
 
-A few resources to get you started if this is your first Flutter project:
+- [@louther-99](https://github.com/louther-99)
+
+
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
